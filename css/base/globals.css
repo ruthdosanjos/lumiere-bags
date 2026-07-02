@@ -1,0 +1,13 @@
+body{
+
+    background:var(--color-background);
+
+}
+
+.container{
+
+    width:min(1200px,90%);
+
+    margin:auto;
+
+}

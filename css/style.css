@@ -1,0 +1,20 @@
+@import url("./variables.css");
+
+/* Base */
+@import url("./base/reset.css");
+@import url("./base/typography.css");
+@import url("./base/globals.css");
+
+/* Layout */
+@import url("./layout/header.css");
+@import url("./layout/hero.css");
+@import url("./layout/sections.css");
+@import url("./layout/footer.css");
+
+/* Components */
+@import url("./components/buttons.css");
+@import url("./components/cards.css");
+@import url("./components/badges.css");
+
+/* Responsive */
+@import url("./responsive.css");

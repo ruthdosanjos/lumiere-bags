@@ -1,0 +1,31 @@
+.btn-primary{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:.75rem;
+
+    margin-top:2rem;
+
+    padding:1rem 2rem;
+
+    border-radius:50px;
+
+    background:var(--color-primary);
+
+    color:white;
+
+    font-weight:600;
+
+    transition:var(--transition);
+
+}
+
+.btn-primary:hover{
+
+    background:var(--color-secondary);
+
+    transform:translateY(-3px);
+
+}
