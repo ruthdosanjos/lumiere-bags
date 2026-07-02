@@ -1,0 +1,40 @@
+:root{
+
+    /* Colors */
+
+    --color-primary: #1F1F1F;
+    --color-secondary: #B89B5E;
+    --color-background: #FAF9F7;
+    --color-surface: #FFFFFF;
+    --color-text: #3B3B3B;
+    --color-border: #E9E5DD;
+
+    /* Typography */
+
+    --font-heading: "Playfair Display", serif;
+    --font-body: "Inter", sans-serif;
+
+    /* Spacing */
+
+    --spacing-xs: .5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 2rem;
+    --spacing-lg: 4rem;
+    --spacing-xl: 6rem;
+
+    /* Radius */
+
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 20px;
+
+    /* Shadow */
+
+    --shadow-sm: 0 4px 12px rgba(0,0,0,.08);
+    --shadow-md: 0 12px 30px rgba(0,0,0,.12);
+
+    /* Transition */
+
+    --transition: .3s ease;
+
+}

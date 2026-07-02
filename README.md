@@ -5,7 +5,7 @@ Mantive o código aqui para preservar meu histórico e facilitar a visualizaçã
 
 ## Sobre o projeto
 - Desenvolvido originalmente em 2023 para a Formação em Web Design – Instituto NU by Descomplica (Programa de educação tecnológica)
-- Tecnologias utilizadas: HTML e CSS.
+- Tecnologias utilizadas: HTML, CSS e Bootstrap.
 - Objetivo: Desenvolver um site usando os conhecimentos aprendidos no curso.
 
 ## Atualizações futuras
