@@ -1,0 +1,187 @@
+/* ========================================
+   Product Card
+======================================== */
+
+.product-card {
+
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    box-shadow: var(--shadow-sm);
+
+    transition:
+        transform .35s ease,
+        box-shadow .35s ease;
+
+}
+
+
+/* ========================================
+   Image
+======================================== */
+
+.product-image {
+
+    position: relative;
+    overflow: hidden;
+
+    aspect-ratio: 4 / 5;
+
+    border-radius: 1.25rem;
+
+}
+
+.product-image img {
+
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+
+    transition: transform .4s ease;
+
+}
+
+
+/* ========================================
+   Content
+======================================== */
+
+.product-info {
+
+    display: flex;
+    flex-direction: column;
+
+    flex: 1;
+
+    padding: 1.5rem;
+
+}
+
+.product-collection {
+
+    display: block;
+
+    margin-bottom: .5rem;
+
+    font-size: .75rem;
+    font-weight: 500;
+
+    letter-spacing: .15rem;
+    text-transform: uppercase;
+
+    color: var(--color-secondary);
+
+}
+
+.product-name {
+
+    margin-bottom: .5rem;
+
+    font-family: var(--font-heading);
+    font-size: 1.6rem;
+    font-weight: 600;
+
+    color: var(--color-primary);
+
+}
+
+.product-price {
+
+    margin-bottom: 1rem;
+
+    font-size: 1rem;
+    font-weight: 500;
+
+    color: var(--color-text);
+
+}
+
+.product-link {
+
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+
+    width: fit-content;
+
+    font-weight: 500;
+    text-decoration: none;
+
+    color: var(--color-primary);
+
+}
+
+.product-link i {
+
+    transition: transform .3s ease;
+
+}
+
+
+/* ========================================
+   Buttons
+======================================== */
+
+.favorite-button {
+
+    position: absolute;
+
+    top: 1rem;
+    right: 1rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 2.75rem;
+    height: 2.75rem;
+
+    border: none;
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, .95);
+
+    cursor: pointer;
+
+    transition:
+        transform .3s ease,
+        background .3s ease;
+
+}
+
+
+/* ========================================
+   Hover
+======================================== */
+
+.product-card:hover {
+
+    transform: translateY(-8px);
+
+    box-shadow: var(--shadow-md);
+
+}
+
+.product-card:hover .product-image img {
+
+    transform: scale(1.05);
+
+}
+
+.product-card:hover .product-link i {
+
+    transform: translateX(4px);
+
+}
+
+.favorite-button:hover {
+
+    transform: scale(1.08);
+
+    background: #fff;
+
+}

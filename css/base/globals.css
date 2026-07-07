@@ -1,7 +1,6 @@
-body{
-
-    background:var(--color-background);
-
+body {
+  background: var(--color-background);
+  padding-top: var(--header-height);
 }
 
 .container{

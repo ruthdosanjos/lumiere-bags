@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-
 <html lang="pt-br">
 
 <head>
 
-    <title> Lumière Bags </title>
+    <title>Lumière Bags</title>
 
     <meta charset="utf-8">
     <meta name="author" content="Ruth">
@@ -14,152 +13,424 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
         rel="stylesheet">
 
-    <link rel="stylesheet" href="./css/style.css">
-    <link rel="stylesheet" href="./css/responsive.css">
     <link rel="icon" href="./assets/images/brand/favicon.ico">
+
+    <link rel="stylesheet" href="./css/style.css">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
-  rel="stylesheet">
-  <link
-rel="stylesheet"
-href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+        rel="stylesheet">
+
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
 </head>
 
-
-
 <body>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
-<script src="./js/main.js"></script>
-<script src="./js/products.js"></script>
-<script src="./js/cart.js"></script>
-
 
     <header class="header">
 
-    <nav class="navbar">
+        <nav class="navbar">
 
-        <div class="nav-container">
+            <div class="nav-container">
 
-            <a href="#" class="logo">
+                <a href="#" class="logo">
+                    LUMIÈRE
+                </a>
 
-                LUMIÈRE
+                <ul class="nav-menu">
 
-            </a>
+                    <li>
+                        <a href="#featured">Coleção</a>
+                    </li>
 
-            <ul class="nav-menu">
+                    <li>
+                        <a href="#products">Loja</a>
+                    </li>
 
-                <li>
-                    <a href="#featured">Collection</a>
-                </li>
+                    <li>
+                        <a href="#story">Sobre</a>
+                    </li>
 
-                <li>
-                    <a href="#products">Shop</a>
-                </li>
+                    <li>
+                        <a href="#newsletter">Contato</a>
+                    </li>
 
-                <li>
-                    <a href="#story">About</a>
-                </li>
+                </ul>
 
-                <li>
-                    <a href="#newsletter">Contact</a>
-                </li>
+                <div class="nav-actions">
 
-            </ul>
+                    <button
+                        class="icon-button"
+                        aria-label="Pesquisar">
 
-            <div class="nav-actions">
+                        <i class="bi bi-search"></i>
 
-                <button class="icon-button">
+                    </button>
 
-                    <i class="bi bi-search"></i>
+                    <button
+                        class="icon-button cart-button"
+                        aria-label="Carrinho de compras">
 
-                </button>
+                        <i class="bi bi-bag"></i>
 
-                <button class="icon-button cart-button">
+                        <span class="cart-count">
 
-                    <i class="bi bi-bag"></i>
+                            0
 
-                    <span class="cart-count">
+                        </span>
 
-                        0
+                    </button>
 
-                    </span>
-
-                </button>
+                </div>
 
             </div>
 
-        </div>
+        </nav>
 
-    </nav>
-
-</header>
+    </header>
 
     <main>
 
+        <!-- Hero -->
+
         <section id="hero" class="hero">
 
-    <div class="container hero-content">
+            <div class="container hero-content">
 
-        <div class="hero-text">
+                <div class="hero-text">
 
-            <span class="hero-subtitle">
-                CRAFTED FOR MODERN WOMEN
-            </span>
+                    <span class="hero-subtitle">
+                        CRIADO PARA A MULHER CONTEMPORÂNEA
+                    </span>
 
-            <h1 class="hero-title">
+                    <h1 class="hero-title">
 
-                Timeless
-                <br>
-                Elegance
+                        Elegância que
+                        <br>
+                        permanece
 
-            </h1>
+                    </h1>
 
-            <p class="hero-description">
+                    <p class="hero-description">
 
-                Discover handcrafted handbags designed to combine
-                sophistication, functionality and lasting quality.
+                        Design sofisticado, materiais de qualidade e acabamento impecável para acompanhar você em todos os momentos.
 
-            </p>
+                    </p>
 
-            <a href="#products" class="btn-primary">
+                    <a href="#products" class="btn-primary">
 
-                Explore Collection
+                        Explorar Coleção
 
-                <i class="bi bi-arrow-right"></i>
+                        <i class="bi bi-arrow-right"></i>
 
-            </a>
+                    </a>
 
-        </div>
+                </div>
 
-        <div class="hero-image">
+                <div class="hero-image">
 
-            <img
-                src="./assets/images/hero/banner1.jpg"
-                alt="Luxury handbag">
+                    <img
+                        src="./assets/images/hero/banner1.jpg"
+                        alt="Bolsa de luxo Lumière"
+                        loading="eager"
+                        decoding="async">
 
-        </div>
+                </div>
 
-    </div>
+            </div>
 
-</section>
+        </section>
 
-<section id="featured" class="featured"></section>
-<section id="categories" class="categories"></section>
-<section id="story" class="story"></section>
-<section id="products" class="products"></section>
-<section id="benefits" class="benefits"></section>
-<section id="newsletter" class="newsletter"></section>
+        <!-- Featured Collection -->
+
+        <section id="featured" class="featured">
+
+            <div class="container">
+
+                <div class="section-header">
+
+                    <span class="section-subtitle">
+
+                        NOVA COLEÇÃO
+
+                    </span>
+
+                    <h2 class="section-title">
+
+                        Coleção em Destaque
+
+                    </h2>
+
+                    <p class="section-description">
+
+                        Descubra bolsas criadas para unir elegância,
+                        funcionalidade e design atemporal em cada detalhe.
+
+                    </p>
+
+                </div>
+
+                <div class="products-grid">
+
+                    <!-- Aurora -->
+
+                    <article class="product-card">
+
+                        <div class="product-image">
+
+                            <img
+                                src="./assets/images/products/aurora.jpg"
+                                alt="Bolsa Aurora da coleção Étoile"
+                                loading="lazy"
+                                decoding="async">
+
+                            <button
+                                class="favorite-button"
+                                aria-label="Adicionar bolsa Aurora aos favoritos">
+
+                                <i class="bi bi-heart"></i>
+
+                            </button>
+
+                        </div>
+
+                        <div class="product-info">
+
+                            <span class="product-collection">
+
+                                ÉTOILE
+
+                            </span>
+
+                            <h3 class="product-name">
+
+                                Aurora
+
+                            </h3>
+
+                            <p class="product-price">
+
+                                R$ 489
+
+                            </p>
+
+                            <a
+                                href="#"
+                                class="product-link"
+                                aria-label="Ver detalhes da bolsa Aurora">
+
+                                Ver detalhes
+
+                                <i class="bi bi-arrow-right"></i>
+
+                            </a>
+
+                        </div>
+
+                    </article>
+
+                    <!-- Celeste -->
+
+                    <article class="product-card">
+
+                        <div class="product-image">
+
+                            <img
+                                src="./assets/images/products/celeste.jpg"
+                                alt="Bolsa Celeste da coleção Étoile"
+                                loading="lazy"
+                                decoding="async">
+
+                            <button
+                                class="favorite-button"
+                                aria-label="Adicionar bolsa Celeste aos favoritos">
+
+                                <i class="bi bi-heart"></i>
+
+                            </button>
+
+                        </div>
+
+                        <div class="product-info">
+
+                            <span class="product-collection">
+
+                                ÉTOILE
+
+                            </span>
+
+                            <h3 class="product-name">
+
+                                Celeste
+
+                            </h3>
+
+                            <p class="product-price">
+
+                                R$ 529
+
+                            </p>
+
+                            <a
+                                href="#"
+                                class="product-link"
+                                aria-label="Ver detalhes da bolsa Celeste">
+
+                                Ver detalhes
+
+                                <i class="bi bi-arrow-right"></i>
+
+                            </a>
+
+                        </div>
+
+                    </article>
+
+                    <!-- Élise -->
+
+                    <article class="product-card">
+
+                        <div class="product-image">
+
+                            <img
+                                src="./assets/images/products/elise.jpg"
+                                alt="Bolsa Élise da coleção Atelier"
+                                loading="lazy"
+                                decoding="async">
+
+                            <button
+                                class="favorite-button"
+                                aria-label="Adicionar bolsa Élise aos favoritos">
+
+                                <i class="bi bi-heart"></i>
+
+                            </button>
+
+                        </div>
+
+                        <div class="product-info">
+
+                            <span class="product-collection">
+
+                                ATELIER
+
+                            </span>
+
+                            <h3 class="product-name">
+
+                                Élise
+
+                            </h3>
+
+                            <p class="product-price">
+
+                                R$ 569
+
+                            </p>
+
+                            <a
+                                href="#"
+                                class="product-link"
+                                aria-label="Ver detalhes da bolsa Élise">
+
+                                Ver detalhes
+
+                                <i class="bi bi-arrow-right"></i>
+
+                            </a>
+
+                        </div>
+
+                    </article>
+
+                    <!-- Noire -->
+
+                    <article class="product-card">
+
+                        <div class="product-image">
+
+                            <img
+                                src="./assets/images/products/noire.jpg"
+                                alt="Bolsa Noire da coleção Signature"
+                                loading="lazy"
+                                decoding="async">
+
+                            <button
+                                class="favorite-button"
+                                aria-label="Adicionar bolsa Noire aos favoritos">
+
+                                <i class="bi bi-heart"></i>
+
+                            </button>
+
+                        </div>
+
+                        <div class="product-info">
+
+                            <span class="product-collection">
+
+                                SIGNATURE
+
+                            </span>
+
+                            <h3 class="product-name">
+
+                                Noire
+
+                            </h3>
+
+                            <p class="product-price">
+
+                                R$ 619
+
+                            </p>
+
+                            <a
+                                href="#"
+                                class="product-link"
+                                aria-label="Ver detalhes da bolsa Noire">
+
+                                Ver detalhes
+
+                                <i class="bi bi-arrow-right"></i>
+
+                            </a>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <section id="categories" class="categories"></section>
+
+        <section id="products" class="products"></section>
+
+        <section id="story" class="story"></section>
+
+        <section id="benefits" class="benefits"></section>
+
+        <section id="newsletter" class="newsletter"></section>
 
     </main>
 
     <footer>
 
     </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./js/main.js"></script>
+    <script src="./js/products.js"></script>
+    <script src="./js/cart.js"></script>
 
 </body>
 
