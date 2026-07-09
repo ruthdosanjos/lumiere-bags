@@ -8,14 +8,18 @@
 /* Layout */
 @import url("./layout/header.css");
 @import url("./layout/hero.css");
-@import url("./layout/sections.css");
-@import url("./layout/footer.css");
 @import url("./layout/featured.css");
+@import url("./layout/story.css");
+@import url("./layout/benefits.css");
+@import url("./layout/categories.css");
+@import url("./layout/products.css");
+@import url("./layout/newsletter.css");
+@import url("./layout/footer.css");
+@import url("./layout/sections.css");
+
 
 /* Components */
 @import url("./components/buttons.css");
-@import url("./components/cards.css");
-@import url("./components/badges.css");
 @import url("./components/product-card.css");
 
 /* Responsive */
