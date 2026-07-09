@@ -4,7 +4,7 @@
 
 **LUMIÈRE** é um e-commerce fictício de bolsas com estética minimalista e sofisticada, desenvolvido como projeto de portfólio front-end.
 
-O objetivo é simular uma marca de moda premium com experiência de navegação moderna, inspirada em e-commerces de luxo e landing pages SaaS.
+O objetivo é simular uma marca de moda premium com experiência de navegação moderna, inspirada em e-commerces de luxo e landing pages contemporâneas.
 
 ---
 
@@ -13,8 +13,8 @@ O objetivo é simular uma marca de moda premium com experiência de navegação 
 * Construir um e-commerce visualmente forte para portfólio.
 * Demonstrar domínio de HTML5, CSS3 modular e JavaScript Vanilla.
 * Criar uma interface elegante, responsiva e reutilizável.
-* Simular um produto real com identidade visual consistente.
-* Evoluir futuramente para React com reaproveitamento da arquitetura atual.
+* Simular uma marca real com identidade visual consistente.
+* Evoluir futuramente para React utilizando a arquitetura atual como base.
 
 ---
 
@@ -22,41 +22,141 @@ O objetivo é simular uma marca de moda premium com experiência de navegação 
 
 ## ✅ Concluído
 
-### Estrutura
+## Estrutura
 
 * Organização completa das pastas do projeto.
 * Arquitetura modular de CSS.
 * Estrutura modular de JavaScript.
 * Organização dos assets por categoria.
+* Design System com variáveis de cores, tipografia e espaçamentos.
 
-### Header
+---
+
+# Header
+
+Implementado:
 
 * Navbar fixa.
 * Efeito Glassmorphism ao scroll.
-* Correção do problema de transparência.
-* Compatibilidade com Bootstrap preservada.
-* Navegação estruturada.
+* Navegação por âncoras.
+* Botões de ações preparados para futuras funcionalidades.
+* Estrutura semântica com acessibilidade.
 
-### Hero
+---
 
-* Hero section finalizada.
+# Hero
+
+Finalizado:
+
 * Layout responsivo.
+* Headline principal.
 * CTA principal.
-* Imagem otimizada.
-* Tipografia definitiva.
+* Imagem hero otimizada.
+* Tipografia alinhada ao posicionamento premium da marca.
 
-### Featured Collection
+---
 
-Primeira seção de produtos implementada.
+# Featured Collection
 
-Contém:
+Seção de produtos em destaque finalizada.
 
-* Cabeçalho da seção.
+Coleção criada:
+
+### Aurora
+
+* Elegância natural.
+* Tons claros e sofisticados.
+* Representa leveza e novos começos.
+
+### Celeste
+
+* Design contemporâneo.
+* Personalidade urbana.
+* Representa confiança e modernidade.
+
+### Élise
+
+* Estética clássica e delicada.
+* Inspiração artesanal.
+* Representa feminilidade atemporal.
+
+### Noire
+
+* Peça assinatura da coleção.
+* Luxo discreto.
+* Representa sofisticação e poder.
+
+Implementado:
+
+* Product Cards reutilizáveis.
 * Grid responsivo.
-* Quatro Product Cards.
 * Hover animations.
 * Botão de favoritos.
-* Estrutura preparada para futura integração com JavaScript.
+* Estrutura preparada para integração futura com JavaScript.
+
+---
+
+# Story
+
+Seção institucional criada.
+
+Objetivo:
+
+Transmitir a filosofia da Lumière:
+
+> Design pensado para acompanhar histórias.
+
+Implementado:
+
+* Layout dividido entre texto e imagem.
+* Comunicação de marca.
+* CTA direcionando para coleção.
+
+---
+
+# Benefits
+
+Seção de benefícios finalizada.
+
+Destaques:
+
+* Materiais Premium.
+* Design Atemporal.
+* Acabamento Cuidadoso.
+* Entrega Nacional.
+
+Objetivo:
+
+Construir confiança e reforçar percepção de valor.
+
+---
+
+# Categories
+
+Seção de categorias criada.
+
+Categorias:
+
+* Shoulder Bags
+* Tote Bags
+* Mini Bags
+* Crossbody Bags
+
+Características:
+
+* Grid assimétrico.
+* Cards com diferentes proporções.
+* Overlay com gradiente.
+* Hover com zoom da imagem.
+
+Direção visual:
+
+As imagens foram criadas seguindo uma mesma identidade de coleção, mantendo:
+
+* Mesmo estilo fotográfico.
+* Mesmo acabamento premium.
+* Mesma linguagem visual.
+* Mesma atmosfera de marca.
 
 ---
 
@@ -71,41 +171,14 @@ lumiere/
 ├── assets/
 │   └── images/
 │       ├── brand/
-│       │   ├── favicon.ico
-│       │   ├── logo.png
-│       │   └── logoWhite.png
-│       │
 │       ├── hero/
-│       │   ├── banner1.jpg
-│       │   ├── banner2.jpg
-│       │   ├── banner3.jpg
-│       │   └── banner4.jpg
-│       │
-│       └── products/
-│           ├── aurora.jpg
-│           ├── celeste.jpg
-│           ├── elise.jpg
-│           └── noire.jpg
+│       ├── products/
+│       └── categories/
 │
 ├── css/
 │   ├── base/
-│   │   ├── globals.css
-│   │   ├── reset.css
-│   │   └── typography.css
-│   │
 │   ├── components/
-│   │   ├── badges.css
-│   │   ├── buttons.css
-│   │   ├── cards.css
-│   │   └── product-card.css
-│   │
 │   ├── layout/
-│   │   ├── featured.css
-│   │   ├── footer.css
-│   │   ├── header.css
-│   │   ├── hero.css
-│   │   └── sections.css
-│   │
 │   ├── responsive.css
 │   ├── style.css
 │   └── variables.css
@@ -138,15 +211,16 @@ lumiere/
 
 ## Identidade
 
-"Luz + Sofisticação"
+**"Luz + Sofisticação"**
 
 A interface prioriza:
 
-* Espaço negativo
-* Tipografia elegante
-* Hierarquia visual
-* Componentes reutilizáveis
-* Poucos elementos por tela
+* Espaço negativo.
+* Tipografia elegante.
+* Hierarquia visual.
+* Componentes reutilizáveis.
+* Consistência visual.
+* Experiência premium.
 
 ---
 
@@ -157,11 +231,11 @@ A interface prioriza:
 * HTML5
 * CSS3 Modular
 * JavaScript Vanilla
-* Bootstrap (apenas ícones e utilidades)
+* Bootstrap (ícones e utilidades pontuais)
 
 ---
 
-## Organização CSS
+# Organização CSS
 
 ```text
 base/
@@ -174,7 +248,7 @@ variables.css
 
 ---
 
-## Organização JavaScript
+# Organização JavaScript
 
 ```text
 main.js
@@ -184,72 +258,61 @@ cart.js
 
 ---
 
-## Componentes criados
+# Componentes criados
 
-### Layout
+## Layout
 
 * Header
 * Hero
-* Featured
+* Featured Collection
+* Story
+* Benefits
+* Categories
 
-### Componentes
+## Componentes
 
 * Buttons
 * Product Card
+* Category Card
+* Benefit Card
 * Badges
-* Cards
 
 ---
 
 # ✨ Melhorias implementadas
 
-## Responsividade
+## Performance
 
-Grid de produtos:
-
-Desktop
-
-```
-4 colunas
-```
-
-Tablet
-
-```
-2 colunas
-```
-
-Mobile
-
-```
-1 coluna
-```
-
----
-
-## Product Card
-
-Estrutura preparada para reutilização.
-
-Inclui:
-
-* Hover
-* Escala da imagem
-* Botão de favoritos
-* Sombras utilizando Design System
-* Aspect Ratio fixo
-* Estrutura flexível para futuras ações
-* Componentização visando futura migração para React
+* Uso de `loading="lazy"` em imagens secundárias.
+* Uso de `loading="eager"` no Hero.
+* Uso de `decoding="async"` nas imagens.
+* Organização dos assets por contexto.
 
 ---
 
 ## Acessibilidade
 
+Implementado:
+
 * Uso de landmarks semânticas (`header`, `main`, `section`, `article`, `footer`).
-* `aria-label` em botões e links interativos.
-* Textos alternativos mais descritivos.
-* Imagens secundárias com `loading="lazy"`.
-* Hero com carregamento prioritário (`loading="eager"`).
+* Hierarquia correta de headings.
+* `aria-label` em elementos interativos.
+* Textos alternativos descritivos nas imagens.
+
+---
+
+## Product Cards
+
+Estrutura preparada para evolução.
+
+Inclui:
+
+* Hover.
+* Escala de imagem.
+* Favoritos.
+* Design System.
+* Aspect Ratio.
+* Estrutura compatível com futura migração para React.
 
 ---
 
@@ -257,39 +320,47 @@ Inclui:
 
 ## Curto prazo
 
-* Refinar microinterações dos Product Cards.
-* Implementar estado ativo do botão de favoritos.
-* Finalizar a seção Featured.
-* Revisar consistência visual da UI.
+* Refinar microinterações.
+* Ajustar detalhes visuais finais.
+* Implementar comportamento dos favoritos.
+* Finalizar responsividade completa.
+* Revisar experiência geral da landing page.
 
 ---
 
 ## Médio prazo
 
-* Criar seção Categories.
-* Criar vitrine completa de produtos.
-* Construir seção Story.
-* Implementar seção Benefits.
+* Criar catálogo completo de produtos.
+* Implementar lógica de carrinho.
+* Integrar dados dos produtos via JavaScript.
 * Criar Newsletter.
+* Finalizar Footer completo.
 
 ---
 
 ## Longo prazo
 
-* Carrinho funcional.
-* Catálogo dinâmico via JavaScript.
-* Dados dos produtos desacoplados do HTML.
 * Migração para React.
+* Componentização completa.
+* Catálogo dinâmico.
 * Integração com API simulada.
+* Persistência de carrinho.
 
 ---
 
 # 📌 Status Geral
 
-O projeto deixou definitivamente a fase de estruturação inicial.
+O projeto ultrapassou a fase inicial de estruturação e atualmente possui uma landing page completa com identidade visual consolidada.
 
-A arquitetura de HTML, CSS e JavaScript está consolidada e organizada em componentes reutilizáveis.
+A Lumière já apresenta:
 
-A interface principal (Header + Hero + Featured) encontra-se funcional, responsiva e alinhada à identidade visual proposta.
+* Marca definida.
+* Sistema visual consistente.
+* Hero finalizado.
+* Coleção em destaque.
+* Story institucional.
+* Benefícios.
+* Categorias de produtos.
+* Estrutura preparada para evolução funcional.
 
-O foco das próximas etapas passa a ser a expansão da experiência do usuário por meio de novas seções, refinamento das microinterações e implementação da lógica da aplicação.
+O foco atual passa a ser o refinamento da experiência, implementação das funcionalidades de e-commerce e preparação da arquitetura para uma futura migração para React.
