@@ -210,277 +210,25 @@ decoding="async">
 
 
 
-
-<div class="products-grid">
-
-
-<!-- Aurora -->
-
-
-<article class="product-card">
-
-
-<div class="product-image">
-
-
-<img
-src="./assets/images/products/aurora.jpg"
-alt="Bolsa Aurora da coleção Étoile"
-loading="lazy"
-decoding="async">
-
-
-<button
-type="button"
-class="favorite-button"
-aria-label="Adicionar bolsa Aurora aos favoritos">
-
-
-<i class="bi bi-heart"></i>
-
-
-</button>
-
+<div 
+    id="featured-products"
+    class="products-grid">
 
 </div>
 
+<div class="featured-footer">
 
-<div class="product-info">
+    <a
+        href="#products"
+        class="btn-primary">
 
+        Ver toda a coleção
 
-<span class="product-collection">
-    ÉTOILE
-</span>
+        <i class="bi bi-arrow-right"></i>
 
-
-<h3 class="product-name">
-    Aurora
-</h3>
-
-
-<p class="product-price">
-    R$ 489
-</p>
-
-
-<a href="#" class="product-link" aria-label="Ver detalhes da bolsa Aurora">
-
-    Ver detalhes
-
-    <i class="bi bi-arrow-right"></i>
-
-</a>
-
+    </a>
 
 </div>
-
-
-</article>
-
-
-
-
-
-<!-- Celeste -->
-
-
-<article class="product-card">
-
-
-<div class="product-image">
-
-
-<img
-src="./assets/images/products/celeste.png"
-alt="Bolsa Celeste da coleção Étoile"
-loading="lazy"
-decoding="async">
-
-
-<button
-type="button"
-class="favorite-button"
-aria-label="Adicionar bolsa Celeste aos favoritos">
-
-
-<i class="bi bi-heart"></i>
-
-
-</button>
-
-
-</div>
-
-
-
-<div class="product-info">
-
-
-<span class="product-collection">
-ÉTOILE
-</span>
-
-
-<h3 class="product-name">
-Celeste
-</h3>
-
-
-<p class="product-price">
-R$ 529
-</p>
-
-
-<a href="#" class="product-link" aria-label="Ver detalhes da bolsa Celeste">
-
-Ver detalhes
-
-<i class="bi bi-arrow-right"></i>
-
-</a>
-
-
-</div>
-
-
-</article>
-<!-- Élise -->
-
-
-<article class="product-card">
-
-
-<div class="product-image">
-
-
-<img
-src="./assets/images/products/elise.png"
-alt="Bolsa Élise da coleção Atelier"
-loading="lazy"
-decoding="async">
-
-
-<button
-type="button"
-class="favorite-button"
-aria-label="Adicionar bolsa Élise aos favoritos">
-
-
-<i class="bi bi-heart"></i>
-
-
-</button>
-
-
-</div>
-
-
-
-<div class="product-info">
-
-
-<span class="product-collection">
-ATELIER
-</span>
-
-
-<h3 class="product-name">
-Élise
-</h3>
-
-
-<p class="product-price">
-R$ 569
-</p>
-
-
-<a href="#" class="product-link" aria-label="Ver detalhes da bolsa Élise">
-
-Ver detalhes
-
-<i class="bi bi-arrow-right"></i>
-
-</a>
-
-
-</div>
-
-
-</article>
-
-
-
-
-<!-- Noire -->
-
-
-<article class="product-card">
-
-
-<div class="product-image">
-
-
-<img
-src="./assets/images/products/noire.png"
-alt="Bolsa Noire da coleção Signature"
-loading="lazy"
-decoding="async">
-
-
-<button
-type="button"
-class="favorite-button"
-aria-label="Adicionar bolsa Noire aos favoritos">
-
-
-<i class="bi bi-heart"></i>
-
-
-</button>
-
-
-</div>
-
-
-
-<div class="product-info">
-
-
-<span class="product-collection">
-SIGNATURE
-</span>
-
-
-<h3 class="product-name">
-Noire
-</h3>
-
-
-<p class="product-price">
-R$ 619
-</p>
-
-
-<a href="#" class="product-link" aria-label="Ver detalhes da bolsa Noire">
-
-Ver detalhes
-
-<i class="bi bi-arrow-right"></i>
-
-</a>
-
-
-</div>
-
-
-</article>
-
-
-</div>
-
-
-</div>
-
 
 </section>
 
@@ -820,16 +568,130 @@ Crossbody Bags
 </section>
 
 
+<!-- Products -->
 
-
-
-
-<!-- Future sections -->
-
-
-<!-- Products section - future implementation -->
 
 <section id="products" class="products">
+
+
+<div class="container">
+
+
+<div class="section-header">
+
+
+<span class="section-subtitle">
+Coleção
+</span>
+
+
+<h2 class="section-title">
+
+Explore toda a coleção
+
+</h2>
+
+
+<p class="section-description">
+
+Descubra modelos desenvolvidos para acompanhar diferentes momentos,
+unindo funcionalidade, elegância e design atemporal.
+
+</p>
+
+
+</div>
+
+
+
+<div class="products-filters">
+
+
+<button
+type="button"
+class="filter-button active"
+data-category="all">
+
+Todos
+
+</button>
+
+
+<button
+type="button"
+class="filter-button"
+data-category="shoulder">
+
+Shoulder
+
+</button>
+
+
+<button
+type="button"
+class="filter-button"
+data-category="tote">
+
+Tote
+
+</button>
+
+
+<button
+type="button"
+class="filter-button"
+data-category="mini">
+
+Mini
+
+</button>
+
+
+<button
+type="button"
+class="filter-button"
+data-category="crossbody">
+
+Crossbody
+
+</button>
+
+
+</div>
+
+
+
+<div
+id="products-catalog"
+class="products-catalog">
+
+
+<!-- Produtos renderizados via JavaScript -->
+
+
+</div>
+
+
+
+<div class="products-footer">
+
+
+<a
+href="#"
+class="btn-primary">
+
+Ver coleção completa
+
+<i class="bi bi-arrow-right"></i>
+
+</a>
+
+
+</div>
+
+
+</div>
+
 
 </section>
 

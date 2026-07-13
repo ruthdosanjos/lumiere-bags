@@ -1,0 +1,107 @@
+.products {
+
+    padding: 8rem 0;
+
+}
+
+
+
+/* =========================
+   Filters
+========================= */
+
+.products-filters {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+
+    gap: 1rem;
+
+    margin: 3rem 0 4rem;
+
+}
+
+
+.filter-button {
+
+    padding: .75rem 1.5rem;
+
+    border: 1px solid var(--color-border);
+
+    border-radius: 999px;
+
+    background: transparent;
+
+    color: var(--color-text);
+
+    font-size: .95rem;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition: all .3s ease;
+
+}
+
+
+.filter-button:hover {
+
+    background: var(--color-primary);
+
+    color: var(--color-white);
+
+    border-color: var(--color-primary);
+
+}
+
+
+.filter-button.active {
+
+    background: var(--color-primary);
+
+    color: var(--color-white);
+
+    border-color: var(--color-primary);
+
+}
+
+.filter-button:focus-visible {
+
+    outline: 2px solid var(--color-primary);
+
+    outline-offset: 4px;
+
+}
+
+
+
+/* =========================
+   Products Catalog
+========================= */
+
+.products-catalog {
+
+    display: grid;
+
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+
+    gap: 2rem;
+
+}
+
+
+
+/* =========================
+   Footer
+========================= */
+
+.products-footer {
+
+    display: flex;
+    justify-content: center;
+
+    margin-top: 4rem;
+
+}

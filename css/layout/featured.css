@@ -15,3 +15,13 @@
     align-items: start;
 
 }
+
+.featured-footer {
+
+    display: flex;
+
+    justify-content: center;
+
+    margin-top: 3.5rem;
+
+}
