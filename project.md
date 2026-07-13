@@ -2,7 +2,7 @@
 
 # 👜 Visão Geral
 
-**LUMIÈRE** é um e-commerce fictício de bolsas com estética minimalista e sofisticada, desenvolvido como projeto de portfólio front-end.
+LUMIÈRE é um e-commerce fictício de bolsas com estética minimalista e sofisticada, desenvolvido como projeto de portfólio front-end.
 
 O objetivo é simular uma marca de moda premium com experiência de navegação moderna, inspirada em e-commerces de luxo e landing pages contemporâneas.
 
@@ -22,13 +22,18 @@ O objetivo é simular uma marca de moda premium com experiência de navegação 
 
 ## ✅ Concluído
 
-## Estrutura
+---
+
+# Estrutura
+
+Implementado:
 
 * Organização completa das pastas do projeto.
 * Arquitetura modular de CSS.
 * Estrutura modular de JavaScript.
 * Organização dos assets por categoria.
 * Design System com variáveis de cores, tipografia e espaçamentos.
+* Separação de responsabilidades entre HTML, CSS e JavaScript.
 
 ---
 
@@ -41,6 +46,7 @@ Implementado:
 * Navegação por âncoras.
 * Botões de ações preparados para futuras funcionalidades.
 * Estrutura semântica com acessibilidade.
+* Contador do carrinho preparado para futuras integrações.
 
 ---
 
@@ -62,25 +68,25 @@ Seção de produtos em destaque finalizada.
 
 Coleção criada:
 
-### Aurora
+## Aurora
 
 * Elegância natural.
 * Tons claros e sofisticados.
 * Representa leveza e novos começos.
 
-### Celeste
+## Celeste
 
 * Design contemporâneo.
 * Personalidade urbana.
 * Representa confiança e modernidade.
 
-### Élise
+## Élise
 
 * Estética clássica e delicada.
 * Inspiração artesanal.
 * Representa feminilidade atemporal.
 
-### Noire
+## Noire
 
 * Peça assinatura da coleção.
 * Luxo discreto.
@@ -91,8 +97,86 @@ Implementado:
 * Product Cards reutilizáveis.
 * Grid responsivo.
 * Hover animations.
-* Botão de favoritos.
-* Estrutura preparada para integração futura com JavaScript.
+* Botão de favoritos funcional.
+* Renderização dinâmica através do JavaScript.
+* Dados dos produtos centralizados em uma única fonte.
+* Estrutura preparada para expansão do catálogo.
+
+---
+
+# Catálogo de Produtos
+
+Implementado:
+
+* Sistema de produtos baseado em dados.
+* Renderização automática dos cards.
+* Criação de componentes reutilizáveis através da função `createProductCard()`.
+* Integração entre Featured Collection e catálogo completo.
+
+Novos produtos adicionados para expansão do catálogo:
+
+## Alba
+
+* Design sofisticado e minimalista.
+* Representa elegância discreta para o dia a dia.
+
+## Serena
+
+* Modelo funcional e contemporâneo.
+* Representa equilíbrio entre estilo e praticidade.
+
+## Stella
+
+* Design marcante e refinado.
+* Representa personalidade e presença.
+
+## Vivienne
+
+* Estética premium e feminina.
+* Representa luxo atemporal.
+
+Filtros implementados:
+
+* Todos.
+* Shoulder.
+* Tote.
+* Mini.
+* Crossbody.
+
+Também implementado:
+
+* Estado vazio para categorias sem resultados.
+* Atualização dinâmica dos produtos filtrados.
+* Estrutura preparada para novos produtos.
+
+---
+
+# Sistema de Favoritos
+
+Implementado utilizando JavaScript Vanilla e `localStorage`.
+
+Funcionalidades:
+
+* Adicionar produtos aos favoritos.
+* Remover produtos dos favoritos.
+* Atualização dinâmica do ícone de favorito.
+* Estado salvo no navegador.
+* Persistência após atualização da página.
+* Sincronização entre produtos da Featured Collection e catálogo completo.
+
+Estrutura:
+
+Product Card  
+↓  
+Favorite Button  
+↓  
+Favorites State  
+↓  
+localStorage
+
+Chave utilizada:
+
+lumiereFavorites
 
 ---
 
@@ -137,10 +221,10 @@ Seção de categorias criada.
 
 Categorias:
 
-* Shoulder Bags
-* Tote Bags
-* Mini Bags
-* Crossbody Bags
+* Shoulder Bags.
+* Tote Bags.
+* Mini Bags.
+* Crossbody Bags.
 
 Características:
 
@@ -162,32 +246,31 @@ As imagens foram criadas seguindo uma mesma identidade de coleção, mantendo:
 
 # 📂 Estrutura Atual
 
-```text
 lumiere/
-├── README.md
-├── project.md
-├── index.html
-│
-├── assets/
-│   └── images/
-│       ├── brand/
-│       ├── hero/
-│       ├── products/
-│       └── categories/
-│
-├── css/
-│   ├── base/
-│   ├── components/
-│   ├── layout/
-│   ├── responsive.css
-│   ├── style.css
-│   └── variables.css
-│
-└── js/
-    ├── cart.js
-    ├── main.js
-    └── products.js
-```
+
+├── README.md  
+├── project.md  
+├── index.html  
+│  
+├── assets/  
+│   └── images/  
+│       ├── brand/  
+│       ├── hero/  
+│       ├── products/  
+│       └── categories/  
+│  
+├── css/  
+│   ├── base/  
+│   ├── components/  
+│   ├── layout/  
+│   ├── responsive.css  
+│   ├── style.css  
+│   └── variables.css  
+│  
+└── js/  
+    ├── cart.js  
+    ├── main.js  
+    └── products.js  
 
 ---
 
@@ -195,19 +278,19 @@ lumiere/
 
 ## Conceito
 
-* Minimalista
-* Elegante
-* Premium
-* Atemporal
+* Minimalista.
+* Elegante.
+* Premium.
+* Atemporal.
 
 ## Inspirações
 
-* E-commerce de luxo
-* Landing Pages SaaS
-* Apple
-* COS
-* Polène
-* Cuyana
+* E-commerce de luxo.
+* Landing Pages SaaS.
+* Apple.
+* COS.
+* Polène.
+* Cuyana.
 
 ## Identidade
 
@@ -228,33 +311,54 @@ A interface prioriza:
 
 ## Tecnologias
 
-* HTML5
-* CSS3 Modular
-* JavaScript Vanilla
-* Bootstrap (ícones e utilidades pontuais)
+* HTML5.
+* CSS3 Modular.
+* JavaScript Vanilla.
+* Bootstrap (ícones e utilidades pontuais).
 
 ---
 
 # Organização CSS
 
-```text
 base/
+
 layout/
+
 components/
+
 responsive.css
+
 style.css
+
 variables.css
-```
 
 ---
 
 # Organização JavaScript
 
-```text
-main.js
-products.js
-cart.js
-```
+## main.js
+
+Responsável por:
+
+* Comportamentos gerais da página.
+* Interações globais da interface.
+
+## products.js
+
+Responsável por:
+
+* Dados dos produtos.
+* Renderização dos cards.
+* Filtros por categoria.
+* Sistema de favoritos.
+* Persistência com localStorage.
+
+## cart.js
+
+Preparado para:
+
+* Lógica do carrinho.
+* Controle de produtos adicionados.
 
 ---
 
@@ -262,20 +366,21 @@ cart.js
 
 ## Layout
 
-* Header
-* Hero
-* Featured Collection
-* Story
-* Benefits
-* Categories
+* Header.
+* Hero.
+* Featured Collection.
+* Story.
+* Benefits.
+* Categories.
+* Products.
 
 ## Componentes
 
-* Buttons
-* Product Card
-* Category Card
-* Benefit Card
-* Badges
+* Buttons.
+* Product Card.
+* Category Card.
+* Benefit Card.
+* Badges.
 
 ---
 
@@ -303,13 +408,14 @@ Implementado:
 
 ## Product Cards
 
-Estrutura preparada para evolução.
+Evoluídos para componentes reutilizáveis.
 
-Inclui:
+Incluem:
 
+* Renderização dinâmica.
 * Hover.
 * Escala de imagem.
-* Favoritos.
+* Favoritos persistentes.
 * Design System.
 * Aspect Ratio.
 * Estrutura compatível com futura migração para React.
@@ -320,21 +426,23 @@ Inclui:
 
 ## Curto prazo
 
+* Implementar carrinho de compras.
+* Adicionar botão "Adicionar ao carrinho".
+* Atualizar contador do header.
+* Criar persistência do carrinho utilizando `localStorage`.
 * Refinar microinterações.
 * Ajustar detalhes visuais finais.
-* Implementar comportamento dos favoritos.
 * Finalizar responsividade completa.
-* Revisar experiência geral da landing page.
 
 ---
 
 ## Médio prazo
 
-* Criar catálogo completo de produtos.
-* Implementar lógica de carrinho.
-* Integrar dados dos produtos via JavaScript.
-* Criar Newsletter.
+* Criar mini carrinho lateral.
+* Implementar página ou modal de detalhes do produto.
+* Criar Newsletter funcional.
 * Finalizar Footer completo.
+* Melhorar experiência geral de navegação.
 
 ---
 
@@ -344,13 +452,13 @@ Inclui:
 * Componentização completa.
 * Catálogo dinâmico.
 * Integração com API simulada.
-* Persistência de carrinho.
+* Persistência avançada de dados.
 
 ---
 
 # 📌 Status Geral
 
-O projeto ultrapassou a fase inicial de estruturação e atualmente possui uma landing page completa com identidade visual consolidada.
+O projeto ultrapassou a fase inicial de estruturação e atualmente possui uma base funcional de e-commerce.
 
 A Lumière já apresenta:
 
@@ -358,9 +466,12 @@ A Lumière já apresenta:
 * Sistema visual consistente.
 * Hero finalizado.
 * Coleção em destaque.
-* Story institucional.
-* Benefícios.
-* Categorias de produtos.
-* Estrutura preparada para evolução funcional.
+* Catálogo dinâmico renderizado via JavaScript.
+* Oito produtos cadastrados.
+* Sistema de filtros por categoria.
+* Sistema de favoritos persistente.
+* Componentes reutilizáveis.
+* Arquitetura preparada para evolução.
 
-O foco atual passa a ser o refinamento da experiência, implementação das funcionalidades de e-commerce e preparação da arquitetura para uma futura migração para React.
+O foco atual passa a ser a implementação das funcionalidades de compra, refinamento da experiência do usuário e preparação da arquitetura para uma futura migração para React.
+
