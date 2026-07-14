@@ -142,26 +142,39 @@ function createProductCard(product) {
                     ${product.name}
                 </h3>
 
-                <p class="product-price">
+           <div class="product-actions">
 
-                    ${product.price.toLocaleString("pt-BR", {
-        style: "currency",
-        currency: "BRL"
-    })}
+    <p class="product-price">
 
-                </p>
+        ${product.price.toLocaleString("pt-BR", {
+            style: "currency",
+            currency: "BRL"
+        })}
 
-                <a
-                    href="#"
-                    class="product-link"
-                    aria-label="Ver detalhes da bolsa ${product.name}">
+    </p>
 
-                    Ver detalhes
+    <button
+        type="button"
+        class="add-to-cart-button"
+        data-product-id="${product.id}"
+        aria-label="Adicionar bolsa ${product.name} ao carrinho">
 
-                    <i class="bi bi-arrow-right"></i>
+        <i class="bi bi-bag-plus"></i>
 
-                </a>
+    </button>
 
+</div>
+
+<a
+    href="#"
+    class="product-link"
+    aria-label="Ver detalhes da bolsa ${product.name}">
+
+    Ver detalhes
+
+    <i class="bi bi-arrow-right"></i>
+
+</a>
             </div>
 
         </article>
