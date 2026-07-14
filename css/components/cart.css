@@ -1,0 +1,291 @@
+/* ==========================================================
+   Cart Toast
+========================================================== */
+
+.cart-toast {
+
+    position: fixed;
+
+    right: 2rem;
+    bottom: 2rem;
+
+    padding: 1rem 1.4rem;
+
+    background: #111;
+    color: #fff;
+
+    border-radius: 999px;
+
+    font-size: .9rem;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .15);
+
+    opacity: 0;
+    transform: translateY(20px);
+
+    transition: .3s ease;
+
+    z-index: 9999;
+
+}
+
+.cart-toast.show {
+
+    opacity: 1;
+
+    transform: translateY(0);
+
+}
+
+
+/* ==========================================================
+   Mini Cart Drawer
+========================================================== */
+
+.mini-cart {
+
+    position: fixed;
+
+    top: 0;
+    right: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    width: 380px;
+    max-width: 100%;
+
+    height: 100vh;
+
+    background: #fff;
+
+    box-shadow: -10px 0 30px rgba(0, 0, 0, .08);
+
+    transform: translateX(100%);
+
+    transition: transform .35s ease;
+
+    z-index: 9999;
+
+}
+
+.mini-cart.open {
+
+    transform: translateX(0);
+
+}
+
+
+/* ==========================================================
+   Mini Cart Content
+========================================================== */
+
+.mini-cart-content {
+
+    flex: 1;
+
+    padding: 1.5rem;
+
+    overflow-y: auto;
+
+}
+
+.cart-empty {
+
+    margin-top: 3rem;
+
+    text-align: center;
+
+    color: #888;
+
+}
+
+
+/* ==========================================================
+   Mini Cart Item
+========================================================== */
+
+.mini-cart-item {
+
+    display: flex;
+
+    gap: 1rem;
+
+    padding: 1rem 0;
+
+    border-bottom: 1px solid #efefef;
+
+}
+
+.mini-cart-image {
+
+    width: 84px;
+    height: 84px;
+
+    object-fit: cover;
+
+    border-radius: 12px;
+
+    flex-shrink: 0;
+
+}
+
+.mini-cart-info {
+
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+
+}
+
+.mini-cart-name {
+
+    margin: 0;
+
+    font-size: 1rem;
+    font-weight: 600;
+
+}
+
+.mini-cart-collection {
+
+    margin-top: .25rem;
+
+    color: #888;
+
+    font-size: .8rem;
+
+    letter-spacing: .08em;
+
+    text-transform: uppercase;
+
+}
+
+.mini-cart-price {
+
+    margin: .75rem 0;
+
+    font-weight: 600;
+
+}
+
+
+/* ==========================================================
+   Item Actions
+========================================================== */
+
+.mini-cart-actions {
+
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.quantity-controls {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: .5rem;
+
+}
+
+.quantity {
+
+    min-width: 20px;
+
+    text-align: center;
+
+    font-weight: 600;
+
+}
+
+.quantity-button {
+
+    width: 32px;
+    height: 32px;
+
+    border: 1px solid #ddd;
+
+    border-radius: 50%;
+
+    background: #fff;
+
+    cursor: pointer;
+
+    transition: .3s ease;
+
+}
+
+.quantity-button:hover {
+
+    background: #111;
+
+    color: #fff;
+
+}
+
+.remove-item-button {
+
+    border: none;
+
+    background: transparent;
+
+    color: #888;
+
+    cursor: pointer;
+
+    transition: .3s ease;
+
+}
+
+.remove-item-button:hover {
+
+    color: #c0392b;
+
+}
+
+
+/* ==========================================================
+   Overlay
+========================================================== */
+
+.cart-overlay {
+
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(0, 0, 0, .35);
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transition: .3s ease;
+
+    z-index: 9998;
+
+}
+
+.cart-overlay.show {
+
+    opacity: 1;
+
+    visibility: visible;
+
+}
+
+
+/* ==========================================================
+   Body State
+========================================================== */
+
+body.cart-open {
+
+    overflow: hidden;
+
+}

@@ -21,6 +21,7 @@
 /* Components */
 @import url("./components/buttons.css");
 @import url("./components/product-card.css");
+@import url("./components/cart.css");
 
 /* Responsive */
 @import url("./responsive.css");

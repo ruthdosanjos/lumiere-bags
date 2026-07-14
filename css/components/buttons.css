@@ -29,3 +29,39 @@
     transform:translateY(-3px);
 
 }
+
+.add-to-cart-button {
+
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border: 1px solid #e8e8e8;
+    border-radius: 50%;
+
+    background: #fff;
+    color: var(--color-dark);
+
+    cursor: pointer;
+
+    transition: all .3s ease;
+
+}
+
+.add-to-cart-button:hover {
+
+    background: var(--color-dark);
+    color: #fff;
+
+    transform: translateY(-2px);
+
+}
+
+.add-to-cart-button i {
+
+    font-size: 1rem;
+
+}
