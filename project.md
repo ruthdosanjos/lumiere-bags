@@ -46,7 +46,8 @@ Implementado:
 * Navegação por âncoras.
 * Botões de ações preparados para futuras funcionalidades.
 * Estrutura semântica com acessibilidade.
-* Contador do carrinho preparado para futuras integrações.
+* Contador do carrinho integrado ao sistema de compras.
+* Atualização dinâmica conforme quantidade de produtos adicionados.
 
 ---
 
@@ -110,7 +111,7 @@ Implementado:
 
 * Sistema de produtos baseado em dados.
 * Renderização automática dos cards.
-* Criação de componentes reutilizáveis através da função `createProductCard()`.
+* Criação de componentes reutilizáveis através da função createProductCard().
 * Integração entre Featured Collection e catálogo completo.
 
 Novos produtos adicionados para expansão do catálogo:
@@ -153,7 +154,7 @@ Também implementado:
 
 # Sistema de Favoritos
 
-Implementado utilizando JavaScript Vanilla e `localStorage`.
+Implementado utilizando JavaScript Vanilla e localStorage.
 
 Funcionalidades:
 
@@ -177,6 +178,146 @@ localStorage
 Chave utilizada:
 
 lumiereFavorites
+
+---
+
+# Botão de Compra
+
+Implementado:
+
+* Botão "Adicionar ao carrinho" integrado aos Product Cards.
+* Identificação dos produtos através de data-product-id.
+* Evento global de clique utilizando JavaScript Vanilla.
+* Adição dinâmica dos produtos ao estado do carrinho.
+* Feedback visual através de Toast de confirmação.
+
+Fluxo implementado:
+
+Product Card  
+↓  
+Add To Cart Button  
+↓  
+Cart State  
+↓  
+localStorage  
+↓  
+Mini Cart
+
+---
+
+# Sistema de Carrinho
+
+Primeira versão do carrinho implementada utilizando JavaScript Vanilla e localStorage.
+
+Funcionalidades atuais:
+
+* Adicionar produtos ao carrinho.
+* Incrementar quantidade automaticamente ao adicionar o mesmo produto novamente.
+* Persistência dos dados no navegador.
+* Atualização dinâmica do contador do header.
+* Renderização do mini carrinho lateral.
+* Cálculo automático do valor total.
+* Estado vazio quando não existem produtos adicionados.
+
+Estrutura:
+
+Product Card  
+↓  
+cart.js  
+↓  
+Cart State  
+↓  
+localStorage
+
+Chave utilizada:
+
+lumiereCart
+
+---
+
+# Mini Carrinho
+
+Interface lateral criada para simular a experiência de compra de um e-commerce premium.
+
+Implementado:
+
+* Abertura através do botão do carrinho no header.
+* Overlay de fundo para foco na interação.
+* Controle visual de abertura e fechamento.
+* Lista dinâmica dos produtos adicionados.
+* Exibição de:
+  * Imagem do produto.
+  * Nome.
+  * Coleção.
+  * Preço.
+  * Quantidade.
+  * Valor total.
+
+Estrutura preparada para evolução:
+
+* Controle de quantidade.
+* Remoção de produtos.
+* Checkout.
+* Página completa de carrinho.
+
+---
+
+# Refatoração do cart.js
+
+O arquivo cart.js passou por uma refatoração estrutural para melhorar organização e escalabilidade.
+
+Melhorias implementadas:
+
+* Separação clara de responsabilidades.
+* Criação de helpers reutilizáveis.
+* Redução de repetição de código.
+* Funções menores e mais coesas.
+* Padronização dos comentários.
+* Centralização da busca de produtos.
+* Centralização da formatação de valores monetários.
+* Separação entre estado, armazenamento, renderização e eventos.
+
+Nova organização:
+
+## Cart State
+
+Responsável pelo estado atual dos produtos adicionados.
+
+## Storage Helpers
+
+Responsável pela persistência através do localStorage.
+
+## Product Helpers
+
+Responsável por:
+
+* Buscar produtos.
+* Buscar itens do carrinho.
+* Formatar valores.
+
+## Cart Helpers
+
+Responsável por:
+
+* Contagem de itens.
+* Cálculo do valor total.
+* Atualização das informações do carrinho.
+
+## Rendering
+
+Responsável por:
+
+* Criar itens do mini carrinho.
+* Renderizar estado vazio.
+* Atualizar valores exibidos.
+
+## Events
+
+Responsável pelas interações:
+
+* Adicionar produtos.
+* Abrir mini carrinho.
+* Fechar mini carrinho.
 
 ---
 
@@ -294,7 +435,7 @@ lumiere/
 
 ## Identidade
 
-**"Luz + Sofisticação"**
+"Luz + Sofisticação"
 
 A interface prioriza:
 
@@ -355,10 +496,27 @@ Responsável por:
 
 ## cart.js
 
-Preparado para:
+Responsável por:
 
-* Lógica do carrinho.
-* Controle de produtos adicionados.
+* Estado do carrinho.
+* Persistência com localStorage.
+* Adição de produtos.
+* Contador do header.
+* Renderização do mini carrinho.
+* Controle da interface de compra.
+* Preparação para quantidade, remoção e checkout.
+
+Arquitetura atual:
+
+Cart State  
+↓  
+Helpers  
+↓  
+Cart Actions  
+↓  
+Rendering  
+↓  
+Events
 
 ---
 
@@ -381,6 +539,7 @@ Preparado para:
 * Category Card.
 * Benefit Card.
 * Badges.
+* Mini Cart.
 
 ---
 
@@ -388,9 +547,9 @@ Preparado para:
 
 ## Performance
 
-* Uso de `loading="lazy"` em imagens secundárias.
-* Uso de `loading="eager"` no Hero.
-* Uso de `decoding="async"` nas imagens.
+* Uso de loading="lazy" em imagens secundárias.
+* Uso de loading="eager" no Hero.
+* Uso de decoding="async" nas imagens.
 * Organização dos assets por contexto.
 
 ---
@@ -399,9 +558,9 @@ Preparado para:
 
 Implementado:
 
-* Uso de landmarks semânticas (`header`, `main`, `section`, `article`, `footer`).
+* Uso de landmarks semânticas (header, main, section, article, footer).
 * Hierarquia correta de headings.
-* `aria-label` em elementos interativos.
+* aria-label em elementos interativos.
 * Textos alternativos descritivos nas imagens.
 
 ---
@@ -419,6 +578,7 @@ Incluem:
 * Design System.
 * Aspect Ratio.
 * Estrutura compatível com futura migração para React.
+* Integração com botão de compra.
 
 ---
 
@@ -426,20 +586,19 @@ Incluem:
 
 ## Curto prazo
 
-* Implementar carrinho de compras.
-* Adicionar botão "Adicionar ao carrinho".
-* Atualizar contador do header.
-* Criar persistência do carrinho utilizando `localStorage`.
+* Implementar controle de quantidade no mini carrinho.
+* Implementar remoção de produtos.
+* Criar feedback visual para alterações no carrinho.
 * Refinar microinterações.
-* Ajustar detalhes visuais finais.
-* Finalizar responsividade completa.
+* Ajustar responsividade completa.
 
 ---
 
 ## Médio prazo
 
-* Criar mini carrinho lateral.
-* Implementar página ou modal de detalhes do produto.
+* Criar página completa de carrinho.
+* Implementar checkout simulado.
+* Criar modal de detalhes do produto.
 * Criar Newsletter funcional.
 * Finalizar Footer completo.
 * Melhorar experiência geral de navegação.
@@ -458,9 +617,9 @@ Incluem:
 
 # 📌 Status Geral
 
-O projeto ultrapassou a fase inicial de estruturação e atualmente possui uma base funcional de e-commerce.
+O projeto evoluiu de uma landing page visual para uma experiência de e-commerce funcional.
 
-A Lumière já apresenta:
+A Lumière atualmente possui:
 
 * Marca definida.
 * Sistema visual consistente.
@@ -470,8 +629,10 @@ A Lumière já apresenta:
 * Oito produtos cadastrados.
 * Sistema de filtros por categoria.
 * Sistema de favoritos persistente.
-* Componentes reutilizáveis.
-* Arquitetura preparada para evolução.
+* Product Cards reutilizáveis.
+* Botão de compra funcional.
+* Carrinho persistente com localStorage.
+* Mini carrinho lateral funcional.
+* Arquitetura JavaScript organizada e escalável.
 
-O foco atual passa a ser a implementação das funcionalidades de compra, refinamento da experiência do usuário e preparação da arquitetura para uma futura migração para React.
-
+O foco atual passa a ser o refinamento da jornada de compra, implementação das próximas funcionalidades do carrinho e evolução da arquitetura para uma futura migração para React.
