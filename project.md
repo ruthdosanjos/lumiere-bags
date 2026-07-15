@@ -207,7 +207,33 @@ Mini Cart
 
 # Sistema de Carrinho
 
-Primeira versão do carrinho implementada utilizando JavaScript Vanilla e localStorage.
+Sistema completo de carrinho implementado utilizando JavaScript Vanilla e localStorage.
+
+A arquitetura foi estruturada separando o estado do carrinho dos dados dos produtos.
+
+O carrinho mantém apenas as referências necessárias:
+
+- productId.
+- quantity.
+
+Os dados completos dos produtos são recuperados através do products.js.
+
+Fluxo implementado:
+
+Product Card  
+↓  
+cart.js  
+↓  
+Cart State  
+↓  
+localStorage  
+↓  
+cart-page.js  
+↓  
+Products Data  
+↓  
+Renderização do carrinho
+
 
 Funcionalidades atuais:
 
@@ -216,18 +242,13 @@ Funcionalidades atuais:
 * Persistência dos dados no navegador.
 * Atualização dinâmica do contador do header.
 * Renderização do mini carrinho lateral.
-* Cálculo automático do valor total.
+* Página completa de carrinho.
+* Busca dos dados dos produtos através do catálogo centralizado.
+* Cálculo automático de subtotal, frete e valor total.
 * Estado vazio quando não existem produtos adicionados.
+* Controle de quantidade na página completa do carrinho.
+* Remoção de produtos.
 
-Estrutura:
-
-Product Card  
-↓  
-cart.js  
-↓  
-Cart State  
-↓  
-localStorage
 
 Chave utilizada:
 
@@ -408,10 +429,11 @@ lumiere/
 │   ├── style.css  
 │   └── variables.css  
 │  
-└── js/  
+├── js/  
     ├── cart.js  
+    ├── cart-page.js  
     ├── main.js  
-    └── products.js  
+    └── products.js    
 
 ---
 
@@ -504,7 +526,8 @@ Responsável por:
 * Contador do header.
 * Renderização do mini carrinho.
 * Controle da interface de compra.
-* Preparação para quantidade, remoção e checkout.
+* Atualização dos dados do carrinho.
+* Preparação para checkout.
 
 Arquitetura atual:
 
@@ -518,6 +541,31 @@ Rendering
 ↓  
 Events
 
+
+## cart-page.js
+
+Responsável pela página completa do carrinho.
+
+Responsabilidades:
+
+* Leitura do estado salvo no localStorage.
+* Integração com products.js.
+* Renderização dos produtos adicionados.
+* Atualização de quantidade.
+* Remoção de itens.
+* Cálculo de subtotal.
+* Cálculo de frete.
+* Cálculo do valor total.
+
+Arquitetura:
+
+Cart State  
+↓  
+Product Lookup  
+↓  
+Cart Products  
+↓  
+Page Rendering
 ---
 
 # Componentes criados
@@ -587,10 +635,11 @@ Incluem:
 ## Curto prazo
 
 * Implementar controle de quantidade no mini carrinho.
-* Implementar remoção de produtos.
 * Criar feedback visual para alterações no carrinho.
+* Sincronizar contador do header com todas as interações.
 * Refinar microinterações.
 * Ajustar responsividade completa.
+* Criar fluxo do botão finalizar compra.
 
 ---
 
@@ -633,6 +682,9 @@ A Lumière atualmente possui:
 * Botão de compra funcional.
 * Carrinho persistente com localStorage.
 * Mini carrinho lateral funcional.
+* Página completa de carrinho.
+* Integração entre carrinho e catálogo de produtos.
+* Cálculo de subtotal, frete e total.
 * Arquitetura JavaScript organizada e escalável.
 
-O foco atual passa a ser o refinamento da jornada de compra, implementação das próximas funcionalidades do carrinho e evolução da arquitetura para uma futura migração para React.
+O foco atual passa a ser o refinamento da jornada de compra e evolução da arquitetura para uma futura migração para React.

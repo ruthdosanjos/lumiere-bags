@@ -2,65 +2,69 @@
 # 👜 LUMIÈRE
 
 ![Status do Projeto](https://img.shields.io/badge/Status-Em%20Desenvolvimento-blue)
-![Tecnologias](https://img.shields.io/badge/Tech-HTML5%20%7C%20CSS3%20Modular%20%7C%20JS%20Vanilla-orange)
+![Tecnologias](https://img.shields.io/badge/Tech-HTML5%20%7C%20CSS3%20Modular%20%7C%20JavaScript-orange)
 
-A **LUMIÈRE** é um e-commerce fictício de bolsas com estética minimalista e sofisticada. O projeto foi idealizado para simular a experiência de navegação de uma marca de moda de luxo, unindo um design de alto padrão a uma engenharia de software robusta no front-end.
+A **LUMIÈRE** é um e-commerce fictício de bolsas com estética minimalista e sofisticada, desenvolvido como projeto de portfólio front-end.
+O objetivo é simular a experiência de navegação de uma marca de moda premium, unindo um design elegante a uma arquitetura de código organizada, escalável e preparada para futuras evoluções.
 
-Mais do que uma interface bonita, este projeto demonstra o domínio de **fundamentos sólidos em Web Development**, focado em performance, semântica, acessibilidade e arquitetura de código escalável.
-
----
-
-## 🎯 Diferenciais Técnicos (O que este projeto demonstra)
-
-Em vez de utilizar frameworks pesados, a LUMIÈRE foi construída do zero utilizando tecnologias nativas, aplicando boas práticas de mercado que garantem a sustentabilidade do código:
-
-* **Arquitetura CSS Modular (SMACSS/ITCSS adaptado):** Código CSS totalmente desacoplado e organizado por responsabilidade (`base`, `layout`, `components`), evitando especificidade descontrolada e facilitando a manutenção.
-* **Foco total em Acessibilidade (a11y):** Uso rigoroso de landmarks semânticas (`<header>`, `<main>`, `<section>`, `<article>`), atributos `aria-label` em elementos interativos e contraste visual planejado.
-* **Otimização de Performance:** Estratégia de carregamento de mídia utilizando `loading="lazy"` para imagens secundárias e `loading="eager"` com prioridade para o Hero banner (LCP).
-* **Componentização e Mentalidade React:** Os elementos de UI (como o *Product Card*) foram desenhados de forma isolada e estruturada, preparando o projeto para uma migração suave para React no futuro.
+Mais do que uma interface visualmente agradável, este projeto demonstra conhecimentos sólidos em desenvolvimento front-end, com foco em HTML semântico, CSS modular, JavaScript Vanilla, acessibilidade, performance e organização de software.
 
 ---
-
-## 🛠️ Tecnologias e Ferramentas
-
-* **HTML5** (Semântico e acessível)
-* **CSS3** (Variáveis nativas, Flexbox, Grid e estrutura modular)
-* **JavaScript Vanilla** (Lógica de negócios, manipulação de DOM e gerenciamento de estado do carrinho)
-* **Bootstrap** (Utilizado estritamente para ícones e utilitários de espaçamento, preservando a leveza do projeto)
-
+## ✨ Funcionalidades
+* Catálogo de produtos renderizado dinamicamente via JavaScript.
+* Oito produtos cadastrados.
+* Sistema de filtros por categoria.
+* Sistema de favoritos persistente utilizando LocalStorage.
+* Carrinho de compras funcional.
+* Mini carrinho lateral.
+* Atualização dinâmica do contador de produtos.
+* Persistência do carrinho no navegador.
+* Toast de confirmação ao adicionar produtos.
+* Componentes reutilizáveis.
+* Layout totalmente responsivo.
 ---
-
-## 📂 Estrutura do Projeto
-
-A organização de pastas reflete uma estrutura profissional e limpa:
-
-```text
-lumiere/
-├── index.html          # Estrutura principal semântica
-├── project.md          # Documentação interna de acompanhamento
-├── assets/             # Imagens organizadas por contexto (brand, hero, products)
-├── css/
-│   ├── base/           # Resets, globais e tipografia
-│   ├── components/     # UI isolada (buttons, cards, badges)
-│   ├── layout/         # Seções estruturais (header, hero, featured)
-│   ├── variables.css   # Design System (Cores, fontes, sombras)
-│   └── style.css       # Centralizador de imports
-└── js/
-    ├── main.js         # Inicialização e escopo global
-    ├── products.js     # Estrutura e dados dos produtos
-    └── cart.js         # Lógica do carrinho de compras
-```
+## 🎯 Diferenciais Técnicos
+* **Arquitetura CSS Modular**
+* Estrutura organizada em `base`, `layout` e `components`, facilitando manutenção e escalabilidade.
+* **JavaScript Modular**
+* Separação de responsabilidades entre catálogo, renderização, favoritos, carrinho e comportamentos globais.
+* **Persistência de Dados**
+* Utilização de LocalStorage para favoritos e carrinho de compras.
+* **Performance**
+* `loading="lazy"`
+* `loading="eager"` para o Hero
+* `decoding="async"`
+* **Acessibilidade**
+* HTML semântico
+* Landmarks
+* `aria-label`
+* Textos alternativos
 ---
-## 🚀 Próximos Passos na Roadmap
-[ ] Finalizar o catálogo dinâmico renderizado via JavaScript (desacoplamento de dados).
+## 🛠️ Tecnologias
+* HTML5
+* CSS3
+* JavaScript Vanilla
+* Bootstrap Icons
+---
+## 🚀 Roadmap
+**Em desenvolvimento**
+* Controle de quantidade no mini carrinho.
+* Remoção de produtos.
+* Microinterações.
+* Melhorias de responsividade.
+* Próximas funcionalidades
+* Página completa do carrinho.
+* Modal de detalhes do produto.
+* Checkout simulado.
+* Newsletter funcional.
+* Footer completo.
+* Futuro
+* Migração para React.
+* Componentização completa.
+* Integração com API simulada.
+---
+## 🧾 Sobre o Projeto
 
-[ ] Implementar a lógica funcional do carrinho de compras (LocalStorage).
-
-[ ] Criar animações de microinterações nos cards de produtos.
-
-[ ] Futuro: Refatorar a aplicação completa para React, aproveitando a atual arquitetura de componentes.
-
-## 🧾 Nota sobre o Histórico do Projeto
 Este projeto nasceu originalmente em 2023 durante a Formação em Web Design – Instituto NU by Descomplica. Após perder o acesso total à minha conta antiga do GitHub, decidi não apenas recuperar a ideia original, mas reestruturá-la completamente do zero.
 
 O código atual reflete minha evolução técnica recente, transformando um site estático antigo em uma aplicação front-end modular, performática e moderna.

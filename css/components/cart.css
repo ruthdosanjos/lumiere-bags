@@ -6,24 +6,40 @@
 
     position: fixed;
 
-    right: 2rem;
-    bottom: 2rem;
+    right: 1.5rem;
 
-    padding: 1rem 1.4rem;
+    bottom: 1.5rem;
+
+
+    padding: .75rem 1rem;
+
 
     background: #111;
+
     color: #fff;
+
 
     border-radius: 999px;
 
-    font-size: .9rem;
 
-    box-shadow: 0 10px 30px rgba(0, 0, 0, .15);
+    font-size: .8rem;
+
+    font-weight: 500;
+
+
+    letter-spacing: .02em;
+
+
+    box-shadow: 0 8px 20px rgba(0, 0, 0, .12);
+
 
     opacity: 0;
-    transform: translateY(20px);
+
+    transform: translateY(15px);
+
 
     transition: .3s ease;
+
 
     z-index: 9999;
 
@@ -75,6 +91,90 @@
 
 }
 
+/* ==========================================================
+   Mini Cart Header
+========================================================== */
+
+.mini-cart-header {
+
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 1.5rem;
+
+    border-bottom: 1px solid #eeeeee;
+
+}
+
+
+.mini-cart-header-info {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: .35rem;
+
+}
+
+
+.mini-cart-header h2 {
+
+    margin: 0;
+
+    font-size: 1.1rem;
+
+    font-weight: 600;
+
+    letter-spacing: .02em;
+
+}
+
+
+.cart-items-count {
+
+    font-size: .8rem;
+
+    color: #888;
+
+}
+
+
+.close-cart-button {
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 36px;
+    height: 36px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: transparent;
+
+    color: #555;
+
+    cursor: pointer;
+
+    transition: .3s ease;
+
+}
+
+
+.close-cart-button:hover {
+
+    background: #f5f5f5;
+
+    color: #111;
+
+}
+
 
 /* ==========================================================
    Mini Cart Content
@@ -102,6 +202,90 @@
 
 
 /* ==========================================================
+   Mini Cart Footer
+========================================================== */
+
+.mini-cart-footer {
+
+    padding: 1.5rem;
+
+    border-top: 1px solid #eeeeee;
+
+    background: #fff;
+
+}
+
+.cart-total {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 1.25rem;
+
+}
+
+.cart-total span {
+
+    font-size: .85rem;
+
+    color: #888;
+
+    text-transform: uppercase;
+
+    letter-spacing: .1em;
+
+}
+
+.cart-total strong {
+
+    font-size: 1.15rem;
+
+    font-weight: 700;
+
+    color: #111;
+
+}
+
+.checkout-button {
+
+    width: 100%;
+
+    padding: 1rem;
+
+    border: none;
+
+    border-radius: 999px;
+
+    background: #111;
+
+    color: #fff;
+
+    font-size: .9rem;
+
+    font-weight: 600;
+
+    letter-spacing: .05em;
+
+    text-transform: uppercase;
+
+    cursor: pointer;
+
+    transition: .3s ease;
+
+}
+
+.checkout-button:hover {
+
+    background: #333;
+
+    transform: translateY(-2px);
+
+}
+
+/* ==========================================================
    Mini Cart Item
 ========================================================== */
 
@@ -111,20 +295,21 @@
 
     gap: 1rem;
 
-    padding: 1rem 0;
+    padding: 1.25rem 0;
 
-    border-bottom: 1px solid #efefef;
+    border-bottom: 1px solid #eeeeee;
 
 }
 
 .mini-cart-image {
 
-    width: 84px;
-    height: 84px;
+    width: 88px;
+
+    height: 88px;
 
     object-fit: cover;
 
-    border-radius: 12px;
+    border-radius: 14px;
 
     flex-shrink: 0;
 
@@ -133,8 +318,12 @@
 .mini-cart-info {
 
     display: flex;
+
     flex: 1;
+
     flex-direction: column;
+
+    justify-content: space-between;
 
 }
 
@@ -142,20 +331,23 @@
 
     margin: 0;
 
-    font-size: 1rem;
+    font-size: .95rem;
+
     font-weight: 600;
+
+    line-height: 1.3;
 
 }
 
 .mini-cart-collection {
 
-    margin-top: .25rem;
+    margin-top: .35rem;
 
-    color: #888;
+    color: #999;
 
-    font-size: .8rem;
+    font-size: .72rem;
 
-    letter-spacing: .08em;
+    letter-spacing: .12em;
 
     text-transform: uppercase;
 
@@ -163,7 +355,9 @@
 
 .mini-cart-price {
 
-    margin: .75rem 0;
+    margin: .65rem 0;
+
+    font-size: .95rem;
 
     font-weight: 600;
 
@@ -189,15 +383,25 @@
 
     align-items: center;
 
-    gap: .5rem;
+    gap: .35rem;
+
+    padding: .2rem;
+
+    border: 1px solid #e8e8e8;
+
+    border-radius: 999px;
+
+    width: fit-content;
 
 }
 
 .quantity {
 
-    min-width: 20px;
+    min-width: 24px;
 
     text-align: center;
+
+    font-size: .85rem;
 
     font-weight: 600;
 
@@ -205,16 +409,27 @@
 
 .quantity-button {
 
-    width: 32px;
-    height: 32px;
+    display: flex;
 
-    border: 1px solid #ddd;
+    align-items: center;
+
+    justify-content: center;
+
+    width: 28px;
+
+    height: 28px;
+
+    border: none;
 
     border-radius: 50%;
 
-    background: #fff;
+    background: transparent;
+
+    color: #555;
 
     cursor: pointer;
+
+    font-size: 1rem;
 
     transition: .3s ease;
 
@@ -234,7 +449,9 @@
 
     background: transparent;
 
-    color: #888;
+    color: #999;
+
+    font-size: .85rem;
 
     cursor: pointer;
 

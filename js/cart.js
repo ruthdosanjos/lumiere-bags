@@ -15,6 +15,8 @@ let cart = JSON.parse(
 
 const cartCounter = document.querySelector(".cart-count");
 
+const cartItemsCount = document.querySelector(".cart-items-count");
+
 const cartButton = document.querySelector(".cart-button");
 
 const miniCart = document.querySelector(".mini-cart");
@@ -24,6 +26,8 @@ const cartOverlay = document.querySelector(".cart-overlay");
 const closeCartButton = document.querySelector(".close-cart-button");
 
 const miniCartContent = document.querySelector(".mini-cart-content");
+
+const checkoutButton = document.querySelector(".checkout-button");
 
 const cartTotal = document.querySelector(".cart-total strong");
 
@@ -38,6 +42,8 @@ function saveCart() {
         CART_STORAGE_KEY,
         JSON.stringify(cart)
     );
+
+    updateCartItemsCount();
 
 }
 
@@ -139,6 +145,42 @@ function syncCart() {
 
 }
 
+/* ==========================================================
+   Update Mini Cart Count
+========================================================== */
+
+function updateCartItemsCount() {
+
+    if (!cartItemsCount) return;
+
+
+    const totalItems = cart.reduce(
+        (total, item) => total + item.quantity,
+        0
+    );
+
+
+    if (totalItems === 0) {
+
+        cartItemsCount.textContent = "0 itens";
+
+        return;
+
+    }
+
+
+    if (totalItems === 1) {
+
+        cartItemsCount.textContent = "1 item";
+
+        return;
+
+    }
+
+
+    cartItemsCount.textContent = `${totalItems} itens`;
+
+}
 
 /* ==========================================================
    Cart Actions
@@ -166,21 +208,53 @@ function addToCart(productId) {
 
     syncCart();
 
+    openMiniCart();
+
+}
+
+function increaseQuantity(productId) {
+
+    const cartItem = getCartItem(productId);
+
+    if (!cartItem) return;
+
+    cartItem.quantity++;
+
+    syncCart();
+
+}
+
+function decreaseQuantity(productId) {
+
+    const cartItem = getCartItem(productId);
+
+    if (!cartItem) return;
+
+    cartItem.quantity--;
+
+    if (cartItem.quantity <= 0) {
+
+        removeFromCart(productId);
+
+        return;
+
+    }
+
+    syncCart();
+
 }
 
 function removeFromCart(productId) {
 
-    // Implementaremos futuramente.
+    cart = cart.filter(item => {
+
+        return item.productId !== productId;
+
+    });
+
+    syncCart();
 
 }
-
-function updateQuantity(productId, quantity) {
-
-    // Implementaremos futuramente.
-
-}
-
-
 /* ==========================================================
    Toast
 ========================================================== */
@@ -407,6 +481,63 @@ function handleCartClick(event) {
 
 }
 
+function handleMiniCartClick(event) {
+
+    const increaseButton = event.target.closest(".increase");
+
+    if (increaseButton) {
+
+        const productId = Number(
+            increaseButton.dataset.productId
+        );
+
+        increaseQuantity(productId);
+
+        return;
+
+    }
+
+    const decreaseButton = event.target.closest(".decrease");
+
+    if (decreaseButton) {
+
+        const productId = Number(
+            decreaseButton.dataset.productId
+        );
+
+        decreaseQuantity(productId);
+
+        return;
+
+    }
+
+    const removeButton = event.target.closest(".remove-item-button");
+
+    if (removeButton) {
+
+        const productId = Number(
+            removeButton.dataset.productId
+        );
+
+        removeFromCart(productId);
+
+    }
+
+}
+
+/* ==========================================================
+   Checkout Redirect
+========================================================== */
+
+checkoutButton?.addEventListener(
+    "click",
+    () => {
+
+        window.location.href = "./cart.html";
+
+    }
+);
+
 
 /* ==========================================================
    Event Listeners
@@ -444,7 +575,10 @@ if (cartOverlay) {
 
 }
 
-
+miniCartContent.addEventListener(
+    "click",
+    handleMiniCartClick
+);
 /* ==========================================================
    Initialization
 ========================================================== */
@@ -452,3 +586,5 @@ if (cartOverlay) {
 updateCartCounter();
 
 renderMiniCart();
+
+updateCartItemsCount();
