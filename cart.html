@@ -5,23 +5,15 @@
 
     <meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>
         Carrinho | LUMIÈRE
     </title>
 
+    <link rel="stylesheet" href="./css/style.css">
 
-    <link
-        rel="stylesheet"
-        href="./css/style.css">
-
-
-   <link
-    rel="stylesheet"
-    href="./css/pages/cart-page.css">
+    <link rel="stylesheet" href="./css/pages/cart-page.css">
 
 
 </head>
@@ -30,108 +22,231 @@
 <body>
 
 
-<header>
-
-    <!-- reutilizaremos o header futuramente -->
-
-</header>
+    <header class="header">
 
 
-
-<main class="cart-page">
-
-
-    <section class="cart-container">
+        <nav class="navbar">
 
 
-        <div class="cart-products">
+            <div class="nav-container">
 
 
-            <h1>
-                Meu carrinho
-            </h1>
+                <a href="./index.html" class="logo" aria-label="Lumière Bags - Página inicial">
+
+                    LUMIÈRE
+
+                </a>
 
 
-            <div class="cart-page-list">
 
-                <!-- Produtos renderizados via JS -->
+                <ul class="nav-menu">
+
+
+                    <li>
+
+                        <a href="./index.html#featured">
+                            Coleção
+                        </a>
+
+                    </li>
+
+
+                    <li>
+
+                        <a href="./index.html#products">
+                            Loja
+                        </a>
+
+                    </li>
+
+
+                    <li>
+
+                        <a href="./index.html#story">
+                            Sobre
+                        </a>
+
+                    </li>
+
+
+                    <li>
+
+                        <a href="./index.html#newsletter">
+                            Contato
+                        </a>
+
+                    </li>
+
+
+                </ul>
+
+
+
+
+                <div class="nav-actions">
+
+
+
+                    <button type="button" class="icon-button" aria-label="Pesquisar">
+
+
+                        <i class="bi bi-search"></i>
+
+
+                    </button>
+
+
+
+
+
+                    <button type="button" class="icon-button cart-button" aria-label="Carrinho de compras">
+
+
+                        <i class="bi bi-bag"></i>
+
+
+
+                        <span class="cart-count">
+
+                            0
+
+                        </span>
+
+
+                    </button>
+
+
+
+                </div>
+
+
 
             </div>
 
 
-        </div>
+        </nav>
 
 
-
-        <aside class="cart-summary">
-
-
-            <h2>
-                Resumo do pedido
-            </h2>
+    </header>
 
 
-            <div class="summary-line">
+    <main class="cart-page">
 
-                <span>
-                    Subtotal
+        <section class="cart-header">
+
+            <div class="container">
+
+                <span class="breadcrumb">
+                    Início / Meu carrinho
                 </span>
 
-                <strong>
-                    R$ 0,00
-                </strong>
+                <h1>
+                    Meu carrinho
+                </h1>
+
+                <p>
+                    Revise seus produtos antes de finalizar a compra.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <section class="cart-container">
+
+
+            <div class="cart-products">
+
+
+
+                <div class="cart-page-list">
+
+                    <!-- Produtos renderizados via JS -->
+
+                </div>
+
 
             </div>
 
 
 
-            <div class="summary-line">
-
-                <span>
-                    Frete
-                </span>
-
-                <strong>
-                    R$ 0,00
-                </strong>
-
-            </div>
+            <aside class="cart-summary">
 
 
+                <h2>
+                    Resumo do pedido
+                </h2>
 
-            <div class="summary-total">
 
-                <span>
-                    Total
-                </span>
+                <div class="summary-line">
 
-                <strong>
-                    R$ 0,00
-                </strong>
+                    <span>
+                        Subtotal
+                    </span>
 
-            </div>
+                    <strong class="summary-subtotal">
+                        R$ 0,00
+                    </strong>
+
+                </div>
 
 
 
-            <button
-                class="checkout-button">
+                <div class="summary-line">
 
-                Finalizar compra
+                    <span>
+                        Frete
+                    </span>
 
-            </button>
+                    <strong>
+                        R$ 0,00
+                    </strong>
 
-
-        </aside>
-
-
-    </section>
-
-
-</main>
+                </div>
 
 
-<script src="./js/products.js"></script>
-<script src="./js/cart-page.js"></script>
+
+                <div class="summary-total">
+
+                    <span>
+                        Total
+                    </span>
+
+                    <strong>
+                        R$ 0,00
+                    </strong>
+
+                </div>
+
+
+
+                <button class="checkout-button">
+
+                    Finalizar compra
+
+                </button>
+
+                <p class="summary-note">
+
+                    Compra protegida • Troca em até 30 dias
+
+                </p>
+
+            </aside>
+
+
+        </section>
+
+
+    </main>
+
+
+    <script src="./js/products.js"></script>
+
+    <script src="./js/cart.js"></script>
+
+    <script src="./js/cart-page.js"></script>
 
 
 </body>

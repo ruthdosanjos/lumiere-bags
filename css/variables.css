@@ -39,4 +39,13 @@
 
 
     --header-height: 80px;
+
+    /* Layout */
+
+--container-width: 1200px;
+
+/* Text */
+
+--color-text-muted: rgba(59, 59, 59, .75);
 }
+

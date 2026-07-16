@@ -1,42 +1,10 @@
-console.log("cart-page.js carregado");
-
-
 /* ==========================================================
    Cart Page State
 ========================================================== */
 
-let cart = JSON.parse(
-    localStorage.getItem("lumiereCart")
-) || [];
+const SHIPPING_COST = 25;
 
-
-
-/* ==========================================================
-   Cart Helpers
-========================================================== */
-
-function getCartProducts() {
-
-    return cart.map(item => {
-
-        const product = products.find(
-            product => product.id === item.productId
-        );
-
-
-        if (!product) return null;
-
-
-        return {
-            ...product,
-            quantity: item.quantity
-        };
-
-    }).filter(Boolean);
-
-}
-
-
+const pageCart = window.cart;
 
 /* ==========================================================
    DOM Elements
@@ -46,364 +14,414 @@ const cartItemsContainer = document.querySelector(
     ".cart-page-list"
 );
 
-
 const subtotalElement = document.querySelector(
     ".summary-subtotal"
 );
 
-
 const shippingElement = document.querySelector(
     ".summary-shipping"
 );
-
 
 const totalElement = document.querySelector(
     ".summary-total strong"
 );
 
 
-
 /* ==========================================================
-   Save Cart
+   Storage Helpers
 ========================================================== */
 
 function saveCart() {
 
     localStorage.setItem(
-        "lumiereCart",
+        CART_STORAGE_KEY,
         JSON.stringify(cart)
     );
 
 }
 
 
-
 /* ==========================================================
-   Format Currency
+   Product Helpers
 ========================================================== */
 
-function formatCurrency(value) {
+function getProduct(productId) {
 
-    if (value === undefined || value === null) {
+    return products.find(product => {
 
-        console.warn(
-            "Preço inválido recebido:",
-            value
-        );
+        return product.id === productId;
 
-        return "R$ 0,00";
+    });
 
-    }
+}
 
+function getCartItem(productId) {
+
+    return cart.find(item => {
+
+        return item.productId === productId;
+
+    });
+
+}
+
+function getCartProducts() {
+
+    return cart
+        .map(item => {
+
+            const product = getProduct(
+                item.productId
+            );
+
+            if (!product) {
+
+                return null;
+
+            }
+
+            return {
+
+                ...product,
+
+                quantity: item.quantity
+
+            };
+
+        })
+        .filter(Boolean);
+
+}
+
+function formatPrice(value) {
 
     return value.toLocaleString(
         "pt-BR",
         {
+
             style: "currency",
+
             currency: "BRL"
+
         }
     );
 
 }
 
 
-
 /* ==========================================================
-   Calculate Totals
+   Cart Helpers
 ========================================================== */
 
-function calculateTotals() {
+function getSubtotal() {
 
-    const cartProducts = getCartProducts();
+    return getCartProducts().reduce(
+        (total, item) => {
 
-
-    const subtotal = cartProducts.reduce(
-        (total, item) =>
-            total + (
+            return total + (
                 item.price *
                 item.quantity
-            ),
+            );
+
+        },
         0
     );
 
+}
 
-    const shipping = subtotal > 0
-        ? 25
+function getShipping() {
+
+    return getSubtotal() > 0
+        ? SHIPPING_COST
         : 0;
 
+}
 
-    const total = subtotal + shipping;
+function getTotal() {
 
+    return getSubtotal() + getShipping();
 
+}
+
+function updateSummary() {
 
     if (subtotalElement) {
 
         subtotalElement.textContent =
-            formatCurrency(subtotal);
+            formatPrice(
+                getSubtotal()
+            );
 
     }
-
 
     if (shippingElement) {
 
         shippingElement.textContent =
-            formatCurrency(shipping);
+            formatPrice(
+                getShipping()
+            );
 
     }
-
 
     if (totalElement) {
 
         totalElement.textContent =
-            formatCurrency(total);
+            formatPrice(
+                getTotal()
+            );
 
     }
 
 }
-
-
-
-/* ==========================================================
-   Render Cart Page
-========================================================== */
-
-function renderCartPage() {
-
-
-    if (!cartItemsContainer) return;
-
-
-    cartItemsContainer.innerHTML = "";
-
-
-
-    const cartProducts = getCartProducts();
-
-
-
-    if (!cartProducts.length) {
-
-
-        cartItemsContainer.innerHTML = `
-
-            <p class="cart-empty">
-
-                Seu carrinho está vazio.
-
-            </p>
-
-        `;
-
-
-        calculateTotals();
-
-        return;
-
-    }
-
-
-
-    cartProducts.forEach(item => {
-
-
-        const cartItem = document.createElement(
-            "article"
-        );
-
-
-        cartItem.classList.add(
-            "cart-page-item"
-        );
-
-
-
-        cartItem.innerHTML = `
-
-            <img
-                src="${item.image}"
-                alt="Bolsa ${item.name}">
-
-
-            <div class="cart-page-info">
-
-
-                <h3>
-                    ${item.name}
-                </h3>
-
-
-                <p>
-                    ${item.collection}
-                </p>
-
-
-                <strong>
-                    ${formatCurrency(item.price)}
-                </strong>
-
-
-
-                <div class="cart-page-actions">
-
-
-                    <button
-                        class="quantity-button"
-                        data-action="decrease"
-                        data-id="${item.id}">
-
-                        -
-
-                    </button>
-
-
-
-                    <span>
-                        ${item.quantity}
-                    </span>
-
-
-
-                    <button
-                        class="quantity-button"
-                        data-action="increase"
-                        data-id="${item.id}">
-
-                        +
-
-                    </button>
-
-
-
-                    <button
-                        class="remove-item-button"
-                        data-action="remove"
-                        data-id="${item.id}">
-
-                        Remover
-
-                    </button>
-
-
-                </div>
-
-
-            </div>
-
-        `;
-
-
-        cartItemsContainer.appendChild(
-            cartItem
-        );
-
-
-    });
-
-
-    calculateTotals();
-
-}
-
 
 
 /* ==========================================================
    Cart Actions
 ========================================================== */
 
-cartItemsContainer?.addEventListener(
-    "click",
-    event => {
+function increaseQuantity(productId) {
 
+    const item = getCartItem(
+        productId
+    );
 
-        const button = event.target.closest(
-            "button"
-        );
+    if (!item) return;
 
+    item.quantity++;
 
-        if (!button) return;
+    saveCart();
 
+}
 
+function decreaseQuantity(productId) {
 
-        const id = Number(
-            button.dataset.id
-        );
+    const item = getCartItem(
+        productId
+    );
 
+    if (!item) return;
 
-        const action =
-            button.dataset.action;
+    item.quantity--;
 
+    if (item.quantity <= 0) {
 
+        removeFromCart(productId);
 
-        const item = cart.find(
-            product =>
-                product.productId === id
-        );
-
-
-
-        if (!item) return;
-
-
-
-        if (action === "increase") {
-
-            item.quantity++;
-
-        }
-
-
-
-        if (action === "decrease") {
-
-
-            item.quantity--;
-
-
-
-            if (item.quantity <= 0) {
-
-
-                cart = cart.filter(
-                    product =>
-                        product.productId !== id
-                );
-
-            }
-
-        }
-
-
-
-        if (action === "remove") {
-
-
-            cart = cart.filter(
-                product =>
-                    product.productId !== id
-            );
-
-        }
-
-
-
-        saveCart();
-
-        renderCartPage();
-
+        return;
 
     }
-);
 
+    saveCart();
+
+}
+
+function removeFromCart(productId) {
+
+    cart = cart.filter(item => {
+
+        return item.productId !== productId;
+
+    });
+
+    saveCart();
+
+}
+
+/* ==========================================================
+   Rendering Helpers
+========================================================== */
+
+function renderEmptyCart() {
+
+    cartItemsContainer.innerHTML = `
+
+        <p class="cart-empty">
+
+            Seu carrinho está vazio.
+
+        </p>
+
+    `;
+
+}
+
+
+function createCartItem(item) {
+
+    return `
+
+        <article class="cart-item">
+
+            <img
+                src="${item.image}"
+                alt="${item.name}"
+                class="cart-item-image">
+
+            <div class="cart-item-info">
+
+                <span class="cart-item-collection">
+
+                    ${item.collection}
+
+                </span>
+
+                <h2 class="cart-item-name">
+
+                    ${item.name}
+
+                </h2>
+
+                <p class="cart-item-price">
+
+                    ${formatPrice(item.price)}
+
+                </p>
+
+                <div class="cart-item-footer">
+
+                    <div class="quantity-controls">
+
+                        <button
+                            type="button"
+                            class="quantity-button decrease"
+                            data-product-id="${item.id}">
+
+                            -
+
+                        </button>
+
+                        <span class="quantity">
+
+                            ${item.quantity}
+
+                        </span>
+
+                        <button
+                            type="button"
+                            class="quantity-button increase"
+                            data-product-id="${item.id}">
+
+                            +
+
+                        </button>
+
+                    </div>
+
+                    <button
+                        type="button"
+                        class="remove-item-button"
+                        data-product-id="${item.id}">
+
+                        Remover
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </article>
+
+    `;
+
+}
 
 
 /* ==========================================================
-   Initial Render
+   Rendering
 ========================================================== */
 
-console.log(
-    "Carrinho página:",
-    cart
+function renderCartPage() {
+
+    if (!cartItemsContainer) return;
+
+    const cartProducts = getCartProducts();
+
+    if (!cartProducts.length) {
+
+        renderEmptyCart();
+
+        updateSummary();
+
+        return;
+
+    }
+
+    cartItemsContainer.innerHTML = cartProducts
+        .map(createCartItem)
+        .join("");
+
+    updateSummary();
+
+}
+
+
+/* ==========================================================
+   Events
+========================================================== */
+
+function handleCartPageClick(event) {
+
+    const increaseButton = event.target.closest(".increase");
+
+    if (increaseButton) {
+
+        const productId = Number(
+            increaseButton.dataset.productId
+        );
+
+        increaseQuantity(productId);
+
+        renderCartPage();
+
+        return;
+
+    }
+
+    const decreaseButton = event.target.closest(".decrease");
+
+    if (decreaseButton) {
+
+        const productId = Number(
+            decreaseButton.dataset.productId
+        );
+
+        decreaseQuantity(productId);
+
+        renderCartPage();
+
+        return;
+
+    }
+
+    const removeButton = event.target.closest(".remove-item-button");
+
+    if (removeButton) {
+
+        const productId = Number(
+            removeButton.dataset.productId
+        );
+
+        removeFromCart(productId);
+
+        renderCartPage();
+
+    }
+
+}
+
+
+cartItemsContainer?.addEventListener(
+
+    "click",
+
+    handleCartPageClick
+
 );
 
+
+/* ==========================================================
+   Initialization
+========================================================== */
 
 renderCartPage();

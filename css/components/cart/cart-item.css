@@ -1,0 +1,227 @@
+/* ==========================================================
+   Cart Items List
+========================================================== */
+
+.cart-page-list {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: var(--spacing-md);
+
+}
+
+
+/* ==========================================================
+   Cart Item
+========================================================== */
+
+.cart-item {
+
+    display: grid;
+
+    grid-template-columns: 160px 1fr;
+
+    gap: var(--spacing-md);
+
+    padding: var(--spacing-md);
+
+    background: var(--color-surface);
+
+    border: 1px solid var(--color-border);
+
+    border-radius: var(--radius-lg);
+
+    transition: var(--transition);
+
+}
+
+
+.cart-item:hover {
+
+    box-shadow: var(--shadow-sm);
+
+}
+
+
+/* ==========================================================
+   Image
+========================================================== */
+
+.cart-item-image {
+
+    width: 160px;
+
+    height: 160px;
+
+    object-fit: cover;
+
+    border-radius: var(--radius-md);
+
+}
+
+
+/* ==========================================================
+   Information
+========================================================== */
+
+.cart-item-info {
+
+    display: flex;
+
+    flex-direction: column;
+
+}
+
+
+.cart-item-collection {
+
+    margin-bottom: .5rem;
+
+    font-size: .75rem;
+
+    letter-spacing: .12em;
+
+    text-transform: uppercase;
+
+    color: var(--color-secondary);
+
+}
+
+
+.cart-item-name {
+
+    margin-bottom: .75rem;
+
+    font-family: var(--font-heading);
+
+    font-size: 1.5rem;
+
+    font-weight: 500;
+
+    color: var(--color-primary);
+
+}
+
+
+.cart-item-price {
+
+    margin-bottom: auto;
+
+    font-size: 1rem;
+
+    font-weight: 600;
+
+    color: var(--color-text);
+
+}
+
+
+/* ==========================================================
+   Footer Actions
+========================================================== */
+
+.cart-item-footer {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: var(--spacing-md);
+
+    margin-top: var(--spacing-md);
+
+}
+
+
+/* ==========================================================
+   Quantity Controls
+========================================================== */
+
+.quantity-controls {
+
+    display: flex;
+
+    align-items: center;
+
+    border: 1px solid var(--color-border);
+
+    border-radius: var(--radius-sm);
+
+    overflow: hidden;
+
+}
+
+
+.quantity-button {
+
+    width: 36px;
+
+    height: 36px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border: none;
+
+    background: transparent;
+
+    color: var(--color-text);
+
+    cursor: pointer;
+
+    transition: var(--transition);
+
+}
+
+
+.quantity-button:hover {
+
+    background: var(--color-background);
+
+}
+
+
+.quantity {
+
+    min-width: 36px;
+
+    text-align: center;
+
+    font-size: .95rem;
+
+}
+
+
+/* ==========================================================
+   Remove Button
+========================================================== */
+
+.remove-item-button {
+
+    border: none;
+
+    background: transparent;
+
+    color: var(--color-text-muted);
+
+    cursor: pointer;
+
+    font-size: .9rem;
+
+    transition: var(--transition);
+
+}
+
+
+.remove-item-button:hover {
+
+    color: var(--color-secondary);
+
+}

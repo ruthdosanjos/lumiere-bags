@@ -9,6 +9,7 @@ let cart = JSON.parse(
 ) || [];
 
 
+window.cart = cart;
 /* ==========================================================
    DOM Elements
 ========================================================== */
@@ -575,10 +576,14 @@ if (cartOverlay) {
 
 }
 
-miniCartContent.addEventListener(
-    "click",
-    handleMiniCartClick
-);
+if (miniCartContent) {
+
+    miniCartContent.addEventListener(
+        "click",
+        handleMiniCartClick
+    );
+
+}
 /* ==========================================================
    Initialization
 ========================================================== */

@@ -190,7 +190,11 @@ function createProductCard(product) {
 
 function renderFeaturedProducts() {
 
+    if (!featuredProductsContainer) return;
+
+
     const featuredProducts = products.slice(0, 4);
+
 
     featuredProductsContainer.innerHTML = featuredProducts
         .map(createProductCard)
@@ -203,6 +207,9 @@ function renderFeaturedProducts() {
 ========================================================== */
 
 function renderProducts(productsList) {
+
+    if (!productsCatalog) return;
+
 
     if (!productsList.length) {
 
@@ -220,13 +227,12 @@ function renderProducts(productsList) {
 
     }
 
+
     productsCatalog.innerHTML = productsList
         .map(createProductCard)
         .join("");
 
 }
-
-
 
 /* ==========================================================
    Filters

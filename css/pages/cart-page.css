@@ -1,0 +1,173 @@
+@import "../components/cart/cart-item.css";
+@import "../components/cart/cart-summary.css";
+
+/* ==========================================================
+   Cart Page
+========================================================== */
+
+/* Layout da página... */
+
+/* ==========================================================
+   Cart Page
+========================================================== */
+
+.cart-page {
+
+    padding-bottom: var(--spacing-xl);
+
+}
+
+
+/* ==========================================================
+   Cart Header
+========================================================== */
+
+.cart-header {
+
+    padding:
+        var(--spacing-lg)
+        0
+        var(--spacing-md);
+
+    background: var(--color-background);
+
+    border-bottom: 1px solid var(--color-border);
+
+}
+
+
+/* ==========================================================
+   Container
+========================================================== */
+
+.cart-header .container {
+
+    width: min(var(--container-width), 100%);
+
+    margin: 0 auto;
+
+    padding-inline: var(--spacing-md);
+
+}
+
+
+/* ==========================================================
+   Breadcrumb
+========================================================== */
+
+.breadcrumb {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: .5rem;
+
+    margin-bottom: var(--spacing-sm);
+
+    font-size: .85rem;
+
+    color: var(--color-text-muted);
+
+}
+
+
+.breadcrumb a {
+
+    color: var(--color-text-muted);
+
+    text-decoration: none;
+
+    transition: var(--transition);
+
+}
+
+
+.breadcrumb a:hover {
+
+    color: var(--color-secondary);
+
+}
+
+
+.breadcrumb span:last-child {
+
+    color: var(--color-text);
+
+}
+
+
+/* ==========================================================
+   Title
+========================================================== */
+
+.cart-header h1 {
+
+    margin-bottom: var(--spacing-sm);
+
+    font-family: var(--font-heading);
+
+    font-size: clamp(2rem, 5vw, 2.8rem);
+
+    font-weight: 500;
+
+    color: var(--color-primary);
+
+}
+
+
+/* ==========================================================
+   Description
+========================================================== */
+
+.cart-description {
+
+    max-width: 560px;
+
+    color: var(--color-text-muted);
+
+    line-height: 1.8;
+
+}
+
+/* ==========================================================
+   Layout
+========================================================== */
+
+.cart-container {
+
+    display: grid;
+
+    grid-template-columns: 2fr 1fr;
+
+    gap: var(--spacing-lg);
+
+    width: min(var(--container-width), 100%);
+
+    margin: var(--spacing-lg) auto;
+
+    padding-inline: var(--spacing-md);
+
+}
+
+
+.cart-products {
+
+    min-width: 0;
+
+}
+
+
+/* ==========================================================
+   Empty State
+========================================================== */
+
+.cart-empty {
+
+    padding: var(--spacing-xl);
+
+    text-align: center;
+
+    color: var(--color-text-muted);
+
+}
