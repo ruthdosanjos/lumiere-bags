@@ -613,7 +613,11 @@ lumiere/
     ├── cart.js  
     ├── cart-page.js  
     ├── main.js  
-    └── products.js    
+    ├── newsletter.js  
+    ├── products.js  
+    │
+    └── components/
+        └── toast.js  
 
 ---
 
@@ -695,6 +699,20 @@ Responsável por:
 * Filtros por categoria.
 * Sistema de favoritos.
 * Persistência com localStorage.
+
+## newsletter.js
+
+Responsável por:
+
+* Gerenciamento da inscrição da newsletter.
+* Validação de e-mail.
+* Persistência dos inscritos através do localStorage.
+* Controle de cadastro duplicado.
+* Integração com o sistema global de Toast.
+
+Chave utilizada:
+
+lumiereNewsletter
 
 ## cart.js
 
@@ -810,6 +828,7 @@ Summary Update
 * Mini Cart.
 * Cart Item.
 * Cart Summary.
+* Toast.
 
 ---
 
@@ -834,6 +853,43 @@ Implementado:
 * Textos alternativos descritivos nas imagens.
 
 ---
+
+---
+
+## Newsletter
+
+Implementado:
+
+* Seção institucional de captura de e-mails.
+* Formulário responsivo integrado ao design da marca.
+* Validação de e-mail utilizando JavaScript Vanilla.
+* Persistência dos cadastros através de localStorage.
+* Bloqueio de cadastros duplicados.
+* Feedback visual através do componente Toast.
+
+Arquitetura:
+
+Newsletter Form
+
+↓
+
+newsletter.js
+
+↓
+
+Validation
+
+↓
+
+localStorage
+
+↓
+
+Toast Feedback
+
+Chave utilizada:
+
+lumiereNewsletter
 
 ## Product Cards
 
@@ -865,7 +921,6 @@ Incluem:
 
 * Implementar checkout simulado.
 * Criar modal de detalhes do produto.
-* Criar Newsletter funcional.
 * Finalizar Footer completo.
 * Melhorar experiência geral de navegação.
 
@@ -906,5 +961,5 @@ A Lumière atualmente possui:
 * Remoção de produtos.
 * Cálculo automático de subtotal, frete e total.
 * Arquitetura JavaScript organizada e escalável.
-
-O foco atual passa a ser o refinamento da experiência de compra, evolução visual dos componentes e preparação da arquitetura para futura migração para React.
+* Newsletter funcional com persistência local.
+* Sistema de Toast reutilizável entre funcionalidades.

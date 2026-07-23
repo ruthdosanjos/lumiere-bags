@@ -308,10 +308,6 @@ decoding="async">
 </section>
 
 
-
-
-
-
 <!-- Benefits -->
 
 
@@ -696,11 +692,80 @@ Ver coleção completa
 </section>
 
 
+<!-- Newsletter -->
+
+<section
+    id="newsletter"
+    class="newsletter">
+
+    <div class="container">
+
+        <div class="newsletter-content">
+
+            <div class="section-header">
+
+                <span class="section-subtitle">
+                    Newsletter
+                </span>
+
+                <h2 class="section-title">
+                    Faça parte do universo Lumière
+                </h2>
+
+                <p class="section-description">
+
+                    Receba novidades sobre novas coleções,
+                    lançamentos e inspirações exclusivas antes
+                    de todo mundo.
+
+                </p>
+
+            </div>
 
 
-<!-- Newsletter section - future implementation -->
+            <form
+                class="newsletter-form"
+                autocomplete="off"
+                novalidate>
 
-<section id="newsletter" class="newsletter">
+                <label
+                    for="newsletter-email"
+                    class="sr-only">
+
+                    Seu e-mail
+
+                </label>
+
+                <input
+                    type="email"
+                    id="newsletter-email"
+                    name="email"
+                    placeholder="Seu melhor e-mail"
+                    required>
+
+                <button
+                    type="submit"
+                    class="btn-primary">
+
+                    Inscrever-se
+
+                    <i class="bi bi-arrow-right"></i>
+
+                </button>
+
+            </form>
+
+
+            <p class="newsletter-note">
+
+                Sem spam. Apenas conteúdos exclusivos,
+                novidades e lançamentos da Lumière.
+
+            </p>
+
+        </div>
+
+    </div>
 
 </section>
 
@@ -781,6 +846,7 @@ Ver coleção completa
 <div class="cart-overlay"></div>
 
 
+<script src="./js/components/toast.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -790,7 +856,7 @@ Ver coleção completa
 
 <script src="./js/cart.js"></script>
 
-<script src="./js/components/header.js"></script>
+<script src="./js/newsletter.js"></script>
 
 </body>
 
