@@ -4,12 +4,12 @@
 
 .newsletter {
 
-    padding: var(--section-spacing) 0;
+    
+    padding: 6rem 0;
 
     background: var(--color-surface);
 
 }
-
 
 .newsletter-content {
 
@@ -20,7 +20,6 @@
     text-align: center;
 
 }
-
 
 .newsletter-form {
 
@@ -35,7 +34,6 @@
     align-items: center;
 
 }
-
 
 .newsletter-form input {
 
@@ -59,13 +57,11 @@
 
 }
 
-
 .newsletter-form input::placeholder {
 
     color: var(--color-text-light);
 
 }
-
 
 .newsletter-form input:focus {
 
@@ -76,7 +72,6 @@
     box-shadow: 0 0 0 4px rgba(0, 0, 0, .05);
 
 }
-
 
 .newsletter-note {
 

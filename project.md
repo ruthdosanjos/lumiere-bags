@@ -18,12 +18,6 @@ O objetivo é simular uma marca de moda premium com experiência de navegação 
 
 ---
 
-# 🧱 Status do Projeto
-
-## ✅ Concluído
-
----
-
 # Estrutura
 
 Implementado:
