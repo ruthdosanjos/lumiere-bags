@@ -64,12 +64,13 @@ Mini Cart / Cart Page
 
 Finalizado:
 
-* Layout responsivo.
+* Layout responsivo para desktop, tablet e mobile.
+* Adaptação do conteúdo para diferentes tamanhos de tela.
 * Headline principal.
 * CTA principal.
 * Imagem hero otimizada.
 * Tipografia alinhada ao posicionamento premium da marca.
-
+* Organização em coluna no mobile para melhor experiência visual.
 ---
 
 # Featured Collection
@@ -113,6 +114,55 @@ Implementado:
 * Estrutura preparada para expansão do catálogo.
 
 ---
+
+---
+
+# Featured Collection — ÉTOILE
+
+A seção Featured Collection foi refinada para apresentar uma coleção específica da marca ao invés de produtos aleatórios do catálogo.
+
+Coleção em destaque:
+
+## ÉTOILE
+
+Representa:
+
+* Leveza.
+* Elegância cotidiana.
+* Design atemporal.
+* Sofisticação discreta.
+
+Produtos apresentados:
+
+## Aurora
+
+* Shoulder Bag.
+* Elegância natural.
+* Tons claros e sofisticados.
+
+## Celeste
+
+* Tote Bag.
+* Design contemporâneo.
+* Personalidade urbana.
+
+## Alba
+
+* Shoulder Bag.
+* Minimalismo refinado.
+* Versatilidade para o dia a dia.
+
+## Luna
+
+* Mini Bag.
+* Design compacto.
+* Praticidade aliada à sofisticação.
+
+Implementado:
+
+* Renderização dinâmica baseada em coleção.
+* Separação entre Featured Collection e catálogo completo.
+* Estrutura preparada para destacar diferentes coleções futuramente.
 
 # Catálogo de Produtos
 
@@ -158,6 +208,22 @@ Também implementado:
 * Estado vazio para categorias sem resultados.
 * Atualização dinâmica dos produtos filtrados.
 * Estrutura preparada para novos produtos.
+
+Novos produtos adicionados:
+
+## Luna
+
+* Coleção: ÉTOILE.
+* Categoria: Mini Bag.
+* Design compacto e elegante.
+* Criada para completar a coleção destaque.
+
+## Amélie
+
+* Coleção: ATELIER.
+* Categoria: Crossbody.
+* Design artesanal e sofisticado.
+* Representa a proposta refinada da coleção ATELIER.
 
 ---
 
@@ -531,6 +597,8 @@ Implementado:
 * Layout dividido entre texto e imagem.
 * Comunicação de marca.
 * CTA direcionando para coleção.
+* Adaptação responsiva com empilhamento de conteúdo no mobile.
+* Centralização de texto e imagem em telas menores.
 
 ---
 
@@ -548,6 +616,12 @@ Destaques:
 Objetivo:
 
 Construir confiança e reforçar percepção de valor.
+
+Responsividade:
+
+* Grid adaptado para diferentes dispositivos.
+* Cards organizados em coluna no mobile.
+* Preservação da hierarquia visual da seção.
 
 ---
 
@@ -568,6 +642,8 @@ Características:
 * Cards com diferentes proporções.
 * Overlay com gradiente.
 * Hover com zoom da imagem.
+* Layout adaptado para diferentes tamanhos de tela.
+* Organização simplificada em coluna no mobile mantendo a identidade visual.
 
 Direção visual:
 
@@ -589,8 +665,7 @@ lumiere/
 ├── index.html  
 │  
 ├── assets/  
-│   └── images/  
-│       ├── brand/  
+│   └── images/   
 │       ├── hero/  
 │       ├── products/  
 │       └── categories/  
@@ -860,6 +935,8 @@ Implementado:
 * Persistência dos cadastros através de localStorage.
 * Bloqueio de cadastros duplicados.
 * Feedback visual através do componente Toast.
+* Ajustes responsivos para diferentes tamanhos de tela.
+* Layout mobile com formulário reorganizado verticalmente.
 
 Arquitetura:
 
@@ -884,7 +961,6 @@ Toast Feedback
 Chave utilizada:
 
 lumiereNewsletter
-
 ---
 
 ## Footer
@@ -896,6 +972,8 @@ Implementado:
 * Área de descrição da marca.
 * Links para coleções e atendimento.
 * Layout responsivo para dispositivos menores.
+* Adaptação da estrutura para mobile com navegação mais compacta.
+* Organização dos links em formato inline no mobile para preservar a estética minimalista.
 * Integração visual com o restante da página.
 
 Estrutura:
@@ -935,6 +1013,36 @@ Incluem:
 
 ---
 
+---
+
+# Responsividade
+
+Implementada a adaptação completa da página inicial para diferentes dispositivos.
+
+A responsividade foi trabalhada preservando a identidade premium da Lumière e evitando perda de hierarquia visual.
+
+Implementado:
+
+* Header reorganizado para mobile.
+* Menu hamburguer preparado para navegação em telas menores.
+* Hero adaptado para layout vertical.
+* Featured Collection com grid responsivo.
+* Story reorganizado com texto e imagem empilhados.
+* Benefits adaptado para cards em coluna.
+* Categories reorganizado para mobile.
+* Products adaptado para catálogo em uma coluna.
+* Filtros de produtos preparados para rolagem horizontal.
+* Newsletter com formulário adaptado para telas menores.
+* Footer reorganizado para navegação mobile.
+
+Direção aplicada:
+
+* Preservação de espaçamento.
+* Melhor aproveitamento de telas pequenas.
+* Manutenção da hierarquia tipográfica.
+* Redução de elementos excessivos no mobile.
+* Experiência consistente entre desktop e dispositivos móveis.
+
 # 🚧 Próximos Passos
 
 ## Curto prazo
@@ -959,7 +1067,6 @@ Incluem:
 * Catálogo dinâmico.
 * Integração com API simulada.
 * Persistência avançada de dados.
-
 ---
 
 # 📌 Status Geral
@@ -989,3 +1096,6 @@ A Lumière atualmente possui:
 * Arquitetura JavaScript organizada e escalável.
 * Newsletter funcional com persistência local.
 * Sistema de Toast reutilizável entre funcionalidades.
+* Página inicial totalmente responsiva para desktop, tablet e mobile.
+* Componentes adaptados mantendo consistência visual entre diferentes resoluções.
+* Experiência mobile refinada para navegação, catálogo e áreas institucionais.

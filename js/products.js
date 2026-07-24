@@ -3,6 +3,7 @@
 ========================================================== */
 
 const products = [
+
     {
         id: 1,
         name: "Aurora",
@@ -66,7 +67,24 @@ const products = [
         category: "mini",
         price: 679,
         image: "./assets/images/products/vivienne.png"
-    }
+    },
+    {
+        id: 9,
+        name: "Luna",
+        collection: "ÉTOILE",
+        category: "mini",
+        price: 549,
+        image: "./assets/images/products/luna.png"
+    },
+
+    {
+    id: 10,
+    name: "Amélie",
+    collection: "ATELIER",
+    category: "mini",
+    price: 599,
+    image: "./assets/images/products/amelie.png"
+}
 ];
 
 /* ==========================================================
@@ -193,7 +211,9 @@ function renderFeaturedProducts() {
     if (!featuredProductsContainer) return;
 
 
-    const featuredProducts = products.slice(0, 4);
+    const featuredProducts = products
+        .filter(product => product.collection === "ÉTOILE")
+        .slice(0, 4);
 
 
     featuredProductsContainer.innerHTML = featuredProducts
