@@ -35,6 +35,12 @@
 
 }
 
+.newsletter-form .btn-primary {
+
+    margin-top: 0;
+
+}
+
 .newsletter-form input {
 
     flex: 1;
