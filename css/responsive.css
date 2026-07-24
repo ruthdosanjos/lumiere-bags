@@ -23,80 +23,114 @@
 
     /* ---------- Header ---------- */
 
-    .nav-container {
-        width: 90%;
-    }
+.nav-container {
+
+    width: 90%;
+
+    display: grid;
+
+    grid-template-columns: 32px 1fr auto;
+
+    align-items: center;
+
+    gap: .5rem;
+
+}
 
 
-    .logo {
-        font-size: 1.6rem;
-        letter-spacing: .18rem;
-    }
+.menu-toggle {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 32px;
+
+    height: 32px;
+
+}
 
 
-    .menu-toggle {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+.menu-toggle i {
+
+    display: block;
+
+}
 
 
-    .nav-menu {
+.logo {
 
-        display: none;
+    font-size: 1.4rem;
 
-        position: absolute;
+    letter-spacing: .15rem;
 
-        top: var(--header-height);
+    text-align: center;
 
-        left: 0;
+    white-space: nowrap;
 
-        width: 100%;
+}
 
-        padding: 2rem 0;
+.nav-menu {
 
-        background: rgba(250, 249, 247, 0.95);
+    display: none;
 
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
+    position: absolute;
 
-        flex-direction: column;
+    top: var(--header-height);
 
-        align-items: center;
+    left: 0;
 
-        gap: 1.5rem;
+    width: 100%;
 
-        box-shadow: var(--shadow-sm);
+    padding: 2rem 0;
 
-    }
+    background: rgba(250, 249, 247, 0.95);
 
+    backdrop-filter: blur(16px);
 
-    .nav-menu.active {
+    -webkit-backdrop-filter: blur(16px);
 
-        display: flex;
+    flex-direction: column;
 
-    }
+    align-items: center;
 
+    gap: 1.5rem;
 
-    .nav-menu a {
+    box-shadow: var(--shadow-sm);
 
-        font-size: 1.1rem;
-
-    }
-
-
-    .nav-actions {
-
-        gap: .75rem;
-
-    }
+}
 
 
-    .icon-button {
+.nav-menu.active {
 
-        font-size: 1.1rem;
+    display: flex;
 
-    }
+}
+
+
+.nav-menu a {
+
+    font-size: 1.1rem;
+
+}
+
+
+.nav-actions {
+
+    display: flex;
+
+    gap: .4rem;
+
+}
+
+
+.icon-button {
+
+    font-size: 1.1rem;
+
+}
 
 
 
@@ -104,9 +138,9 @@
 
     .hero {
 
-        padding-top: calc(var(--header-height) + 3rem);
+        min-height: auto;
 
-        padding-bottom: 4rem;
+        padding-bottom: 3rem;
 
     }
 
@@ -120,6 +154,8 @@
         width: 100%;
 
         text-align: center;
+
+        gap: 2rem;
 
     }
 
@@ -162,9 +198,7 @@
 
     .hero-image img {
 
-        width: 100%;
-
-        max-width: 350px;
+        width: min(100%, 300px);
 
     }
 
@@ -195,12 +229,23 @@
     }
 
 
+    .section-description {
+
+        max-width: 90%;
+
+        margin-left: auto;
+
+        margin-right: auto;
+
+    }
+
+
 
     /* ---------- Featured Products ---------- */
 
     .featured {
 
-        padding: 5rem 0;
+        padding: 4rem 0;
 
     }
 
@@ -212,7 +257,6 @@
         gap: 1.5rem;
 
     }
-
 
 
 }
