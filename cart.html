@@ -12,31 +12,25 @@
     </title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
+
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
         rel="stylesheet">
 
     <link rel="stylesheet" href="./css/style.css">
 
     <link rel="stylesheet" href="./css/pages/cart-page.css">
 
-
 </head>
-
 
 <body>
 
-
     <header class="header">
-
 
         <nav class="navbar">
 
-
             <div class="nav-container">
-
 
                 <a href="./index.html" class="logo" aria-label="Lumière Bags - Página inicial">
 
@@ -44,74 +38,51 @@
 
                 </a>
 
-
-
                 <ul class="nav-menu">
 
-
                     <li>
-
                         <a href="./index.html#featured">
                             Coleção
                         </a>
-
                     </li>
 
-
                     <li>
-
                         <a href="./index.html#products">
                             Loja
                         </a>
-
                     </li>
 
-
                     <li>
-
                         <a href="./index.html#story">
                             Sobre
                         </a>
-
                     </li>
 
-
                     <li>
-
                         <a href="./index.html#newsletter">
                             Contato
                         </a>
-
                     </li>
-
 
                 </ul>
 
-
-
-
                 <div class="nav-actions">
 
-
-
-                    <button type="button" class="icon-button" aria-label="Pesquisar">
-
+                    <button
+                        type="button"
+                        class="icon-button"
+                        aria-label="Pesquisar">
 
                         <i class="bi bi-search"></i>
 
-
                     </button>
 
-
-
-
-
-                    <button type="button" class="icon-button cart-button" aria-label="Carrinho de compras">
-
+                    <button
+                        type="button"
+                        class="icon-button cart-button"
+                        aria-label="Carrinho de compras">
 
                         <i class="bi bi-bag"></i>
-
-
 
                         <span class="cart-count">
 
@@ -119,136 +90,237 @@
 
                         </span>
 
-
                     </button>
-
-
 
                 </div>
 
-
-
             </div>
-
 
         </nav>
 
-
     </header>
 
-
     <main class="cart-page">
+
+        <!-- ==========================================================
+             Header
+        =========================================================== -->
 
         <section class="cart-header">
 
             <div class="container">
 
                 <span class="breadcrumb">
+
                     Início / Meu carrinho
+
                 </span>
 
                 <h1>
+
                     Meu carrinho
+
                 </h1>
 
                 <p>
+
                     Revise seus produtos antes de finalizar a compra.
+
                 </p>
 
             </div>
 
         </section>
 
+        <!-- ==========================================================
+             Cart
+        =========================================================== -->
 
         <section class="cart-container">
 
+            <!-- Produtos -->
 
             <div class="cart-products">
 
-
-
                 <div class="cart-page-list">
 
-                    <!-- Produtos renderizados via JS -->
+                    <!-- Renderizado via JavaScript -->
 
                 </div>
-
 
             </div>
 
-
+            <!-- Resumo -->
 
             <aside class="cart-summary">
 
-
                 <h2>
+
                     Resumo do pedido
+
                 </h2>
 
+                <!-- Subtotal -->
 
                 <div class="summary-line">
 
                     <span>
+
                         Subtotal
+
                     </span>
 
                     <strong class="summary-subtotal">
+
                         R$ 0,00
+
                     </strong>
 
                 </div>
 
-
+                <!-- Frete -->
 
                 <div class="summary-line">
 
                     <span>
+
                         Frete
+
                     </span>
 
-                    <strong>
+                    <strong class="summary-shipping">
+
                         R$ 0,00
+
                     </strong>
 
                 </div>
 
+                <!-- Entrega -->
 
+                <div class="summary-line">
+
+                    <span>
+
+                        Entrega estimada
+
+                    </span>
+
+                    <strong class="summary-delivery">
+
+                        2–5 dias úteis
+
+                    </strong>
+
+                </div>
+
+                <!-- Cupom -->
+
+                <div class="coupon">
+
+                    <label for="coupon-code">
+
+                        Cupom de desconto
+
+                    </label>
+
+                    <div class="coupon-form">
+
+                        <input
+                            type="text"
+                            id="coupon-code"
+                            placeholder="Digite seu cupom"
+                            autocomplete="off">
+
+                        <button
+                            type="button"
+                            class="coupon-button">
+
+                            Aplicar
+
+                        </button>
+
+                    </div>
+
+                    <small class="coupon-note">
+
+                        Os cupons promocionais serão disponibilizados em campanhas futuras.
+
+                    </small>
+
+                </div>
+
+                <!-- Total -->
 
                 <div class="summary-total">
 
                     <span>
+
                         Total
+
                     </span>
 
                     <strong>
+
                         R$ 0,00
+
                     </strong>
 
                 </div>
 
+                <!-- Ações -->
 
+                <div class="summary-actions">
 
-                <button class="checkout-button">
+                    <button
+                        type="button"
+                        class="checkout-button">
 
-                    Finalizar compra
+                        Finalizar compra
 
-                </button>
+                    </button>
 
-                <p class="summary-note">
+                    <a
+                        href="./index.html#products"
+                        class="continue-shopping">
 
-                    Compra protegida • Troca em até 30 dias
+                        <i class="bi bi-arrow-left"></i>
 
-                </p>
+                        Continuar comprando
+
+                    </a>
+
+                </div>
+
+                <!-- Observações -->
+
+                <div class="summary-info">
+
+                    <p class="summary-note">
+
+                        Compra protegida
+
+                    </p>
+
+                    <p class="summary-note">
+
+                        Troca em até 30 dias
+
+                    </p>
+
+                    <p class="summary-note">
+
+                        Pagamento 100% seguro
+
+                    </p>
+
+                </div>
 
             </aside>
 
-
         </section>
 
-
     </main>
-
-   
 
     <script src="./js/products.js"></script>
 
@@ -257,7 +329,6 @@
     <script src="./js/main.js"></script>
 
     <script src="./js/cart-page.js"></script>
-
 
 </body>
 
