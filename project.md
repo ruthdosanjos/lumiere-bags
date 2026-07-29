@@ -448,8 +448,15 @@ Arquivo:
 
 css/components/cart/cart-summary.css
 
+Arquitetura de estilos:
+
+* cart-page.css concentra os estilos base exclusivos da página do carrinho.
+* cart-responsive.css reúne todas as adaptações responsivas específicas da página, mantendo a separação entre estilos globais e estilos locais.
+* Os componentes Cart Item e Cart Summary permanecem isolados em arquivos próprios para facilitar reutilização e manutenção.
+
 
 ---
+
 
 ## cart-page.js
 
@@ -622,6 +629,10 @@ Responsividade:
 * Grid adaptado para diferentes dispositivos.
 * Cards organizados em coluna no mobile.
 * Preservação da hierarquia visual da seção.
+* Página do carrinho totalmente adaptada para dispositivos móveis.
+* Responsividade do carrinho isolada em arquivo próprio (cart-responsive.css).
+* Header mobile reutilizado entre páginas com personalizações específicas para o carrinho.
+* Separação entre regras responsivas globais e regras exclusivas da página do carrinho.
 
 ---
 
@@ -670,13 +681,19 @@ lumiere/
 │       ├── products/  
 │       └── categories/  
 │  
-├── css/  
-│   ├── base/  
-│   ├── components/  
-│   ├── layout/  
-│   ├── responsive.css  
-│   ├── style.css  
-│   └── variables.css  
+├── css/
+│   ├── base/
+│   ├── components/
+│   │   └── cart/
+│   │       ├── cart-item.css
+│   │       └── cart-summary.css
+│   ├── layout/
+│   ├── pages/
+│   │   └── cart-page.css
+│   ├── responsive.css
+│   ├── cart-responsive.css
+│   ├── style.css
+│   └── variables.css
 │  
 ├── js/  
     ├── cart.js  
@@ -736,13 +753,23 @@ A interface prioriza:
 
 # Organização CSS
 
+# Organização CSS
+
 base/
 
 layout/
 
 components/
+    └── cart/
+        ├── cart-item.css
+        └── cart-summary.css
+
+pages/
+    └── cart-page.css
 
 responsive.css
+
+cart-responsive.css
 
 style.css
 
