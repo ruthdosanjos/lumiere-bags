@@ -185,13 +185,6 @@ lumiere/
 - Catálogo expandido
 - Melhorias de animações
 
-### Futuro
-
-- Migração para React
-- Componentização completa
-- API simulada
-- Backend integrado
-
 ---
 
 ## 🎓 Objetivos do projeto

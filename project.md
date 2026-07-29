@@ -14,8 +14,6 @@ O objetivo é simular uma marca de moda premium com experiência de navegação 
 * Demonstrar domínio de HTML5, CSS3 modular e JavaScript Vanilla.
 * Criar uma interface elegante, responsiva e reutilizável.
 * Simular uma marca real com identidade visual consistente.
-* Evoluir futuramente para React utilizando a arquitetura atual como base.
-
 ---
 
 # Estrutura
@@ -1035,7 +1033,6 @@ Incluem:
 * Favoritos persistentes.
 * Design System.
 * Aspect Ratio.
-* Estrutura compatível com futura migração para React.
 * Integração com botão de compra.
 
 ---
@@ -1089,7 +1086,6 @@ Direção aplicada:
 
 ## Longo prazo
 
-* Migração para React.
 * Componentização completa.
 * Catálogo dinâmico.
 * Integração com API simulada.
