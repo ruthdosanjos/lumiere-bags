@@ -21,11 +21,11 @@
 
     display: grid;
 
-    grid-template-columns: 160px 1fr;
+    grid-template-columns: 180px 1fr;
 
-    gap: var(--spacing-md);
+    gap: var(--spacing-lg);
 
-    padding: var(--spacing-md);
+    padding: var(--spacing-lg);
 
     background: var(--color-surface);
 
@@ -36,7 +36,6 @@
     transition: var(--transition);
 
 }
-
 
 .cart-item:hover {
 
@@ -51,16 +50,15 @@
 
 .cart-item-image {
 
-    width: 160px;
+    width: 180px;
 
-    height: 160px;
+    height: 180px;
 
     object-fit: cover;
 
     border-radius: var(--radius-md);
 
 }
-
 
 /* ==========================================================
    Information
@@ -96,14 +94,13 @@
 
     font-family: var(--font-heading);
 
-    font-size: 1.5rem;
+    font-size: 1.35rem;
 
     font-weight: 500;
 
     color: var(--color-primary);
 
 }
-
 
 .cart-item-price {
 
@@ -132,10 +129,11 @@
 
     gap: var(--spacing-md);
 
-    margin-top: var(--spacing-md);
+    margin-top: auto;
+
+    padding-top: var(--spacing-md);
 
 }
-
 
 /* ==========================================================
    Quantity Controls

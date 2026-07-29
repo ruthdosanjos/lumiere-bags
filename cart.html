@@ -15,16 +15,18 @@
 
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
         rel="stylesheet">
 
     <link rel="stylesheet" href="./css/style.css">
-
+    <link rel="stylesheet" href="./css/responsive.css">
     <link rel="stylesheet" href="./css/pages/cart-page.css">
+    <link rel="stylesheet" href="./css/cart-responsive.css">
 
 </head>
 
-<body>
+<body class="cart-page">
 
     <header class="header">
 
@@ -68,19 +70,13 @@
 
                 <div class="nav-actions">
 
-                    <button
-                        type="button"
-                        class="icon-button"
-                        aria-label="Pesquisar">
+                    <button type="button" class="icon-button" aria-label="Pesquisar">
 
                         <i class="bi bi-search"></i>
 
                     </button>
 
-                    <button
-                        type="button"
-                        class="icon-button cart-button"
-                        aria-label="Carrinho de compras">
+                    <button type="button" class="icon-button cart-button" aria-label="Carrinho de compras">
 
                         <i class="bi bi-bag"></i>
 
@@ -226,15 +222,9 @@
 
                     <div class="coupon-form">
 
-                        <input
-                            type="text"
-                            id="coupon-code"
-                            placeholder="Digite seu cupom"
-                            autocomplete="off">
+                        <input type="text" id="coupon-code" placeholder="Digite seu cupom" autocomplete="off">
 
-                        <button
-                            type="button"
-                            class="coupon-button">
+                        <button type="button" class="coupon-button">
 
                             Aplicar
 
@@ -272,17 +262,13 @@
 
                 <div class="summary-actions">
 
-                    <button
-                        type="button"
-                        class="checkout-button">
+                    <button type="button" class="checkout-button">
 
                         Finalizar compra
 
                     </button>
 
-                    <a
-                        href="./index.html#products"
-                        class="continue-shopping">
+                    <a href="./index.html#products" class="continue-shopping">
 
                         <i class="bi bi-arrow-left"></i>
 

@@ -13,7 +13,7 @@
 
 .cart-page {
 
-    padding-bottom: var(--spacing-xl);
+        padding-bottom: 6rem;
 
 }
 
@@ -25,13 +25,21 @@
 .cart-header {
 
     padding:
-        var(--spacing-lg)
+        3rem
         0
-        var(--spacing-md);
+        2.5rem;
 
     background: var(--color-background);
 
     border-bottom: 1px solid var(--color-border);
+
+}
+
+@media (max-width: 768px) {
+
+    .cart-page .nav-actions .icon-button:not(.cart-button) {
+        display: none;
+    }
 
 }
 
@@ -63,9 +71,9 @@
 
     gap: .5rem;
 
-    margin-bottom: var(--spacing-sm);
+    margin-bottom: 1rem;
 
-    font-size: .85rem;
+    font-size: .8rem;
 
     color: var(--color-text-muted);
 
@@ -103,18 +111,19 @@
 
 .cart-header h1 {
 
-    margin-bottom: var(--spacing-sm);
+    margin-bottom: 1rem;
 
     font-family: var(--font-heading);
 
-    font-size: clamp(2rem, 5vw, 2.8rem);
+    font-size: clamp(2.2rem, 5vw, 3rem);
 
     font-weight: 500;
+
+    letter-spacing: -.02em;
 
     color: var(--color-primary);
 
 }
-
 
 /* ==========================================================
    Description
@@ -138,13 +147,13 @@
 
     display: grid;
 
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: minmax(0, 1.8fr) minmax(320px, .9fr);
 
-    gap: var(--spacing-lg);
+    gap: 3rem;
 
     width: min(var(--container-width), 100%);
 
-    margin: var(--spacing-lg) auto;
+    margin: 3rem auto;
 
     padding-inline: var(--spacing-md);
 
@@ -155,6 +164,12 @@
 
     min-width: 0;
 
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 1.5rem;
+
 }
 
 
@@ -164,10 +179,16 @@
 
 .cart-empty {
 
-    padding: var(--spacing-xl);
+    padding: 5rem 2rem;
 
     text-align: center;
 
     color: var(--color-text-muted);
+
+    background: var(--color-surface);
+
+    border-radius: var(--radius-lg);
+
+    border: 1px solid var(--color-border);
 
 }
