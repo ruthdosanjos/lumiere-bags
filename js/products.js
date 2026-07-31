@@ -152,6 +152,12 @@ const productsCatalog = document.querySelector("#products-catalog");
 
 const filterButtons = document.querySelectorAll(".filter-button");
 
+const categoryLinks = document.querySelectorAll(
+    ".category-card[data-category]"
+);
+
+const productsSection = document.querySelector("#products");
+
 
 /* ==========================================================
    Product Card
@@ -326,6 +332,25 @@ function filterProducts(category) {
 }
 
 
+function applyProductFilter(category) {
+
+    const activeButton = Array.from(filterButtons)
+        .find(button => {
+
+            return button.dataset.category === category;
+
+        });
+
+    if (!activeButton) return false;
+
+    updateActiveFilter(activeButton);
+    filterProducts(category);
+
+    return true;
+
+}
+
+
 
 /* ==========================================================
    Events
@@ -337,9 +362,31 @@ filterButtons.forEach(button => {
 
         const category = button.dataset.category;
 
-        updateActiveFilter(button);
+        applyProductFilter(category);
 
-        filterProducts(category);
+    });
+
+});
+
+
+categoryLinks.forEach(link => {
+
+    link.addEventListener("click", event => {
+
+        const category = link.dataset.category;
+
+        if (!applyProductFilter(category) || !productsSection) return;
+
+        event.preventDefault();
+
+        const prefersReducedMotion = window.matchMedia(
+            "(prefers-reduced-motion: reduce)"
+        ).matches;
+
+        productsSection.scrollIntoView({
+            behavior: prefersReducedMotion ? "auto" : "smooth",
+            block: "start"
+        });
 
     });
 
