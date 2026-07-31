@@ -139,7 +139,7 @@
    Quantity Controls
 ========================================================== */
 
-.quantity-controls {
+.cart-page-list .quantity-controls {
 
     display: flex;
 
@@ -154,7 +154,7 @@
 }
 
 
-.quantity-button {
+.cart-page-list .quantity-button {
 
     width: 36px;
 
@@ -179,14 +179,14 @@
 }
 
 
-.quantity-button:hover {
+.cart-page-list .quantity-button:hover {
 
     background: var(--color-background);
 
 }
 
 
-.quantity {
+.cart-page-list .quantity {
 
     min-width: 36px;
 
@@ -201,7 +201,7 @@
    Remove Button
 ========================================================== */
 
-.remove-item-button {
+.cart-page-list .remove-item-button {
 
     border: none;
 
@@ -218,7 +218,7 @@
 }
 
 
-.remove-item-button:hover {
+.cart-page-list .remove-item-button:hover {
 
     color: var(--color-secondary);
 
