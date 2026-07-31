@@ -217,11 +217,13 @@ function decreaseQuantity(productId) {
 
 function removeFromCart(productId) {
 
-    cart = cart.filter(item => {
+    const updatedCart = cart.filter(item => {
 
         return item.productId !== productId;
 
     });
+
+    cart.splice(0, cart.length, ...updatedCart);
 
     saveCart();
 
