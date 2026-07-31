@@ -91,9 +91,42 @@ const products = [
    Favorites State
 ========================================================== */
 
-let favorites = JSON.parse(
-    localStorage.getItem("lumiereFavorites")
-) || [];
+function loadFavorites() {
+
+    const storedFavorites = localStorage.getItem(
+        "lumiereFavorites"
+    );
+
+    if (!storedFavorites) return [];
+
+    try {
+
+        const parsedFavorites = JSON.parse(
+            storedFavorites
+        );
+
+        if (!Array.isArray(parsedFavorites)) return [];
+
+        return parsedFavorites.filter(productId => {
+
+            return Number.isInteger(productId)
+                && products.some(product => {
+
+                    return product.id === productId;
+
+                });
+
+        });
+
+    } catch (error) {
+
+        return [];
+
+    }
+
+}
+
+let favorites = loadFavorites();
 
 
 /* ==========================================================
