@@ -4,9 +4,38 @@
 
 const CART_STORAGE_KEY = "lumiereCart";
 
-let cart = JSON.parse(
-    localStorage.getItem(CART_STORAGE_KEY)
-) || [];
+function loadCart() {
+
+    const storedCart = localStorage.getItem(
+        CART_STORAGE_KEY
+    );
+
+    if (!storedCart) return [];
+
+    try {
+
+        const parsedCart = JSON.parse(storedCart);
+
+        if (!Array.isArray(parsedCart)) return [];
+
+        return parsedCart.filter(item => {
+
+            return item
+                && Number.isInteger(item.productId)
+                && Number.isInteger(item.quantity)
+                && item.quantity > 0;
+
+        });
+
+    } catch (error) {
+
+        return [];
+
+    }
+
+}
+
+let cart = loadCart();
 
 
 window.cart = cart;
@@ -28,7 +57,9 @@ const closeCartButton = document.querySelector(".close-cart-button");
 
 const miniCartContent = document.querySelector(".mini-cart-content");
 
-const checkoutButton = document.querySelector(".checkout-button");
+const checkoutButton = document.querySelector(
+    ".mini-cart .checkout-button"
+);
 
 const cartTotal = document.querySelector(".cart-total strong");
 
