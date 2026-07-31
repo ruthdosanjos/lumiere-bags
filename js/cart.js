@@ -4,6 +4,8 @@
 
 const CART_STORAGE_KEY = "lumiereCart";
 
+const SHIPPING_COST = 25;
+
 function loadCart() {
 
     const storedCart = localStorage.getItem(
@@ -104,6 +106,41 @@ function getCartItem(productId) {
 
 }
 
+function getCartProducts() {
+
+    return cart
+        .map(item => {
+
+            if (
+                !item
+                || !Number.isInteger(item.productId)
+                || !Number.isInteger(item.quantity)
+                || item.quantity <= 0
+            ) {
+
+                return null;
+
+            }
+
+            const product = getProduct(
+                item.productId
+            );
+
+            if (!product) return null;
+
+            return {
+
+                ...product,
+
+                quantity: item.quantity
+
+            };
+
+        })
+        .filter(Boolean);
+
+}
+
 function formatPrice(value) {
 
     return value.toLocaleString("pt-BR", {
@@ -131,21 +168,29 @@ function getCartItemsCount() {
 
 }
 
-function getCartTotal() {
+function getCartSubtotal(cartProducts = getCartProducts()) {
 
-    return cart.reduce((total, item) => {
+    return cartProducts.reduce((total, item) => {
 
-        const product = getProduct(item.productId);
-
-        if (!product) {
-
-            return total;
-
-        }
-
-        return total + (product.price * item.quantity);
+        return total + (
+            item.price * item.quantity
+        );
 
     }, 0);
+
+}
+
+function getShippingCost(subtotal) {
+
+    return subtotal > 0
+        ? SHIPPING_COST
+        : 0;
+
+}
+
+function getOrderTotal(subtotal, shipping) {
+
+    return subtotal + shipping;
 
 }
 
@@ -162,7 +207,7 @@ function updateCartTotal() {
     if (!cartTotal) return;
 
     cartTotal.textContent = formatPrice(
-        getCartTotal()
+        getCartSubtotal()
     );
 
 }
@@ -282,6 +327,14 @@ function removeFromCart(productId) {
     });
 
     cart.splice(0, cart.length, ...updatedCart);
+
+    syncCart();
+
+}
+
+function clearCart() {
+
+    cart.splice(0, cart.length);
 
     syncCart();
 

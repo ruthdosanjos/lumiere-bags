@@ -1,14 +1,6 @@
 (function initializeCartPage() {
 
 /* ==========================================================
-   Cart Page State
-========================================================== */
-
-const SHIPPING_COST = 25;
-
-const pageCart = window.cart;
-
-/* ==========================================================
    DOM Elements
 ========================================================== */
 
@@ -30,79 +22,23 @@ const totalElement = document.querySelector(
 
 
 /* ==========================================================
-   Product Helpers
+   Cart Summary
 ========================================================== */
 
-function getCartProducts() {
+function updateSummary(cartProducts) {
 
-    return cart
-        .map(item => {
-
-            const product = getProduct(
-                item.productId
-            );
-
-            if (!product) {
-
-                return null;
-
-            }
-
-            return {
-
-                ...product,
-
-                quantity: item.quantity
-
-            };
-
-        })
-        .filter(Boolean);
-
-}
-
-
-/* ==========================================================
-   Cart Helpers
-========================================================== */
-
-function getSubtotal() {
-
-    return getCartProducts().reduce(
-        (total, item) => {
-
-            return total + (
-                item.price *
-                item.quantity
-            );
-
-        },
-        0
+    const subtotal = getCartSubtotal(
+        cartProducts
     );
 
-}
+    const shipping = getShippingCost(
+        subtotal
+    );
 
-function getShipping(subtotal) {
-
-    return subtotal > 0
-        ? SHIPPING_COST
-        : 0;
-
-}
-
-function getTotal(subtotal, shipping) {
-
-    return subtotal + shipping;
-
-}
-
-function updateSummary() {
-
-    const subtotal = getSubtotal();
-
-    const shipping = getShipping(subtotal);
-
-    const total = getTotal(subtotal, shipping);
+    const total = getOrderTotal(
+        subtotal,
+        shipping
+    );
 
     if (subtotalElement) {
 
@@ -248,7 +184,7 @@ function renderCartPage() {
 
         renderEmptyCart();
 
-        updateSummary();
+        updateSummary(cartProducts);
 
         return;
 
@@ -258,7 +194,7 @@ function renderCartPage() {
         .map(createCartItem)
         .join("");
 
-    updateSummary();
+    updateSummary(cartProducts);
 
 }
 
