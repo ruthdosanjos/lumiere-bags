@@ -472,7 +472,7 @@ function handleCartClick(event) {
 
     const product = getProduct(productId);
 
-    if (product) {
+    if (product && typeof showToast === "function") {
 
         showToast(
             `${product.name} adicionada ao carrinho.`

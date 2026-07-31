@@ -57,15 +57,19 @@ if (menuToggle && navMenu) {
 
 }
 
-window.addEventListener("resize", () => {
+if (menuToggle && navMenu) {
 
-    if (window.innerWidth > 768) {
+    window.addEventListener("resize", () => {
 
-        navMenu.classList.remove("active");
+        if (window.innerWidth > 768) {
 
-        menuToggle.innerHTML =
-            '<i class="bi bi-list"></i>';
+            navMenu.classList.remove("active");
 
-    }
+            menuToggle.innerHTML =
+                '<i class="bi bi-list"></i>';
 
-});
+        }
+
+    });
+
+}

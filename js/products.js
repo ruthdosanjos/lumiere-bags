@@ -384,9 +384,13 @@ function updateFavoriteButton(button, productId) {
     const isFavorite = favorites.includes(productId);
 
 
-    icon.className = isFavorite
-        ? "bi bi-heart-fill"
-        : "bi bi-heart";
+    if (icon) {
+
+        icon.className = isFavorite
+            ? "bi bi-heart-fill"
+            : "bi bi-heart";
+
+    }
 
 
     button.classList.toggle(
