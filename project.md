@@ -43,6 +43,8 @@ Implementado:
 * Contador do carrinho integrado ao sistema de compras.
 * Atualização dinâmica conforme quantidade de produtos adicionados.
 * Compartilhamento do estado do carrinho entre diferentes páginas.
+* Menu mobile e Bootstrap Icons disponíveis também em `cart.html`.
+* Ação do carrinho em `cart.html` direcionada para a lista de itens da própria página.
 
 Arquitetura:
 
@@ -69,50 +71,6 @@ Finalizado:
 * Imagem hero otimizada.
 * Tipografia alinhada ao posicionamento premium da marca.
 * Organização em coluna no mobile para melhor experiência visual.
----
-
-# Featured Collection
-
-Seção de produtos em destaque finalizada.
-
-Coleção criada:
-
-## Aurora
-
-* Elegância natural.
-* Tons claros e sofisticados.
-* Representa leveza e novos começos.
-
-## Celeste
-
-* Design contemporâneo.
-* Personalidade urbana.
-* Representa confiança e modernidade.
-
-## Élise
-
-* Estética clássica e delicada.
-* Inspiração artesanal.
-* Representa feminilidade atemporal.
-
-## Noire
-
-* Peça assinatura da coleção.
-* Luxo discreto.
-* Representa sofisticação e poder.
-
-Implementado:
-
-* Product Cards reutilizáveis.
-* Grid responsivo.
-* Hover animations.
-* Botão de favoritos funcional.
-* Renderização dinâmica através do JavaScript.
-* Dados dos produtos centralizados em uma única fonte.
-* Estrutura preparada para expansão do catálogo.
-
----
-
 ---
 
 # Featured Collection — ÉTOILE
@@ -166,6 +124,7 @@ Implementado:
 
 Implementado:
 
+* Dez produtos cadastrados em `products.js`.
 * Sistema de produtos baseado em dados.
 * Renderização automática dos cards.
 * Criação de componentes reutilizáveis através da função createProductCard().
@@ -219,7 +178,7 @@ Novos produtos adicionados:
 ## Amélie
 
 * Coleção: ATELIER.
-* Categoria: Crossbody.
+* Categoria: Mini Bag.
 * Design artesanal e sofisticado.
 * Representa a proposta refinada da coleção ATELIER.
 
@@ -237,6 +196,8 @@ Funcionalidades:
 * Estado salvo no navegador.
 * Persistência após atualização da página.
 * Sincronização entre produtos da Featured Collection e catálogo completo.
+* Leitura defensiva do `localStorage`.
+* Descarte de IDs inválidos ou sem produto correspondente.
 
 Estrutura:
 
@@ -282,7 +243,7 @@ Mini Cart
 
 Sistema completo de carrinho implementado utilizando JavaScript Vanilla e localStorage.
 
-A arquitetura foi estruturada separando o estado do carrinho dos dados dos produtos e permitindo reutilização entre componentes e páginas diferentes.
+A arquitetura separa os dados dos produtos do estado de compra. `cart.js` é a fonte central para estado, persistência, helpers e ações; `cart-page.js` fica responsável pela transformação e renderização exclusiva da página completa.
 
 O estado do carrinho possui uma única fonte de verdade compartilhada entre:
 
@@ -300,30 +261,30 @@ Os dados completos dos produtos são recuperados através do products.js.
 
 Fluxo implementado:
 
-Product Card  
-↓  
-cart.js  
-↓  
-Cart State Global  
-↓  
-localStorage  
-↓  
-Header Counter  
-↓  
-Mini Cart  
-↓  
-cart-page.js  
-↓  
-Products Data  
-↓  
-Renderização da página completa
+Product Card
+
+↓
+
+cart.js
+
+↓
+
+Cart State + Actions
+
+↓
+
+localStorage / window.cart
+
+↓
+
+Header Counter / Mini Cart / cart-page.js
 
 
 Funcionalidades atuais:
 
 * Adicionar produtos ao carrinho.
 * Incrementar quantidade automaticamente ao adicionar o mesmo produto novamente.
-* Persistência dos dados no navegador.
+* Persistência validada dos dados no navegador.
 * Atualização dinâmica do contador do header.
 * Renderização do mini carrinho lateral.
 * Página completa de carrinho.
@@ -336,6 +297,9 @@ Funcionalidades atuais:
 * Reutilização do estado do carrinho entre páginas.
 * Compartilhamento do estado através de window.cart.
 * Separação entre lógica do mini carrinho e renderização da página completa.
+* Sincronização entre contador, mini carrinho e página completa.
+* Sincronização do estado entre abas através do evento `storage`.
+* Leitura defensiva do `localStorage`, aceitando apenas IDs e quantidades inteiras válidas.
 
 
 Chave utilizada:
@@ -354,20 +318,21 @@ Implementado:
 * Overlay de fundo para foco na interação.
 * Controle visual de abertura e fechamento.
 * Lista dinâmica dos produtos adicionados.
+* Controle de quantidade.
+* Remoção de produtos.
+* Subtotal atualizado automaticamente.
+* Redirecionamento para a página completa através do botão de checkout do mini carrinho.
 * Exibição de:
   * Imagem do produto.
   * Nome.
   * Coleção.
   * Preço.
   * Quantidade.
-  * Valor total.
+  * Subtotal.
 
-Estrutura preparada para evolução:
+Próximo passo:
 
-* Controle de quantidade.
-* Remoção de produtos.
-* Checkout.
-* Página completa de carrinho.
+* Checkout simulado, sem integração real de pagamento.
 
 ---
 
@@ -438,7 +403,7 @@ Exibe:
 * Subtotal.
 * Frete.
 * Total.
-* Botão de checkout.
+* Botão preparado para o futuro checkout simulado.
 * Mensagem de segurança da compra.
 
 
@@ -451,27 +416,28 @@ Arquitetura de estilos:
 * cart-page.css concentra os estilos base exclusivos da página do carrinho.
 * cart-responsive.css reúne todas as adaptações responsivas específicas da página, mantendo a separação entre estilos globais e estilos locais.
 * Os componentes Cart Item e Cart Summary permanecem isolados em arquivos próprios para facilitar reutilização e manutenção.
+* Os seletores do mini carrinho e da página completa são limitados aos seus respectivos contextos para evitar efeitos colaterais.
 
 
 ---
 
 
-## cart-page.js
+## Lógica da página
 
 Responsável pela lógica exclusiva da página completa.
 
-Funções:
+Responsabilidades:
 
-* Ler o estado atual do carrinho.
-* Buscar informações dos produtos.
+* Consumir o estado, os helpers e as ações centralizadas em `cart.js`.
+* Transformar as referências do carrinho em dados completos de produtos.
 * Criar os itens da página.
-* Atualizar quantidade.
-* Remover produtos.
 * Atualizar resumo financeiro.
+* Renderizar novamente a página quando o carrinho muda em outra aba.
+* Manter sua lógica exclusiva isolada do escopo global.
 
 Arquitetura:
 
-Cart State
+Central Cart State + Actions
 
 ↓
 
@@ -485,6 +451,8 @@ Cart Products
 
 Page Rendering
 
+O arquivo é executado em escopo isolado. Isso evita colisões globais e mantém em `cart.js` as implementações únicas de persistência, busca, formatação e ações do carrinho.
+
 # Refatoração do cart.js
 
 O arquivo cart.js passou por uma refatoração estrutural para se tornar a fonte central do estado do carrinho.
@@ -492,11 +460,14 @@ O arquivo cart.js passou por uma refatoração estrutural para se tornar a fonte
 A responsabilidade do arquivo foi organizada para controlar:
 
 * Estado do carrinho.
-* Persistência dos dados.
+* Leitura defensiva e persistência dos dados.
+* Busca de produtos e formatação monetária.
+* Ações de adicionar, aumentar, diminuir e remover.
 * Atualização do Header.
 * Renderização do Mini Carrinho.
 * Eventos de interação.
 * Comunicação com a página completa do carrinho.
+* Sincronização entre abas do navegador.
 
 Melhorias implementadas:
 
@@ -507,8 +478,11 @@ Melhorias implementadas:
 * Padronização dos comentários.
 * Centralização da busca de produtos.
 * Centralização da formatação monetária.
+* Centralização da persistência e das ações do carrinho.
 * Separação entre estado, armazenamento, renderização e eventos.
 * Compartilhamento do estado através de uma única fonte de dados.
+* Preservação da referência de `window.cart` após remoções.
+* Contagem de itens reutilizada entre contador e mini carrinho.
 
 Arquitetura:
 
@@ -525,10 +499,13 @@ Estrutura armazenada:
         quantity: 2
     }
 ]
+```
 
 ## Storage Helpers
 
-Responsável pela persistência através do localStorage.
+Responsável pela leitura defensiva e persistência através do localStorage.
+
+O estado carregado precisa ser um array com `productId` e `quantity` inteiros, sendo a quantidade maior que zero. Conteúdo ausente, malformado ou incompatível resulta em carrinho vazio sem interromper a interface.
 
 Chave utilizada:
 
@@ -571,19 +548,19 @@ Responsável pelas interações:
 
 ## Integração entre páginas
 
-O estado do carrinho passou a ser compartilhado entre páginas através de:
+O estado e as ações do carrinho são compartilhados entre as interfaces através de:
 
 cart.js
 
 ↓
 
-window.cart
+window.cart + Cart Helpers + Cart Actions
 
 ↓
 
-cart-page.js
+Header Counter / Mini Cart / cart-page.js
 
-Isso permite que diferentes interfaces utilizem o mesmo estado sem duplicação de dados.
+`cart-page.js` reutiliza essas funções centrais sem redefini-las. O evento `storage` mantém as interfaces atualizadas quando o carrinho é alterado em outra aba.
 
 ---
 
@@ -701,6 +678,7 @@ lumiere/
     ├── products.js  
     │
     └── components/
+        ├── mobile-menu.js
         └── toast.js  
 
 ---
@@ -751,8 +729,6 @@ A interface prioriza:
 
 # Organização CSS
 
-# Organização CSS
-
 base/
 
 layout/
@@ -793,6 +769,7 @@ Responsável por:
 * Filtros por categoria.
 * Sistema de favoritos.
 * Persistência com localStorage.
+* Leitura defensiva dos IDs favoritos persistidos.
 
 ## newsletter.js
 
@@ -803,6 +780,8 @@ Responsável por:
 * Persistência dos inscritos através do localStorage.
 * Controle de cadastro duplicado.
 * Integração com o sistema global de Toast.
+* Leitura defensiva da lista de inscritos.
+* Registro do evento somente quando formulário e input existem.
 
 Chave utilizada:
 
@@ -813,14 +792,14 @@ lumiereNewsletter
 Responsável por:
 
 * Estado central do carrinho.
-* Persistência com localStorage.
-* Adição de produtos.
+* Leitura defensiva e persistência com localStorage.
+* Busca, formatação e ações centralizadas.
 * Atualização do contador do Header.
 * Renderização do Mini Carrinho.
-* Controle das ações de compra.
 * Atualização dos dados exibidos.
 * Comunicação com a página completa do carrinho.
-* Preparação para checkout.
+* Sincronização entre abas do navegador.
+* Redirecionamento do checkout limitado ao botão do mini carrinho.
 
 Arquitetura atual:
 
@@ -850,18 +829,6 @@ Events
 
 Shared Cart State
 
-Arquitetura atual:
-
-Cart State  
-↓  
-Helpers  
-↓  
-Cart Actions  
-↓  
-Rendering  
-↓  
-Events
-
 
 ## cart-page.js
 
@@ -869,15 +836,15 @@ Responsável exclusivamente pela página completa do carrinho.
 
 Responsabilidades:
 
-* Consumir o estado compartilhado do carrinho.
-* Integrar com products.js.
+* Consumir o estado, os helpers e as ações de `cart.js`.
+* Integrar com `products.js`.
 * Transformar referências em dados completos dos produtos.
 * Renderizar os produtos adicionados.
-* Atualizar quantidade.
-* Remover itens.
 * Calcular subtotal.
 * Calcular frete.
 * Calcular valor total.
+* Atualizar a interface após mudanças feitas em outra aba.
+* Isolar a lógica exclusiva da página do escopo global.
 
 Arquitetura:
 
@@ -911,9 +878,7 @@ Summary Update
 * Benefits.
 * Categories.
 * Products.
-* Header.
 * Sections.
-* Categories
 
 ## Componentes
 
@@ -927,6 +892,19 @@ Summary Update
 ---
 
 # ✨ Melhorias implementadas
+
+## Robustez de estado e integração
+
+* Estado, persistência, helpers e ações do carrinho centralizados em `cart.js`.
+* `cart-page.js` isolado do escopo global e sem redefinir funções centrais.
+* Carrinho, favoritos e newsletter carregados com validação defensiva do `localStorage`.
+* Contador, mini carrinho e página completa sincronizados após cada ação.
+* Carrinho sincronizado entre abas através do evento `storage`.
+* Referência compartilhada de `window.cart` preservada após remoções.
+* Seletores DOM opcionais protegidos antes do uso.
+* Redirecionamento do checkout limitado ao botão do mini carrinho.
+* Estilos do mini carrinho e da página completa escopados por componente.
+* Token `--color-white` adicionado ao Design System.
 
 ## Performance
 
@@ -945,8 +923,6 @@ Implementado:
 * Hierarquia correta de headings.
 * aria-label em elementos interativos.
 * Textos alternativos descritivos nas imagens.
-
----
 
 ---
 
@@ -1037,18 +1013,16 @@ Incluem:
 
 ---
 
----
-
 # Responsividade
 
-Implementada a adaptação completa da página inicial para diferentes dispositivos.
+Implementada a adaptação da página inicial e da página completa do carrinho para diferentes dispositivos.
 
 A responsividade foi trabalhada preservando a identidade premium da Lumière e evitando perda de hierarquia visual.
 
 Implementado:
 
-* Header reorganizado para mobile.
-* Menu hamburguer preparado para navegação em telas menores.
+* Header reorganizado para mobile nas duas páginas.
+* Menu hamburguer funcional em `index.html` e `cart.html`.
 * Hero adaptado para layout vertical.
 * Featured Collection com grid responsivo.
 * Story reorganizado com texto e imagem empilhados.
@@ -1058,6 +1032,8 @@ Implementado:
 * Filtros de produtos preparados para rolagem horizontal.
 * Newsletter com formulário adaptado para telas menores.
 * Footer reorganizado para navegação mobile.
+* Lista, resumo financeiro e controles do carrinho adaptados para telas menores.
+* Responsividade exclusiva do carrinho mantida em `cart-responsive.css`.
 
 Direção aplicada:
 
@@ -1072,7 +1048,7 @@ Direção aplicada:
 ## Curto prazo
 
 * Refinar microinterações.
-* Ajustar responsividade completa.
+* Realizar polimentos pontuais de responsividade e experiência mobile.
 
 ---
 
@@ -1086,8 +1062,7 @@ Direção aplicada:
 
 ## Longo prazo
 
-* Componentização completa.
-* Catálogo dinâmico.
+* Expandir componentes conforme novas páginas forem adicionadas.
 * Integração com API simulada.
 * Persistência avançada de dados.
 ---
@@ -1103,12 +1078,12 @@ A Lumière atualmente possui:
 * Hero finalizado.
 * Coleção em destaque.
 * Catálogo dinâmico renderizado via JavaScript.
-* Oito produtos cadastrados.
+* Dez produtos cadastrados.
 * Sistema de filtros por categoria.
 * Sistema de favoritos persistente.
 * Product Cards reutilizáveis.
 * Botão de compra funcional.
-* Carrinho persistente com localStorage.
+* Carrinho persistente com leitura defensiva do localStorage.
 * Mini Carrinho lateral funcional.
 * Página completa de carrinho.
 * Header reutilizável entre páginas.
@@ -1116,9 +1091,12 @@ A Lumière atualmente possui:
 * Controle de quantidade.
 * Remoção de produtos.
 * Cálculo automático de subtotal, frete e total.
+* Estado, persistência, helpers e ações centralizados em `cart.js`.
+* Contador, mini carrinho e página completa sincronizados.
+* Sincronização do carrinho entre abas.
 * Arquitetura JavaScript organizada e escalável.
 * Newsletter funcional com persistência local.
 * Sistema de Toast reutilizável entre funcionalidades.
-* Página inicial totalmente responsiva para desktop, tablet e mobile.
+* Página inicial e carrinho responsivos para desktop, tablet e mobile.
 * Componentes adaptados mantendo consistência visual entre diferentes resoluções.
 * Experiência mobile refinada para navegação, catálogo e áreas institucionais.

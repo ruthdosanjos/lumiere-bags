@@ -55,6 +55,7 @@ Além do design, o foco principal está na construção de uma aplicação escal
 
 ### Catálogo
 
+- Dez bolsas cadastradas em uma fonte de dados central
 - Produtos renderizados dinamicamente via JavaScript
 - Filtros por categoria
 - Estrutura preparada para expansão do catálogo
@@ -65,6 +66,7 @@ Além do design, o foco principal está na construção de uma aplicação escal
 - Adicionar e remover favoritos
 - Persistência com LocalStorage
 - Sincronização entre diferentes seções da página
+- Leitura defensiva dos IDs persistidos
 
 ### Carrinho
 
@@ -73,14 +75,17 @@ Além do design, o foco principal está na construção de uma aplicação escal
 - Atualização automática do contador
 - Controle de quantidade
 - Remoção de produtos
-- Estado compartilhado entre páginas
-- Persistência de dados
+- Estado, persistência e ações centralizados em `cart.js`
+- Sincronização entre contador, mini carrinho e página completa
+- Sincronização do carrinho entre abas do navegador
+- Leitura defensiva do estado persistido
 
 ### Newsletter
 
 - Validação de e-mail
 - Persistência dos inscritos
 - Prevenção de cadastros duplicados
+- Leitura defensiva dos dados persistidos
 
 ### Interface
 
@@ -110,8 +115,11 @@ lumiere/
 │   ├── products.js
 │   ├── cart.js
 │   ├── cart-page.js
+│   ├── main.js
 │   ├── newsletter.js
 │   └── components/
+│       ├── mobile-menu.js
+│       └── toast.js
 │
 ├── index.html
 ├── cart.html
@@ -141,9 +149,18 @@ lumiere/
 
 ### Gerenciamento de Estado
 
-- Estado centralizado do carrinho
-- Compartilhamento entre páginas
-- Persistência utilizando LocalStorage
+- Fonte central para estado, persistência, helpers e ações do carrinho
+- Estado compartilhado entre contador, mini carrinho e página completa
+- Persistência validada utilizando LocalStorage
+- Atualização entre abas através do evento `storage`
+
+### Robustez e Consistência
+
+- `cart-page.js` isolado do escopo global e dedicado à renderização da página
+- Validação defensiva de carrinho, favoritos e newsletter
+- Seletores DOM opcionais protegidos antes do uso
+- Estilos do mini carrinho e da página completa limitados aos seus contextos
+- Design System atualizado com o token de cor clara utilizado pelos componentes
 
 ### Performance
 
@@ -165,7 +182,8 @@ lumiere/
 - Desktop
 - Tablet
 - Mobile
-- Componentes adaptáveis
+- Página inicial e carrinho completo adaptáveis
+- Header e navegação mobile disponíveis nas duas páginas
 - Layout consistente em diferentes resoluções
 
 ---
@@ -206,7 +224,7 @@ Este projeto foi desenvolvido para demonstrar competências em:
 
 Atualmente a Lumière já possui:
 
-- Catálogo dinâmico
+- Catálogo dinâmico com dez produtos
 - Sistema de favoritos
 - Carrinho completo
 - Página exclusiva do carrinho
@@ -214,7 +232,7 @@ Atualmente a Lumière já possui:
 - Responsividade completa
 - Componentes reutilizáveis
 - Arquitetura modular
-- Persistência com LocalStorage
+- Persistência validada com LocalStorage
 
 O projeto continua em evolução, recebendo melhorias contínuas de arquitetura, experiência do usuário e qualidade do código.
 
