@@ -189,7 +189,7 @@ function increaseQuantity(productId) {
 
     item.quantity++;
 
-    saveCart();
+    syncCart();
 
 }
 
@@ -211,7 +211,7 @@ function decreaseQuantity(productId) {
 
     }
 
-    saveCart();
+    syncCart();
 
 }
 
@@ -225,7 +225,7 @@ function removeFromCart(productId) {
 
     cart.splice(0, cart.length, ...updatedCart);
 
-    saveCart();
+    syncCart();
 
 }
 
