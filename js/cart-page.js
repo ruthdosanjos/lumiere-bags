@@ -30,42 +30,8 @@ const totalElement = document.querySelector(
 
 
 /* ==========================================================
-   Storage Helpers
-========================================================== */
-
-function saveCart() {
-
-    localStorage.setItem(
-        CART_STORAGE_KEY,
-        JSON.stringify(cart)
-    );
-
-}
-
-
-/* ==========================================================
    Product Helpers
 ========================================================== */
-
-function getProduct(productId) {
-
-    return products.find(product => {
-
-        return product.id === productId;
-
-    });
-
-}
-
-function getCartItem(productId) {
-
-    return cart.find(item => {
-
-        return item.productId === productId;
-
-    });
-
-}
 
 function getCartProducts() {
 
@@ -92,21 +58,6 @@ function getCartProducts() {
 
         })
         .filter(Boolean);
-
-}
-
-function formatPrice(value) {
-
-    return value.toLocaleString(
-        "pt-BR",
-        {
-
-            style: "currency",
-
-            currency: "BRL"
-
-        }
-    );
 
 }
 
@@ -182,60 +133,6 @@ function updateSummary() {
 
 }
 
-
-/* ==========================================================
-   Cart Actions
-========================================================== */
-
-function increaseQuantity(productId) {
-
-    const item = getCartItem(
-        productId
-    );
-
-    if (!item) return;
-
-    item.quantity++;
-
-    syncCart();
-
-}
-
-function decreaseQuantity(productId) {
-
-    const item = getCartItem(
-        productId
-    );
-
-    if (!item) return;
-
-    item.quantity--;
-
-    if (item.quantity <= 0) {
-
-        removeFromCart(productId);
-
-        return;
-
-    }
-
-    syncCart();
-
-}
-
-function removeFromCart(productId) {
-
-    const updatedCart = cart.filter(item => {
-
-        return item.productId !== productId;
-
-    });
-
-    cart.splice(0, cart.length, ...updatedCart);
-
-    syncCart();
-
-}
 
 /* ==========================================================
    Rendering Helpers
