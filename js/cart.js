@@ -539,6 +539,29 @@ checkoutButton?.addEventListener(
     }
 );
 
+/* ==========================================================
+   Storage Events
+========================================================== */
+
+function handleCartStorage(event) {
+
+    if (
+        event.key !== CART_STORAGE_KEY
+        && event.key !== null
+    ) return;
+
+    const storedCart = loadCart();
+
+    cart.splice(0, cart.length, ...storedCart);
+
+    updateCartCounter();
+
+    renderMiniCart();
+
+    updateCartItemsCount();
+
+}
+
 
 /* ==========================================================
    Event Listeners
@@ -547,6 +570,11 @@ checkoutButton?.addEventListener(
 document.addEventListener(
     "click",
     handleCartClick
+);
+
+window.addEventListener(
+    "storage",
+    handleCartStorage
 );
 
 if (cartButton) {

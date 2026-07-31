@@ -420,12 +420,31 @@ function handleCartPageClick(event) {
 
 }
 
+function handleCartPageStorage(event) {
+
+    if (
+        event.key !== CART_STORAGE_KEY
+        && event.key !== null
+    ) return;
+
+    renderCartPage();
+
+}
+
 
 cartItemsContainer?.addEventListener(
 
     "click",
 
     handleCartPageClick
+
+);
+
+window.addEventListener(
+
+    "storage",
+
+    handleCartPageStorage
 
 );
 
