@@ -131,27 +131,33 @@ function getSubtotal() {
 
 }
 
-function getShipping() {
+function getShipping(subtotal) {
 
-    return getSubtotal() > 0
+    return subtotal > 0
         ? SHIPPING_COST
         : 0;
 
 }
 
-function getTotal() {
+function getTotal(subtotal, shipping) {
 
-    return getSubtotal() + getShipping();
+    return subtotal + shipping;
 
 }
 
 function updateSummary() {
 
+    const subtotal = getSubtotal();
+
+    const shipping = getShipping(subtotal);
+
+    const total = getTotal(subtotal, shipping);
+
     if (subtotalElement) {
 
         subtotalElement.textContent =
             formatPrice(
-                getSubtotal()
+                subtotal
             );
 
     }
@@ -160,7 +166,7 @@ function updateSummary() {
 
         shippingElement.textContent =
             formatPrice(
-                getShipping()
+                shipping
             );
 
     }
@@ -169,7 +175,7 @@ function updateSummary() {
 
         totalElement.textContent =
             formatPrice(
-                getTotal()
+                total
             );
 
     }
