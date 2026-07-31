@@ -186,10 +186,7 @@ function updateCartItemsCount() {
     if (!cartItemsCount) return;
 
 
-    const totalItems = cart.reduce(
-        (total, item) => total + item.quantity,
-        0
-    );
+    const totalItems = getCartItemsCount();
 
 
     if (totalItems === 0) {
