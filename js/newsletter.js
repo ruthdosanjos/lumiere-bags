@@ -15,9 +15,31 @@ const newsletterInput = document.querySelector("#newsletter-email");
 
 function getSubscribers() {
 
-    return JSON.parse(
-        localStorage.getItem(NEWSLETTER_STORAGE_KEY)
-    ) || [];
+    const storedSubscribers = localStorage.getItem(
+        NEWSLETTER_STORAGE_KEY
+    );
+
+    if (!storedSubscribers) return [];
+
+    try {
+
+        const parsedSubscribers = JSON.parse(
+            storedSubscribers
+        );
+
+        if (!Array.isArray(parsedSubscribers)) return [];
+
+        return parsedSubscribers.filter(subscriber => {
+
+            return typeof subscriber === "string";
+
+        });
+
+    } catch (error) {
+
+        return [];
+
+    }
 
 }
 
@@ -49,7 +71,7 @@ function isValidEmail(email) {
    Events
 ========================================================== */
 
-if (newsletterForm) {
+if (newsletterForm && newsletterInput) {
 
     newsletterForm.addEventListener("submit", (event) => {
 
