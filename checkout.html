@@ -98,6 +98,7 @@
                     <a
                         href="./cart.html#cart-content"
                         class="icon-button cart-button"
+                        data-checkout-exit
                         aria-label="Voltar aos itens do carrinho">
 
                         <i class="bi bi-bag" aria-hidden="true"></i>
@@ -128,7 +129,9 @@
 
                 <nav class="checkout-breadcrumb" aria-label="Navegação estrutural">
 
-                    <a href="./cart.html#cart-content">
+                    <a
+                        href="./cart.html#cart-content"
+                        data-checkout-exit>
                         Meu carrinho
                     </a>
 
@@ -169,7 +172,9 @@
 
                 <ol>
 
-                    <li aria-current="step">
+                    <li
+                        data-checkout-progress-step="1"
+                        aria-current="step">
                         <span class="checkout-progress-number" aria-hidden="true">
                             1
                         </span>
@@ -178,12 +183,12 @@
                             Dados e entrega
                         </span>
 
-                        <span class="checkout-sr-only">
+                        <span class="checkout-progress-state checkout-sr-only">
                             Etapa atual
                         </span>
                     </li>
 
-                    <li>
+                    <li data-checkout-progress-step="2">
                         <span class="checkout-progress-number" aria-hidden="true">
                             2
                         </span>
@@ -191,9 +196,11 @@
                         <span>
                             Pagamento
                         </span>
+
+                        <span class="checkout-progress-state checkout-sr-only"></span>
                     </li>
 
-                    <li>
+                    <li data-checkout-progress-step="3">
                         <span class="checkout-progress-number" aria-hidden="true">
                             3
                         </span>
@@ -201,9 +208,11 @@
                         <span>
                             Revisão
                         </span>
+
+                        <span class="checkout-progress-state checkout-sr-only"></span>
                     </li>
 
-                    <li>
+                    <li data-checkout-progress-step="4">
                         <span class="checkout-progress-number" aria-hidden="true">
                             4
                         </span>
@@ -211,6 +220,8 @@
                         <span>
                             Confirmação
                         </span>
+
+                        <span class="checkout-progress-state checkout-sr-only"></span>
                     </li>
 
                 </ol>
@@ -500,13 +511,15 @@
 
                             <a
                                 href="./cart.html#cart-content"
-                                class="checkout-text-action">
+                                class="checkout-text-action"
+                                data-checkout-exit>
                                 Cancelar checkout
                             </a>
 
                             <button
                                 type="button"
-                                class="checkout-primary-action">
+                                class="checkout-primary-action"
+                                data-checkout-next>
                                 Continuar
                             </button>
 
@@ -633,13 +646,15 @@
 
                             <button
                                 type="button"
-                                class="checkout-secondary-action">
+                                class="checkout-secondary-action"
+                                data-checkout-previous>
                                 Voltar
                             </button>
 
                             <button
                                 type="button"
-                                class="checkout-primary-action">
+                                class="checkout-primary-action"
+                                data-checkout-next>
                                 Continuar
                             </button>
 
@@ -737,7 +752,8 @@
 
                             <button
                                 type="button"
-                                class="checkout-secondary-action">
+                                class="checkout-secondary-action"
+                                data-checkout-previous>
                                 Voltar
                             </button>
 
@@ -807,7 +823,8 @@
 
                     <a
                         href="./cart.html#cart-content"
-                        class="checkout-edit-cart">
+                        class="checkout-edit-cart"
+                        data-checkout-exit>
 
                         <i class="bi bi-arrow-left" aria-hidden="true"></i>
                         Editar carrinho
@@ -1047,12 +1064,13 @@
 
     </footer>
 
-    <!-- Ordem de dependências: mobile-menu → products → cart → main -->
+    <!-- Ordem de dependências: mobile-menu → products → cart → main → checkout -->
 
     <script src="./js/components/mobile-menu.js"></script>
     <script src="./js/products.js"></script>
     <script src="./js/cart.js"></script>
     <script src="./js/main.js"></script>
+    <script src="./js/checkout.js"></script>
 
 </body>
 

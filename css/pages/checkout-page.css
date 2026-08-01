@@ -170,6 +170,10 @@ body.checkout-page {
     font-weight: 600;
 }
 
+.checkout-progress li.completed {
+    color: var(--color-primary);
+}
+
 .checkout-progress-number {
     width: 30px;
     height: 30px;
@@ -191,6 +195,13 @@ body.checkout-page {
     background: var(--color-primary);
 
     border-color: var(--color-primary);
+}
+
+.checkout-progress li.completed .checkout-progress-number {
+    color: var(--color-secondary);
+    background: var(--color-background);
+
+    border-color: var(--color-secondary);
 }
 
 /* ==========================================================
