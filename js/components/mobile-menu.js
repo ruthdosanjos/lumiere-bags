@@ -3,28 +3,47 @@ const navMenu = document.querySelector(".nav-menu");
 const navLinks = document.querySelectorAll(".nav-menu a");
 
 
+function setMobileMenuState(isOpen, restoreFocus = false) {
+
+    if (!menuToggle || !navMenu) return;
+
+    navMenu.classList.toggle(
+        "active",
+        isOpen
+    );
+
+    menuToggle.setAttribute(
+        "aria-expanded",
+        String(isOpen)
+    );
+
+    menuToggle.setAttribute(
+        "aria-label",
+        isOpen ? "Fechar menu" : "Abrir menu"
+    );
+
+    menuToggle.innerHTML = isOpen
+        ? '<i class="bi bi-x-lg" aria-hidden="true"></i>'
+        : '<i class="bi bi-list" aria-hidden="true"></i>';
+
+    if (restoreFocus) {
+        menuToggle.focus();
+    }
+
+}
+
+
 if (menuToggle && navMenu) {
 
+    setMobileMenuState(false);
 
     menuToggle.addEventListener("click", () => {
 
-
-        navMenu.classList.toggle("active");
-
-
-        const isOpen = navMenu.classList.contains("active");
-
-
-        menuToggle.setAttribute(
-            "aria-label",
-            isOpen ? "Fechar menu" : "Abrir menu"
+        const isOpen = !navMenu.classList.contains(
+            "active"
         );
 
-
-        menuToggle.innerHTML = isOpen
-            ? '<i class="bi bi-x-lg"></i>'
-            : '<i class="bi bi-list"></i>';
-
+        setMobileMenuState(isOpen);
 
     });
 
@@ -35,19 +54,7 @@ if (menuToggle && navMenu) {
 
         link.addEventListener("click", () => {
 
-
-            navMenu.classList.remove("active");
-
-
-            menuToggle.setAttribute(
-                "aria-label",
-                "Abrir menu"
-            );
-
-
-            menuToggle.innerHTML =
-                '<i class="bi bi-list"></i>';
-
+            setMobileMenuState(false);
 
         });
 
@@ -61,13 +68,22 @@ if (menuToggle && navMenu) {
 
     window.addEventListener("resize", () => {
 
-        if (window.innerWidth > 768) {
+        if (
+            window.innerWidth > 768
+            && navMenu.classList.contains("active")
+        ) {
+            setMobileMenuState(false);
+        }
 
-            navMenu.classList.remove("active");
+    });
 
-            menuToggle.innerHTML =
-                '<i class="bi bi-list"></i>';
+    document.addEventListener("keydown", event => {
 
+        if (
+            event.key === "Escape"
+            && navMenu.classList.contains("active")
+        ) {
+            setMobileMenuState(false, true);
         }
 
     });
