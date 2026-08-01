@@ -526,3 +526,17 @@
 }
 
 }
+
+
+/* ==================================================
+   SMALL MOBILE
+================================================== */
+
+@media (max-width: 425px) {
+
+    .products-grid,
+    .products-catalog {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+}
