@@ -10,6 +10,12 @@ const TOTAL_STEPS = 4;
 
 const LAST_NAVIGABLE_STEP = TOTAL_STEPS - 1;
 
+const PROCESSING_FEEDBACK_DELAY = 250;
+
+const CONFIRM_BUTTON_TEXT = "Confirmar pedido simulado";
+
+const SUBMITTING_BUTTON_TEXT = "Confirmando...";
+
 const STEP_NAMES = [
     "Dados e entrega",
     "Pagamento",
@@ -79,6 +85,10 @@ const SELECTORS = {
     progressState: ".checkout-progress-state",
     liveRegion: ".checkout-live-region",
     reviewSubmit: "[data-review-submit]",
+    confirmButton: ".checkout-confirm-button",
+    confirmationOrderNumber: "[data-confirmation-order-number]",
+    confirmationTotal: "[data-confirmation-total]",
+    confirmationPayment: "[data-confirmation-payment]",
     paymentFieldset: ".checkout-payment-fieldset",
     paymentError: "#checkout-payment-error",
     paymentDetails: "[data-payment-details]",
@@ -122,6 +132,10 @@ const checkoutState = {
     isSubmitting: false
 };
 
+let confirmedOrderSnapshot = null;
+
+let orderNumberSequence = 0;
+
 /* ==========================================================
    DOM Elements
 ========================================================== */
@@ -144,6 +158,22 @@ const liveRegion = document.querySelector(
 
 const reviewSubmit = document.querySelector(
     SELECTORS.reviewSubmit
+);
+
+const confirmButton = document.querySelector(
+    SELECTORS.confirmButton
+);
+
+const confirmationOrderNumber = document.querySelector(
+    SELECTORS.confirmationOrderNumber
+);
+
+const confirmationTotal = document.querySelector(
+    SELECTORS.confirmationTotal
+);
+
+const confirmationPayment = document.querySelector(
+    SELECTORS.confirmationPayment
 );
 
 const paymentFieldset = document.querySelector(
@@ -816,6 +846,345 @@ function renderReviewData(orderData = getCheckoutOrderData()) {
 }
 
 /* ==========================================================
+   Simulated Order Confirmation
+========================================================== */
+
+function isValidOrderData(orderData) {
+
+    return (
+        orderData
+        && Array.isArray(orderData.items)
+        && orderData.items.length > 0
+        && orderData.items.every(item => (
+            Number.isInteger(item.quantity)
+            && item.quantity > 0
+            && Number.isFinite(item.price)
+            && item.price >= 0
+        ))
+        && Number.isFinite(orderData.subtotal)
+        && orderData.subtotal >= 0
+        && Number.isFinite(orderData.shipping)
+        && orderData.shipping >= 0
+        && Number.isFinite(orderData.total)
+        && orderData.total >= 0
+    );
+
+}
+
+function canSubmitCheckout(orderData = getCheckoutOrderData()) {
+
+    return (
+        checkoutState.currentStep === 3
+        && !checkoutState.isSubmitting
+        && validatePersonalAndDeliveryStep(false)
+        && validatePaymentStep(false)
+        && isValidOrderData(orderData)
+        && typeof clearCart === "function"
+    );
+
+}
+
+function updateCheckoutSubmitState() {
+
+    if (!confirmButton) return;
+
+    confirmButton.disabled = !canSubmitCheckout();
+
+    if (!checkoutState.isSubmitting) {
+        confirmButton.textContent = CONFIRM_BUTTON_TEXT;
+    }
+
+}
+
+function setSubmittingState(isSubmitting) {
+
+    checkoutState.isSubmitting = isSubmitting;
+
+    if (isSubmitting) {
+
+        reviewSubmit.setAttribute(
+            "aria-busy",
+            "true"
+        );
+
+        confirmButton.disabled = true;
+        confirmButton.textContent = SUBMITTING_BUTTON_TEXT;
+
+        return;
+
+    }
+
+    reviewSubmit.removeAttribute(
+        "aria-busy"
+    );
+
+    updateCheckoutSubmitState();
+
+}
+
+function generateOrderNumber() {
+
+    orderNumberSequence = (
+        orderNumberSequence + 1
+    ) % 1296;
+
+    const currentYear = new Date().getFullYear();
+    const timestampPart = Date.now()
+        .toString(36)
+        .slice(-4)
+        .padStart(4, "0")
+        .toUpperCase();
+    const sequencePart = orderNumberSequence
+        .toString(36)
+        .padStart(2, "0")
+        .toUpperCase();
+
+    return `LUM-${currentYear}-${timestampPart}${sequencePart}`;
+
+}
+
+function createOrderSnapshot(orderData, orderNumber) {
+
+    const delivery = checkoutState.delivery;
+    const complement = delivery.addressComplement
+        ? ` — ${delivery.addressComplement}`
+        : "";
+
+    return {
+        orderNumber,
+        items: orderData.items.map(item => ({
+            productId: item.id,
+            name: item.name,
+            collection: item.collection,
+            image: item.image,
+            quantity: item.quantity,
+            unitPrice: item.price
+        })),
+        subtotal: orderData.subtotal,
+        shipping: orderData.shipping,
+        total: orderData.total,
+        customer: {
+            fullName: checkoutState.personal.fullName,
+            email: checkoutState.personal.email,
+            phone: checkoutState.personal.phone
+        },
+        delivery: {
+            postalCode: delivery.postalCode,
+            address: delivery.address,
+            addressNumber: delivery.addressNumber,
+            addressComplement: delivery.addressComplement,
+            neighborhood: delivery.neighborhood,
+            city: delivery.city,
+            state: delivery.state,
+            formattedAddress: `${delivery.address}, ${delivery.addressNumber}${complement} — ${delivery.neighborhood}, ${delivery.city}/${delivery.state} — CEP ${delivery.postalCode}`
+        },
+        paymentMethod: checkoutState.paymentMethod
+    };
+
+}
+
+function resetOperationalCheckoutState() {
+
+    checkoutState.currentStep = 4;
+
+    checkoutState.personal.fullName = "";
+    checkoutState.personal.email = "";
+    checkoutState.personal.phone = "";
+
+    checkoutState.delivery.postalCode = "";
+    checkoutState.delivery.address = "";
+    checkoutState.delivery.addressNumber = "";
+    checkoutState.delivery.addressComplement = "";
+    checkoutState.delivery.neighborhood = "";
+    checkoutState.delivery.city = "";
+    checkoutState.delivery.state = "";
+
+    checkoutState.paymentMethod = "";
+
+    checkoutForm.reset();
+
+    reviewPersonal.replaceChildren();
+    reviewAddress.replaceChildren();
+    reviewPayment.replaceChildren();
+    reviewOrder.replaceChildren();
+    orderItems.replaceChildren();
+
+    orderUnavailable.hidden = true;
+    orderUnavailable.textContent = "";
+
+    clearStepErrors(1);
+    clearStepErrors(2);
+    renderPaymentDetails();
+    setSubmittingState(false);
+
+}
+
+function renderConfirmation(orderSnapshot) {
+
+    const payment = PAYMENT_DETAILS[
+        orderSnapshot.paymentMethod
+    ];
+
+    confirmationOrderNumber.textContent = orderSnapshot.orderNumber;
+    confirmationTotal.textContent = formatPrice(
+        orderSnapshot.total
+    );
+    confirmationPayment.textContent = payment.label;
+
+    checkoutForm.hidden = true;
+
+    renderCurrentStep(
+        true,
+        false
+    );
+
+    if (liveRegion) {
+
+        liveRegion.textContent = (
+            `Pedido simulado confirmado. Número ${orderSnapshot.orderNumber}. Nenhuma cobrança foi realizada.`
+        );
+
+    }
+
+}
+
+function completeSimulatedOrder(orderSnapshot) {
+
+    clearCart();
+
+    confirmedOrderSnapshot = orderSnapshot;
+
+    clearCheckoutDraft();
+    resetOperationalCheckoutState();
+    renderConfirmation(confirmedOrderSnapshot);
+
+}
+
+function redirectToFirstInvalidStep() {
+
+    const isPersonalAndDeliveryValid = validatePersonalAndDeliveryStep();
+    const isPaymentValid = validatePaymentStep();
+
+    if (!isPersonalAndDeliveryValid) {
+
+        goToStep(1);
+        announceStepErrors(1);
+        focusFirstInvalidField(1);
+
+        return true;
+
+    }
+
+    if (!isPaymentValid) {
+
+        goToStep(2);
+        announceStepErrors(2);
+        focusFirstInvalidField(2);
+
+        return true;
+
+    }
+
+    return false;
+
+}
+
+function validateCheckoutForSubmission() {
+
+    if (redirectToFirstInvalidStep()) return null;
+
+    const orderData = getCheckoutOrderData();
+
+    if (!orderData) {
+
+        redirectToCartIfEmpty();
+
+        return null;
+
+    }
+
+    if (
+        !isValidOrderData(orderData)
+        || typeof clearCart !== "function"
+    ) {
+
+        if (liveRegion) {
+            liveRegion.textContent = "Não foi possível validar o pedido. Revise o carrinho antes de tentar novamente.";
+        }
+
+        return null;
+
+    }
+
+    return orderData;
+
+}
+
+async function handleCheckoutSubmit(event) {
+
+    event.preventDefault();
+
+    if (
+        checkoutState.currentStep !== 3
+        || checkoutState.isSubmitting
+    ) return;
+
+    const initialOrderData = validateCheckoutForSubmission();
+
+    if (!initialOrderData) {
+
+        updateCheckoutSubmitState();
+
+        return;
+
+    }
+
+    setSubmittingState(true);
+
+    let isCompleted = false;
+
+    try {
+
+        await new Promise(resolve => {
+
+            window.setTimeout(
+                resolve,
+                PROCESSING_FEEDBACK_DELAY
+            );
+
+        });
+
+        const finalOrderData = validateCheckoutForSubmission();
+
+        if (!finalOrderData) return;
+
+        const orderNumber = generateOrderNumber();
+        const orderSnapshot = createOrderSnapshot(
+            finalOrderData,
+            orderNumber
+        );
+
+        completeSimulatedOrder(orderSnapshot);
+
+        isCompleted = true;
+
+    } catch (error) {
+
+        if (liveRegion) {
+            liveRegion.textContent = "Não foi possível concluir a simulação. Tente novamente.";
+        }
+
+    } finally {
+
+        if (!isCompleted) {
+            setSubmittingState(false);
+        }
+
+    }
+
+}
+
+/* ==========================================================
    Accessible Validation
 ========================================================== */
 
@@ -1192,7 +1561,10 @@ function updateStepIndicator() {
 
 }
 
-function renderCurrentStep(focusHeading = false) {
+function renderCurrentStep(
+    focusHeading = false,
+    announceStepChange = true
+) {
 
     checkoutSteps.forEach(stepPanel => {
 
@@ -1215,12 +1587,13 @@ function renderCurrentStep(focusHeading = false) {
     }
 
     updateStepIndicator();
+    updateCheckoutSubmitState();
 
     const stepName = STEP_NAMES[
         checkoutState.currentStep - 1
     ];
 
-    if (liveRegion) {
+    if (liveRegion && announceStepChange) {
 
         liveRegion.textContent = (
             `Etapa ${checkoutState.currentStep} de ${TOTAL_STEPS}: ${stepName}.`
@@ -1437,11 +1810,7 @@ function registerCheckoutEvents() {
 
     checkoutForm.addEventListener(
         "submit",
-        event => {
-
-            event.preventDefault();
-
-        }
+        handleCheckoutSubmit
     );
 
 }
@@ -1500,6 +1869,10 @@ function initializeCheckout() {
         && progressItems.length === TOTAL_STEPS
         && liveRegion
         && reviewSubmit
+        && confirmButton
+        && confirmationOrderNumber
+        && confirmationTotal
+        && confirmationPayment
         && paymentFieldset
         && paymentError
         && paymentDetails

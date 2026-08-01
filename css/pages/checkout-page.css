@@ -880,6 +880,14 @@ body.checkout-page {
     width: 100%;
 }
 
+.checkout-review-submit[aria-busy="true"] {
+    cursor: wait;
+}
+
+.checkout-review-submit[aria-busy="true"] .checkout-step-notice {
+    opacity: 0.72;
+}
+
 /* ==========================================================
    Confirmation
 ========================================================== */
@@ -906,6 +914,18 @@ body.checkout-page {
     color: var(--color-text-muted);
 
     line-height: 1.7;
+}
+
+.checkout-confirmation [data-confirmation-order-number] {
+    display: inline-block;
+
+    margin-left: 0.25rem;
+
+    color: var(--color-primary);
+
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    letter-spacing: 0.06em;
 }
 
 .checkout-confirmation-details {
