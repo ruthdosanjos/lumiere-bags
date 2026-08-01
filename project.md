@@ -1,1102 +1,634 @@
-# 📁 project.md — LUMIÈRE
+# Documento técnico — Lumière
 
-# 👜 Visão Geral
+## Visão geral
 
-LUMIÈRE é um e-commerce fictício de bolsas com estética minimalista e sofisticada, desenvolvido como projeto de portfólio front-end.
+Lumière é um e-commerce fictício de bolsas premium desenvolvido como projeto de portfólio Front-end. A aplicação cobre descoberta de produtos, favoritos, carrinho e finalização demonstrativa de pedido usando somente HTML5, CSS3 modular e JavaScript Vanilla.
 
-O objetivo é simular uma marca de moda premium com experiência de navegação moderna, inspirada em e-commerces de luxo e landing pages contemporâneas.
+O código atual é a fonte oficial deste documento. A aplicação não possui backend, banco de dados, autenticação, gateway de pagamento ou persistência de pedidos confirmados.
 
----
+## Objetivos
 
-# 🎯 Objetivos
+- Demonstrar organização de uma aplicação Front-end multipágina sem frameworks.
+- Construir uma experiência de compra coerente e responsiva.
+- Manter uma identidade visual minimalista, premium e consistente.
+- Aplicar separação de responsabilidades entre marcação, estilos, dados, estado e interface.
+- Tratar persistência e entradas do usuário de forma defensiva.
+- Oferecer fluxos acessíveis por teclado e tecnologias assistivas.
+- Simular um checkout sem coletar ou transmitir dados financeiros.
 
-* Construir um e-commerce visualmente forte para portfólio.
-* Demonstrar domínio de HTML5, CSS3 modular e JavaScript Vanilla.
-* Criar uma interface elegante, responsiva e reutilizável.
-* Simular uma marca real com identidade visual consistente.
----
+## Arquitetura
 
-# Estrutura
+### Stack
 
-Implementado:
+- HTML5 semântico.
+- CSS3 modular com variáveis customizadas.
+- JavaScript Vanilla ES6+ em scripts clássicos.
+- Web Storage API para estados locais selecionados.
+- Fetch API e `AbortController` para integração com ViaCEP.
 
-* Organização completa das pastas do projeto.
-* Arquitetura modular de CSS.
-* Estrutura modular de JavaScript.
-* Organização dos assets por categoria.
-* Design System com variáveis de cores, tipografia e espaçamentos.
-* Separação de responsabilidades entre HTML, CSS e JavaScript.
+Não há bundler, módulos ES, TypeScript, React, jQuery, biblioteca de validação ou biblioteca de máscara.
 
----
+### Páginas
 
-# Header
+| Página | Responsabilidade |
+|---|---|
+| `index.html` | Home, coleção em destaque, catálogo, filtros, favoritos, newsletter e mini carrinho |
+| `cart.html` | Carrinho completo, edição de quantidades, remoção, totais e acesso ao checkout |
+| `checkout.html` | Checkout demonstrativo em quatro etapas e confirmação simulada |
 
-Implementado:
+### Organização do CSS
 
-* Navbar fixa reutilizável entre páginas.
-* Header integrado ao index.html e cart.html.
-* Efeito Glassmorphism ao scroll.
-* Navegação por âncoras na página inicial.
-* Links adaptados para navegação entre páginas.
-* Botões de ações preparados para futuras funcionalidades.
-* Estrutura semântica com acessibilidade.
-* Contador do carrinho integrado ao sistema de compras.
-* Atualização dinâmica conforme quantidade de produtos adicionados.
-* Compartilhamento do estado do carrinho entre diferentes páginas.
-* Menu mobile e Bootstrap Icons disponíveis também em `cart.html`.
-* Ação do carrinho em `cart.html` direcionada para a lista de itens da própria página.
+`css/style.css` importa o núcleo compartilhado:
 
-Arquitetura:
+- `variables.css`: tokens do Design System;
+- `base/`: reset, tipografia e regras globais;
+- `layout/`: seções e estruturas da Home;
+- `components/`: botões, Product Card e mini carrinho.
 
-Header  
-↓  
-cart.js  
-↓  
-Cart State  
-↓  
-localStorage  
-↓  
-Mini Cart / Cart Page
+As páginas especializadas usam folhas adicionais:
 
----
+- `pages/cart-page.css`, que importa `cart-item.css` e `cart-summary.css`;
+- `cart-responsive.css` para adaptações do carrinho completo;
+- `pages/checkout-page.css` para a estrutura e os componentes do checkout;
+- `checkout-responsive.css` para adaptações do checkout;
+- `responsive.css` para regras gerais da interface.
 
-# Hero
+Os seletores do mini carrinho, carrinho completo e checkout são limitados aos seus contextos para reduzir efeitos colaterais entre componentes.
 
-Finalizado:
+### Organização do JavaScript
 
-* Layout responsivo para desktop, tablet e mobile.
-* Adaptação do conteúdo para diferentes tamanhos de tela.
-* Headline principal.
-* CTA principal.
-* Imagem hero otimizada.
-* Tipografia alinhada ao posicionamento premium da marca.
-* Organização em coluna no mobile para melhor experiência visual.
----
+| Arquivo | Responsabilidade principal |
+|---|---|
+| `js/products.js` | Dados dos produtos, Product Cards, Featured, catálogo, filtros, Categories e favoritos |
+| `js/cart.js` | Estado central do carrinho, persistência, helpers, ações, contador e mini carrinho |
+| `js/cart-page.js` | Renderização e eventos exclusivos de `cart.html` |
+| `js/checkout.js` | Estado temporário, etapas, ViaCEP, validação, resumo, revisão e confirmação |
+| `js/newsletter.js` | Validação, persistência e feedback da newsletter |
+| `js/main.js` | Estado visual do header durante a rolagem |
+| `js/components/mobile-menu.js` | Abertura, fechamento e acessibilidade do menu mobile |
+| `js/components/toast.js` | Feedback temporário reutilizável na Home |
 
-# Featured Collection — ÉTOILE
+`cart-page.js` e `checkout.js` são encapsulados em funções autoexecutáveis. As funções centrais do carrinho permanecem disponíveis no escopo global porque as páginas usam scripts clássicos e dependem delas pela ordem de carregamento.
 
-A seção Featured Collection foi refinada para apresentar uma coleção específica da marca ao invés de produtos aleatórios do catálogo.
+### Ordem dos scripts
 
-Coleção em destaque:
+Home:
 
-## ÉTOILE
+1. `toast.js`
+2. `mobile-menu.js`
+3. Bootstrap Bundle 5.3.7
+4. `main.js`
+5. `products.js`
+6. `cart.js`
+7. `newsletter.js`
 
-Representa:
+Carrinho:
 
-* Leveza.
-* Elegância cotidiana.
-* Design atemporal.
-* Sofisticação discreta.
+1. `mobile-menu.js`
+2. `products.js`
+3. `cart.js`
+4. `main.js`
+5. `cart-page.js`
 
-Produtos apresentados:
+Checkout:
 
-## Aurora
+1. `mobile-menu.js`
+2. `products.js`
+3. `cart.js`
+4. `main.js`
+5. `checkout.js`
 
-* Shoulder Bag.
-* Elegância natural.
-* Tons claros e sofisticados.
+`products.js` antecede `cart.js` porque o carrinho consulta a fonte central de produtos. `cart.js` antecede as páginas consumidoras porque expõe os helpers e as ações compartilhadas.
 
-## Celeste
-
-* Tote Bag.
-* Design contemporâneo.
-* Personalidade urbana.
-
-## Alba
-
-* Shoulder Bag.
-* Minimalismo refinado.
-* Versatilidade para o dia a dia.
-
-## Luna
-
-* Mini Bag.
-* Design compacto.
-* Praticidade aliada à sofisticação.
-
-Implementado:
-
-* Renderização dinâmica baseada em coleção.
-* Separação entre Featured Collection e catálogo completo.
-* Estrutura preparada para destacar diferentes coleções futuramente.
-
-# Catálogo de Produtos
-
-Implementado:
-
-* Dez produtos cadastrados em `products.js`.
-* Sistema de produtos baseado em dados.
-* Renderização automática dos cards.
-* Criação de componentes reutilizáveis através da função createProductCard().
-* Integração entre Featured Collection e catálogo completo.
-
-Novos produtos adicionados para expansão do catálogo:
-
-## Alba
-
-* Design sofisticado e minimalista.
-* Representa elegância discreta para o dia a dia.
-
-## Serena
-
-* Modelo funcional e contemporâneo.
-* Representa equilíbrio entre estilo e praticidade.
-
-## Stella
-
-* Design marcante e refinado.
-* Representa personalidade e presença.
-
-## Vivienne
-
-* Estética premium e feminina.
-* Representa luxo atemporal.
-
-Filtros implementados:
-
-* Todos.
-* Shoulder.
-* Tote.
-* Mini.
-* Crossbody.
-
-Também implementado:
-
-* Estado vazio para categorias sem resultados.
-* Atualização dinâmica dos produtos filtrados.
-* Estrutura preparada para novos produtos.
-
-Novos produtos adicionados:
-
-## Luna
-
-* Coleção: ÉTOILE.
-* Categoria: Mini Bag.
-* Design compacto e elegante.
-* Criada para completar a coleção destaque.
-
-## Amélie
-
-* Coleção: ATELIER.
-* Categoria: Mini Bag.
-* Design artesanal e sofisticado.
-* Representa a proposta refinada da coleção ATELIER.
-
----
-
-# Sistema de Favoritos
-
-Implementado utilizando JavaScript Vanilla e localStorage.
-
-Funcionalidades:
-
-* Adicionar produtos aos favoritos.
-* Remover produtos dos favoritos.
-* Atualização dinâmica do ícone de favorito.
-* Estado salvo no navegador.
-* Persistência após atualização da página.
-* Sincronização entre produtos da Featured Collection e catálogo completo.
-* Leitura defensiva do `localStorage`.
-* Descarte de IDs inválidos ou sem produto correspondente.
-
-Estrutura:
-
-Product Card  
-↓  
-Favorite Button  
-↓  
-Favorites State  
-↓  
-localStorage
-
-Chave utilizada:
-
-lumiereFavorites
-
----
-
-# Botão de Compra
-
-Implementado:
-
-* Botão "Adicionar ao carrinho" integrado aos Product Cards.
-* Identificação dos produtos através de data-product-id.
-* Evento global de clique utilizando JavaScript Vanilla.
-* Adição dinâmica dos produtos ao estado do carrinho.
-* Feedback visual através de Toast de confirmação.
-
-Fluxo implementado:
-
-Product Card  
-↓  
-Add To Cart Button  
-↓  
-Cart State  
-↓  
-localStorage  
-↓  
-Mini Cart
-
----
-
-# Sistema de Carrinho
-
-Sistema completo de carrinho implementado utilizando JavaScript Vanilla e localStorage.
-
-A arquitetura separa os dados dos produtos do estado de compra. `cart.js` é a fonte central para estado, persistência, helpers e ações; `cart-page.js` fica responsável pela transformação e renderização exclusiva da página completa.
-
-O estado do carrinho possui uma única fonte de verdade compartilhada entre:
-
-* Mini Carrinho.
-* Página completa do carrinho.
-* Contador do Header.
-
-
-O carrinho mantém apenas as referências necessárias:
-
-- productId.
-- quantity.
-
-Os dados completos dos produtos são recuperados através do products.js.
-
-Fluxo implementado:
-
-Product Card
-
-↓
-
-cart.js
-
-↓
-
-Cart State + Actions
-
-↓
-
-localStorage / window.cart
-
-↓
-
-Header Counter / Mini Cart / cart-page.js
-
-
-Funcionalidades atuais:
-
-* Adicionar produtos ao carrinho.
-* Incrementar quantidade automaticamente ao adicionar o mesmo produto novamente.
-* Persistência validada dos dados no navegador.
-* Atualização dinâmica do contador do header.
-* Renderização do mini carrinho lateral.
-* Página completa de carrinho.
-* Busca dos dados dos produtos através do catálogo centralizado.
-* Cálculo automático de subtotal, frete e valor total.
-* Estado vazio quando não existem produtos adicionados.
-* Controle de quantidade na página completa do carrinho.
-* Remoção de produtos.
-* Integração do Header entre index.html e cart.html.
-* Reutilização do estado do carrinho entre páginas.
-* Compartilhamento do estado através de window.cart.
-* Separação entre lógica do mini carrinho e renderização da página completa.
-* Sincronização entre contador, mini carrinho e página completa.
-* Sincronização do estado entre abas através do evento `storage`.
-* Leitura defensiva do `localStorage`, aceitando apenas IDs e quantidades inteiras válidas.
-
-
-Chave utilizada:
-
-lumiereCart
-
----
-
-# Mini Carrinho
-
-Interface lateral criada para simular a experiência de compra de um e-commerce premium.
-
-Implementado:
-
-* Abertura através do botão do carrinho no header.
-* Overlay de fundo para foco na interação.
-* Controle visual de abertura e fechamento.
-* Lista dinâmica dos produtos adicionados.
-* Controle de quantidade.
-* Remoção de produtos.
-* Subtotal atualizado automaticamente.
-* Redirecionamento para a página completa através do botão de checkout do mini carrinho.
-* Exibição de:
-  * Imagem do produto.
-  * Nome.
-  * Coleção.
-  * Preço.
-  * Quantidade.
-  * Subtotal.
-
-Próximo passo:
-
-* Checkout simulado, sem integração real de pagamento.
-
----
-
-# Página Completa do Carrinho
-
-Página dedicada para revisão dos produtos antes do checkout.
-
-Arquivo principal:
-
-cart.html
-
-Responsabilidades:
-
-* Exibir produtos adicionados.
-* Permitir alteração de quantidade.
-* Permitir remoção de produtos.
-* Exibir resumo financeiro.
-* Calcular subtotal.
-* Calcular frete.
-* Calcular valor total.
-
-Estrutura visual:
-
-Cart Header
-
-↓
-
-Lista de Produtos
-
-↓
-
-Resumo do Pedido
-
-↓
-
-Finalização da Compra
-
-
-Componentes criados:
-
-## Cart Item
-
-Responsável pela representação individual de cada produto.
-
-Exibe:
-
-* Imagem.
-* Coleção.
-* Nome.
-* Preço.
-* Quantidade.
-* Controle de ações.
-
-
-Arquivo:
-
-css/components/cart/cart-item.css
-
-
----
-
-## Cart Summary
-
-Responsável pelo resumo financeiro.
-
-Exibe:
-
-* Subtotal.
-* Frete.
-* Total.
-* Botão preparado para o futuro checkout simulado.
-* Mensagem de segurança da compra.
-
-
-Arquivo:
-
-css/components/cart/cart-summary.css
-
-Arquitetura de estilos:
-
-* cart-page.css concentra os estilos base exclusivos da página do carrinho.
-* cart-responsive.css reúne todas as adaptações responsivas específicas da página, mantendo a separação entre estilos globais e estilos locais.
-* Os componentes Cart Item e Cart Summary permanecem isolados em arquivos próprios para facilitar reutilização e manutenção.
-* Os seletores do mini carrinho e da página completa são limitados aos seus respectivos contextos para evitar efeitos colaterais.
-
-
----
-
-
-## Lógica da página
-
-Responsável pela lógica exclusiva da página completa.
-
-Responsabilidades:
-
-* Consumir o estado, os helpers e as ações centralizadas em `cart.js`.
-* Transformar as referências do carrinho em dados completos de produtos.
-* Criar os itens da página.
-* Atualizar resumo financeiro.
-* Renderizar novamente a página quando o carrinho muda em outra aba.
-* Manter sua lógica exclusiva isolada do escopo global.
-
-Arquitetura:
-
-Central Cart State + Actions
-
-↓
-
-Product Lookup
-
-↓
-
-Cart Products
-
-↓
-
-Page Rendering
-
-O arquivo é executado em escopo isolado. Isso evita colisões globais e mantém em `cart.js` as implementações únicas de persistência, busca, formatação e ações do carrinho.
-
-# Refatoração do cart.js
-
-O arquivo cart.js passou por uma refatoração estrutural para se tornar a fonte central do estado do carrinho.
-
-A responsabilidade do arquivo foi organizada para controlar:
-
-* Estado do carrinho.
-* Leitura defensiva e persistência dos dados.
-* Busca de produtos e formatação monetária.
-* Ações de adicionar, aumentar, diminuir e remover.
-* Atualização do Header.
-* Renderização do Mini Carrinho.
-* Eventos de interação.
-* Comunicação com a página completa do carrinho.
-* Sincronização entre abas do navegador.
-
-Melhorias implementadas:
-
-* Separação clara de responsabilidades.
-* Criação de helpers reutilizáveis.
-* Redução de repetição de código.
-* Funções menores e mais coesas.
-* Padronização dos comentários.
-* Centralização da busca de produtos.
-* Centralização da formatação monetária.
-* Centralização da persistência e das ações do carrinho.
-* Separação entre estado, armazenamento, renderização e eventos.
-* Compartilhamento do estado através de uma única fonte de dados.
-* Preservação da referência de `window.cart` após remoções.
-* Contagem de itens reutilizada entre contador e mini carrinho.
-
-Arquitetura:
-
-## Cart State
-
-Responsável pelo estado atual dos produtos adicionados.
-
-Estrutura armazenada:
+## Estrutura de pastas
 
 ```text
-[
-    {
-        productId: 1,
-        quantity: 2
-    }
-]
-```
-
-## Storage Helpers
-
-Responsável pela leitura defensiva e persistência através do localStorage.
-
-O estado carregado precisa ser um array com `productId` e `quantity` inteiros, sendo a quantidade maior que zero. Conteúdo ausente, malformado ou incompatível resulta em carrinho vazio sem interromper a interface.
-
-Chave utilizada:
-
-lumiereCart
-
-## Product Helpers
-
-Responsável por:
-
-* Buscar produtos através do products.js.
-* Localizar itens existentes no carrinho.
-* Formatar valores.
-
-## Cart Helpers
-
-Responsável por:
-
-* Contagem de itens.
-* Cálculo do valor total.
-* Atualização dos dados exibidos.
-
-## Rendering
-
-Responsável por:
-
-* Criar itens do mini carrinho.
-* Renderizar estado vazio.
-* Atualizar valores exibidos.
-
-## Events
-
-Responsável pelas interações:
-
-* Adicionar produtos.
-* Aumentar quantidade.
-* Diminuir quantidade.
-* Remover produtos.
-* Abrir e fechar Mini Carrinho.
-* Redirecionar para página completa do carrinho.
-
-## Integração entre páginas
-
-O estado e as ações do carrinho são compartilhados entre as interfaces através de:
-
-cart.js
-
-↓
-
-window.cart + Cart Helpers + Cart Actions
-
-↓
-
-Header Counter / Mini Cart / cart-page.js
-
-`cart-page.js` reutiliza essas funções centrais sem redefini-las. O evento `storage` mantém as interfaces atualizadas quando o carrinho é alterado em outra aba.
-
----
-
-# Story
-
-Seção institucional criada.
-
-Objetivo:
-
-Transmitir a filosofia da Lumière:
-
-> Design pensado para acompanhar histórias.
-
-Implementado:
-
-* Layout dividido entre texto e imagem.
-* Comunicação de marca.
-* CTA direcionando para coleção.
-* Adaptação responsiva com empilhamento de conteúdo no mobile.
-* Centralização de texto e imagem em telas menores.
-
----
-
-# Benefits
-
-Seção de benefícios finalizada.
-
-Destaques:
-
-* Materiais Premium.
-* Design Atemporal.
-* Acabamento Cuidadoso.
-* Entrega Nacional.
-
-Objetivo:
-
-Construir confiança e reforçar percepção de valor.
-
-Responsividade:
-
-* Grid adaptado para diferentes dispositivos.
-* Cards organizados em coluna no mobile.
-* Preservação da hierarquia visual da seção.
-* Página do carrinho totalmente adaptada para dispositivos móveis.
-* Responsividade do carrinho isolada em arquivo próprio (cart-responsive.css).
-* Header mobile reutilizado entre páginas com personalizações específicas para o carrinho.
-* Separação entre regras responsivas globais e regras exclusivas da página do carrinho.
-
----
-
-# Categories
-
-Seção de categorias criada.
-
-Categorias:
-
-* Shoulder Bags.
-* Tote Bags.
-* Mini Bags.
-* Crossbody Bags.
-
-Características:
-
-* Grid assimétrico.
-* Cards com diferentes proporções.
-* Overlay com gradiente.
-* Hover com zoom da imagem.
-* Layout adaptado para diferentes tamanhos de tela.
-* Organização simplificada em coluna no mobile mantendo a identidade visual.
-
-Direção visual:
-
-As imagens foram criadas seguindo uma mesma identidade de coleção, mantendo:
-
-* Mesmo estilo fotográfico.
-* Mesmo acabamento premium.
-* Mesma linguagem visual.
-* Mesma atmosfera de marca.
-
----
-
-# 📂 Estrutura Atual
-
-lumiere/
-
-├── README.md  
-├── project.md  
-├── index.html  
-│  
-├── assets/  
-│   └── images/   
-│       ├── hero/  
-│       ├── products/  
-│       └── categories/  
-│  
+lumiere-bags/
+├── assets/
+│   └── images/
+│       ├── categories/
+│       │   ├── crossbody.jpg
+│       │   ├── mini.png
+│       │   ├── shoulder.png
+│       │   └── tote.jpg
+│       ├── hero/
+│       │   ├── banner1.jpg
+│       │   └── banner2.png
+│       └── products/
+│           ├── alba.png
+│           ├── amelie.png
+│           ├── aurora.png
+│           ├── celeste.png
+│           ├── elise.png
+│           ├── luna.png
+│           ├── noire.png
+│           ├── serena.png
+│           ├── stella.png
+│           └── vivienne.png
 ├── css/
 │   ├── base/
+│   │   ├── globals.css
+│   │   ├── reset.css
+│   │   └── typography.css
 │   ├── components/
-│   │   └── cart/
-│   │       ├── cart-item.css
-│   │       └── cart-summary.css
+│   │   ├── cart/
+│   │   │   ├── cart-item.css
+│   │   │   └── cart-summary.css
+│   │   ├── buttons.css
+│   │   ├── cart.css
+│   │   └── product-card.css
 │   ├── layout/
+│   │   ├── benefits.css
+│   │   ├── categories.css
+│   │   ├── featured.css
+│   │   ├── footer.css
+│   │   ├── header.css
+│   │   ├── hero.css
+│   │   ├── newsletter.css
+│   │   ├── products.css
+│   │   ├── sections.css
+│   │   └── story.css
 │   ├── pages/
-│   │   └── cart-page.css
-│   ├── responsive.css
+│   │   ├── cart-page.css
+│   │   └── checkout-page.css
 │   ├── cart-responsive.css
+│   ├── checkout-responsive.css
+│   ├── responsive.css
 │   ├── style.css
 │   └── variables.css
-│  
-├── js/  
-    ├── cart.js  
-    ├── cart-page.js  
-    ├── main.js  
-    ├── newsletter.js  
-    ├── products.js  
-    │
-    └── components/
-        ├── mobile-menu.js
-        └── toast.js  
-
----
-
-# 🎨 Direção Visual
-
-## Conceito
-
-* Minimalista.
-* Elegante.
-* Premium.
-* Atemporal.
-
-## Inspirações
-
-* E-commerce de luxo.
-* Landing Pages SaaS.
-* Apple.
-* COS.
-* Polène.
-* Cuyana.
-
-## Identidade
-
-"Luz + Sofisticação"
-
-A interface prioriza:
-
-* Espaço negativo.
-* Tipografia elegante.
-* Hierarquia visual.
-* Componentes reutilizáveis.
-* Consistência visual.
-* Experiência premium.
-
----
-
-# 🧠 Arquitetura
-
-## Tecnologias
-
-* HTML5.
-* CSS3 Modular.
-* JavaScript Vanilla.
-* Bootstrap (ícones e utilidades pontuais).
-
----
-
-# Organização CSS
-
-base/
-
-layout/
-
-components/
-    └── cart/
-        ├── cart-item.css
-        └── cart-summary.css
-
-pages/
-    └── cart-page.css
-
-responsive.css
-
-cart-responsive.css
-
-style.css
-
-variables.css
-
----
-
-# Organização JavaScript
-
-## main.js
-
-Responsável por:
-
-* Comportamentos gerais da página.
-* Interações globais da interface.
-
-## products.js
-
-Responsável por:
-
-* Dados dos produtos.
-* Renderização dos cards.
-* Filtros por categoria.
-* Sistema de favoritos.
-* Persistência com localStorage.
-* Leitura defensiva dos IDs favoritos persistidos.
-
-## newsletter.js
-
-Responsável por:
-
-* Gerenciamento da inscrição da newsletter.
-* Validação de e-mail.
-* Persistência dos inscritos através do localStorage.
-* Controle de cadastro duplicado.
-* Integração com o sistema global de Toast.
-* Leitura defensiva da lista de inscritos.
-* Registro do evento somente quando formulário e input existem.
-
-Chave utilizada:
-
-lumiereNewsletter
-
-## cart.js
-
-Responsável por:
-
-* Estado central do carrinho.
-* Leitura defensiva e persistência com localStorage.
-* Busca, formatação e ações centralizadas.
-* Atualização do contador do Header.
-* Renderização do Mini Carrinho.
-* Atualização dos dados exibidos.
-* Comunicação com a página completa do carrinho.
-* Sincronização entre abas do navegador.
-* Redirecionamento do checkout limitado ao botão do mini carrinho.
-
-Arquitetura atual:
-
-Cart State
-
-↓
-
-Storage
-
-↓
-
-Helpers
-
-↓
-
-Cart Actions
-
-↓
-
-Rendering
-
-↓
-
-Events
-
-↓
-
-Shared Cart State
-
-
-## cart-page.js
-
-Responsável exclusivamente pela página completa do carrinho.
-
-Responsabilidades:
-
-* Consumir o estado, os helpers e as ações de `cart.js`.
-* Integrar com `products.js`.
-* Transformar referências em dados completos dos produtos.
-* Renderizar os produtos adicionados.
-* Calcular subtotal.
-* Calcular frete.
-* Calcular valor total.
-* Atualizar a interface após mudanças feitas em outra aba.
-* Isolar a lógica exclusiva da página do escopo global.
-
-Arquitetura:
-
-Shared Cart State
-
-↓
-
-Product Lookup
-
-↓
-
-Cart Products
-
-↓
-
-Page Rendering
-
-↓
-
-Summary Update
----
-
-# Componentes criados
-
-## Layout
-
-* Header.
-* Hero.
-* Featured.
-* Story.
-* Benefits.
-* Categories.
-* Products.
-* Sections.
+├── js/
+│   ├── components/
+│   │   ├── mobile-menu.js
+│   │   └── toast.js
+│   ├── cart-page.js
+│   ├── cart.js
+│   ├── checkout.js
+│   ├── main.js
+│   ├── newsletter.js
+│   └── products.js
+├── .gitignore
+├── .vscode/
+│   └── settings.json
+├── cart.html
+├── checkout.html
+├── index.html
+├── project.md
+└── README.md
+```
+
+## Design System
+
+### Conceito visual
+
+- minimalista;
+- elegante;
+- premium;
+- atemporal;
+- baseado em espaço negativo, hierarquia e poucos elementos concorrentes.
+
+### Tokens atuais
+
+| Grupo | Tokens principais |
+|---|---|
+| Cores | `--color-primary`, `--color-secondary`, `--color-background`, `--color-surface`, `--color-white`, `--color-text`, `--color-text-muted`, `--color-border` |
+| Tipografia | Playfair Display para headings e Inter para corpo |
+| Espaçamento | `--spacing-xs` a `--spacing-xl` |
+| Raios | `--radius-sm`, `--radius-md`, `--radius-lg` |
+| Sombras | `--shadow-sm`, `--shadow-md` |
+| Movimento | `--transition` |
+| Layout | `--header-height`, `--container-width` |
+
+As páginas de carrinho e checkout reutilizam esses tokens e padrões de botões, bordas, sombras e tipografia. Não existe uma identidade visual paralela para o checkout.
 
 ## Componentes
 
-* Buttons.
-* Product Card.
-* Mini Cart.
-* Cart Item.
-* Cart Summary.
-* Toast.
+### Compartilhados
 
----
+- Header fixo com navegação, busca visual, favoritos visual e carrinho.
+- Menu mobile com `aria-expanded`, nome acessível dinâmico, fechamento por link, redimensionamento e `Escape`.
+- Footer institucional responsivo.
+- Botões primários e secundários.
+- Product Card criado por `createProductCard()`.
+- Toast com `role="status"`, `aria-live="polite"` e `aria-atomic="true"`.
 
-# ✨ Melhorias implementadas
+### Home
 
-## Robustez de estado e integração
+- Hero.
+- Featured Collection.
+- Benefits.
+- Story.
+- Categories.
+- Products e filtros.
+- Newsletter.
+- Mini carrinho.
 
-* Estado, persistência, helpers e ações do carrinho centralizados em `cart.js`.
-* `cart-page.js` isolado do escopo global e sem redefinir funções centrais.
-* Carrinho, favoritos e newsletter carregados com validação defensiva do `localStorage`.
-* Contador, mini carrinho e página completa sincronizados após cada ação.
-* Carrinho sincronizado entre abas através do evento `storage`.
-* Referência compartilhada de `window.cart` preservada após remoções.
-* Seletores DOM opcionais protegidos antes do uso.
-* Redirecionamento do checkout limitado ao botão do mini carrinho.
-* Estilos do mini carrinho e da página completa escopados por componente.
-* Token `--color-white` adicionado ao Design System.
+### Carrinho completo
 
-## Performance
+- Cart Item.
+- Cart Summary.
+- Estado vazio.
+- Controle de quantidade e remoção.
 
-* Uso de loading="lazy" em imagens secundárias.
-* Uso de loading="eager" no Hero.
-* Uso de decoding="async" nas imagens.
-* Organização dos assets por contexto.
+### Checkout
 
----
+- Indicador de progresso.
+- Painéis de etapa.
+- Grupos de dados pessoais e endereço.
+- Opções de pagamento demonstrativas.
+- Resumo lateral do pedido.
+- Blocos de revisão.
+- Estado de processamento.
+- Painel de confirmação.
+
+## Catálogo e produtos
+
+`js/products.js` é a única fonte de dados dos dez produtos atuais:
+
+| ID | Produto | Coleção | Categoria |
+|---:|---|---|---|
+| 1 | Aurora | ÉTOILE | shoulder |
+| 2 | Celeste | ÉTOILE | tote |
+| 3 | Élise | ATELIER | mini |
+| 4 | Noire | SIGNATURE | crossbody |
+| 5 | Alba | ÉTOILE | shoulder |
+| 6 | Serena | ATELIER | tote |
+| 7 | Stella | SIGNATURE | crossbody |
+| 8 | Vivienne | SIGNATURE | mini |
+| 9 | Luna | ÉTOILE | mini |
+| 10 | Amélie | ATELIER | mini |
+
+A Featured Collection seleciona até quatro produtos ÉTOILE: Aurora, Celeste, Alba e Luna. O catálogo completo oferece filtros para todos os produtos e para as quatro categorias cadastradas.
+
+Os cards de Categories carregam um `data-category` explícito e reutilizam `applyProductFilter()`. O fluxo não dispara cliques artificiais nem duplica a lógica de filtragem. Após aplicar o filtro, a página rola para Products com comportamento reduzido quando essa preferência está ativa.
+
+## Favoritos
+
+O estado de favoritos é um array de IDs e usa `lumiereFavorites` no `localStorage` como fonte persistida.
+
+- A leitura aceita somente um array de IDs inteiros correspondentes a produtos existentes.
+- A interação usa delegação de eventos no documento.
+- `updateFavoriteButtons()` atualiza todos os cards que compartilham o mesmo `data-product-id`.
+- `loadFavoriteState()` reaplica o estado após renderizações da Featured Collection, catálogo e filtros.
+- Ícone, classe ativa, `aria-pressed` e `aria-label` são atualizados em conjunto.
+
+Não existe uma segunda lista de favoritos nem uma página dedicada a eles.
+
+## Fluxo da Home
+
+A ordem atual das seções é:
+
+1. Hero.
+2. Featured Collection.
+3. Benefits.
+4. Story.
+5. Categories.
+6. Products.
+7. Newsletter.
+8. Footer.
+
+### Jornada e CTAs
+
+- O CTA principal do Hero direciona para Featured Collection.
+- O CTA da Featured Collection direciona para Products.
+- Benefits reforça confiança e não possui CTA.
+- O CTA da Story direciona para Categories.
+- Cada card de Categories ativa seu filtro correspondente e conduz a Products.
+- Os Product Cards preservam favoritos, adição ao carrinho e o link visual `Ver detalhes`.
+- O mini carrinho direciona para `cart.html`.
+
+O link `Ver detalhes` ainda usa `href="#"` e não possui uma experiência de detalhes implementada. Os controles visuais de busca também não têm lógica de pesquisa.
+
+## Arquitetura do carrinho
+
+### Fonte de verdade
+
+`js/cart.js` controla a única fonte de estado do carrinho. Cada item persistido contém somente:
+
+```text
+{
+  productId: inteiro,
+  quantity: inteiro maior que zero
+}
+```
+
+O array carregado é compartilhado por `cart` e `window.cart`. Remoções, sincronização externa e `clearCart()` usam mutação do array, preservando a referência para todos os consumidores.
+
+### Helpers centrais
+
+- `getProduct(productId)`: consulta `products.js`.
+- `getCartItem(productId)`: localiza uma referência no estado.
+- `getCartProducts()`: combina referências válidas com os dados do catálogo e inclui quantidade.
+- `getCartItemsCount()`: soma quantidades de produtos válidos.
+- `formatPrice(value)`: formata valores em BRL.
+- `getCartSubtotal()`: soma preço multiplicado pela quantidade.
+- `getShippingCost(subtotal)`: retorna zero sem subtotal e 25 quando há subtotal.
+- `getOrderTotal(subtotal, shipping)`: soma subtotal e frete.
+
+### Ações centrais
+
+- `addToCart()`.
+- `increaseQuantity()`.
+- `decreaseQuantity()`.
+- `removeFromCart()`.
+- `clearCart()`.
+- `syncCart()`.
+
+As ações chamam o fluxo central de sincronização, que atualiza o `localStorage`, o contador e o mini carrinho quando seus elementos existem.
+
+### Mini carrinho
+
+O mini carrinho existe na Home e contém lista dinâmica, subtotal, controle de quantidade, remoção, estado vazio, overlay e link para a página completa. Seu botão não abre o checkout diretamente; o fluxo é Mini Cart → Cart → Checkout.
+
+Quando aberto, o painel atua como diálogo modal acessível. O código gerencia `aria-hidden`, `inert`, contenção de foco, fechamento por `Escape` e restauração de foco.
+
+### Página completa
+
+`js/cart-page.js` está isolado em uma função autoexecutável e mantém somente responsabilidades da página:
+
+- renderizar lista e estado vazio;
+- acionar ações centrais de quantidade e remoção;
+- apresentar subtotal, frete e total usando os helpers de `cart.js`;
+- controlar o estado do botão de checkout;
+- responder à sincronização do armazenamento.
+
+O botão `Finalizar compra` é um `button` com `data-checkout-url="./checkout.html"`. Ele fica desabilitado e recebe `aria-disabled="true"` quando não existem produtos válidos. `Continuar comprando` aponta para `index.html#products`.
+
+A interface de cupom existe, mas a aplicação de cupons ainda não foi implementada.
+
+## Arquitetura do checkout
+
+### Estrutura geral
+
+O checkout é uma única página com progresso de quatro etapas:
+
+1. Dados e entrega.
+2. Pagamento.
+3. Revisão.
+4. Confirmação.
+
+`js/checkout.js` é executado em escopo isolado e usa um objeto `checkoutState` em memória como estado operacional. A etapa Confirmação não pode ser acessada pela navegação comum; ela é exibida apenas depois da conclusão bem-sucedida.
+
+### Etapa 1 — Dados e entrega
+
+Dados pessoais:
+
+- nome completo;
+- e-mail;
+- telefone.
+
+Endereço de entrega:
+
+- CEP;
+- endereço;
+- número;
+- complemento opcional;
+- bairro;
+- cidade;
+- estado.
+
+Regras implementadas:
+
+- nome obrigatório com pelo menos duas partes úteis;
+- e-mail obrigatório e validado por formato razoável;
+- telefone validado por 10 ou 11 dígitos;
+- CEP validado por exatamente oito dígitos;
+- endereço, número, bairro, cidade e estado obrigatórios;
+- número aceita formato numérico com complementos alfanuméricos ou `S/N`;
+- espaços são removidos nas extremidades e o e-mail é normalizado para minúsculas.
+
+O telefone recebe máscara dinâmica para 10 ou 11 dígitos. O CEP recebe máscara `00000-000`. A validação usa somente os dígitos, sem bloquear colagem ou edição do valor.
+
+### ViaCEP
+
+A consulta usa `https://viacep.com.br/ws/{cep}/json/` somente no `blur` de um CEP com oito dígitos.
+
+- `logradouro` → endereço;
+- `bairro` → bairro;
+- `localidade` → cidade;
+- `uf` → estado.
+
+Somente campos vazios são preenchidos; valores digitados pelo usuário são preservados. Número e complemento não são preenchidos. Os campos continuam editáveis.
+
+O fluxo apresenta estados de busca, sucesso, CEP não encontrado, falha de rede e resposta inválida. `AbortController` cancela uma consulta anterior quando necessário, e a mesma consulta bem-sucedida não é repetida sem necessidade. A resposta completa do serviço não é armazenada.
+
+### Etapa 2 — Pagamento
+
+As modalidades válidas são `pix`, `card` e `boleto`, apresentadas como Pix, Cartão e Boleto. A interface solicita somente a modalidade e exibe uma explicação demonstrativa específica.
+
+Não são solicitados número de cartão, validade, CVV, nome impresso, CPF ou dados bancários. O aviso “Esta é uma experiência demonstrativa. Nenhuma cobrança será realizada.” permanece visível no fluxo.
+
+### Etapa 3 — Revisão
+
+A revisão apresenta dinamicamente:
+
+- dados pessoais;
+- endereço completo;
+- modalidade escolhida;
+- produtos, coleção, quantidades e preços;
+- subtotal, frete e total.
+
+O resumo lateral usa exclusivamente os helpers centrais. Referências a produtos inexistentes são ignoradas e anunciadas; se nenhum produto válido permanecer, o rascunho é limpo e a navegação usa `location.replace()` para `cart.html#cart-content`.
+
+O botão `Confirmar pedido simulado`:
+
+- existe somente na área de ações da Revisão;
+- mantém `type="submit"`;
+- fica oculto fora da Revisão e após o sucesso;
+- usa `disabled` enquanto o estado não é válido ou durante o processamento;
+- mostra `Confirmando...` e impede submissão duplicada.
+
+### Etapa 4 — Confirmação
+
+Antes de confirmar, o código revalida dados, pagamento, produtos e valores. Em seguida:
+
+1. gera um número demonstrativo no formato `LUM-ANO-XXXXXX`;
+2. cria um snapshot completo do pedido somente em memória;
+3. chama exclusivamente `clearCart()`;
+4. remove o rascunho do checkout;
+5. limpa o estado operacional que não é mais necessário;
+6. renderiza a confirmação e move o foco para seu heading.
+
+A confirmação mostra número fictício, total, modalidade, aviso de que nenhuma cobrança foi realizada e CTA para `index.html#products`. Não mostra endereço completo ou telefone e não persiste o pedido. Ao recarregar depois do sucesso, o carrinho vazio faz o checkout retornar ao carrinho.
+
+## Persistência
+
+### localStorage
+
+| Chave | Formato | Regras defensivas |
+|---|---|---|
+| `lumiereCart` | Array de `{ productId, quantity }` | Aceita apenas IDs e quantidades inteiros, com quantidade maior que zero |
+| `lumiereFavorites` | Array de IDs | Aceita apenas inteiros correspondentes a produtos existentes |
+| `lumiereNewsletter` | Array de strings | Aceita apenas strings não vazias; novas entradas são normalizadas |
+
+JSON ausente, inválido ou com tipo incompatível produz um estado seguro sem interromper a interface.
+
+### sessionStorage
+
+`lumiereCheckoutDraft` armazena somente uma whitelist:
+
+- etapa atual;
+- nome, e-mail e telefone;
+- CEP, endereço, número, complemento, bairro, cidade e estado;
+- modalidade de pagamento.
+
+O rascunho é salvo após avanço válido e pode ser atualizado ao voltar. Ele não é salvo a cada tecla. Na restauração, o conteúdo é sanitizado e as etapas anteriores são revalidadas antes de permitir uma etapa avançada.
+
+O rascunho é removido quando:
+
+- o formato persistido é inválido;
+- o checkout não possui produtos válidos;
+- o usuário usa os links de saída para editar o carrinho;
+- o pedido simulado é confirmado.
+
+### Dados não persistidos
+
+- resposta completa do ViaCEP;
+- snapshot do pedido confirmado;
+- número fictício do pedido;
+- dados de pagamento, que não são solicitados.
+
+Nenhum dado do checkout é gravado no `localStorage`.
+
+## Responsividade
+
+### Breakpoints existentes
+
+- até 992 px: grids e checkout passam por redução de colunas e espaçamento; o resumo deixa de ser sticky;
+- até 768 px: navegação mobile, campos em uma coluna, ações reorganizadas e componentes ajustados para telas menores;
+- até 425 px: refinamentos de Home e catálogo, incluindo cards de produto em uma coluna.
+
+### Comportamento por página
+
+- Home: Hero vertical, Featured e catálogo responsivos, Story empilhada, Benefits e Categories reorganizados, filtros roláveis, newsletter e footer compactados.
+- Carrinho: lista, controles, resumo e header adaptados por `cart-responsive.css`.
+- Checkout: duas colunas com resumo sticky em telas largas; uma coluna e resumo estático em tablet; campos e ações em largura apropriada no mobile.
+
+`checkout-responsive.css` também trata `prefers-reduced-motion`. A implementação busca preservar ordem de leitura, áreas de toque e ausência de overflow horizontal.
 
 ## Acessibilidade
 
-Implementado:
+### Navegação e estrutura
 
-* Uso de landmarks semânticas (header, main, section, article, footer).
-* Hierarquia correta de headings.
-* aria-label em elementos interativos.
-* Textos alternativos descritivos nas imagens.
+- landmarks e headings semânticos;
+- um `h1` por página;
+- labels visíveis nos formulários;
+- `fieldset` e `legend` para grupos de dados e pagamento;
+- botões com tipos explícitos;
+- imagens com texto alternativo;
+- foco visível preservado.
 
----
+### Estados dinâmicos
 
-## Newsletter
+- `aria-expanded` no menu mobile;
+- `aria-pressed` nos favoritos;
+- `role="dialog"`, `aria-modal`, `aria-hidden` e `inert` no mini carrinho;
+- `aria-current="step"` no progresso do checkout;
+- `aria-invalid` e `aria-describedby` nos campos;
+- mensagens gerais em região `aria-live="polite"`;
+- `aria-busy` durante busca de CEP e confirmação;
+- painéis inativos com `hidden`;
+- estados indisponíveis com `disabled`, sem confundi-los com visibilidade.
 
-Implementado:
+### Gerenciamento de foco
 
-* Seção institucional de captura de e-mails.
-* Formulário responsivo integrado ao design da marca.
-* Validação de e-mail utilizando JavaScript Vanilla.
-* Persistência dos cadastros através de localStorage.
-* Bloqueio de cadastros duplicados.
-* Feedback visual através do componente Toast.
-* Ajustes responsivos para diferentes tamanhos de tela.
-* Layout mobile com formulário reorganizado verticalmente.
+- fechamento do menu mobile por `Escape` devolve foco ao acionador;
+- mini carrinho contém o foco e o devolve ao controle de abertura;
+- troca de etapa foca o heading correspondente;
+- erro de validação foca o primeiro campo inválido;
+- sucesso foca o heading da confirmação;
+- a consulta de CEP só direciona ao número após sucesso iniciado pelo usuário e quando isso não interrompe a interação assistiva prevista.
 
-Arquitetura:
+## Funcionalidades implementadas
 
-Newsletter Form
+- Home institucional com oito blocos na ordem atual.
+- Dez produtos e Featured Collection ÉTOILE.
+- Catálogo dinâmico e filtros por categoria.
+- Categories conectadas aos filtros.
+- Favoritos persistentes e sincronizados visualmente.
+- Product Cards reutilizáveis.
+- Toast de feedback.
+- Newsletter validada e persistente.
+- Header ao scroll e menu mobile acessível.
+- Mini carrinho lateral acessível.
+- Carrinho completo e persistente.
+- Cálculos centrais de subtotal, frete e total.
+- Sincronização do carrinho entre interfaces e abas.
+- Checkout simulado completo em quatro etapas.
+- Validação acessível dos campos e pagamento.
+- Máscaras de telefone e CEP.
+- Preenchimento de endereço via ViaCEP.
+- Rascunho defensivo na sessão.
+- Revisão dinâmica do pedido.
+- Prevenção de confirmação duplicada.
+- Snapshot em memória, limpeza central do carrinho e confirmação simulada.
+- Responsividade de Home, carrinho e checkout.
 
-↓
+## Decisões arquiteturais
 
-newsletter.js
+### Arquitetura conservadora
 
-↓
+O projeto preserva HTML, CSS modular e JavaScript Vanilla. As responsabilidades foram separadas sem introduzir framework, dependência de build ou abstrações incompatíveis com o tamanho atual.
 
-Validation
+### Estado centralizado do carrinho
 
-↓
+`cart.js` é a fonte única para estado, armazenamento, consultas, cálculos e ações. Mini carrinho, contador, página completa e checkout consomem esse núcleo. Isso evita estados paralelos e diferenças financeiras entre interfaces.
 
-localStorage
+### Referência compartilhada estável
 
-↓
+As ações removem e limpam itens por mutação. `window.cart` continua apontando para o mesmo array durante toda a sessão da página.
 
-Toast Feedback
+### Checkout em página única
 
-Chave utilizada:
+As quatro etapas vivem em `checkout.html`. Painéis inativos usam `hidden`, o que mantém uma ordem de documento previsível e evita criar rotas ou arquivos adicionais para cada etapa.
 
-lumiereNewsletter
----
+### Pagamento somente simulado
 
-## Footer
+O checkout coleta apenas a modalidade. A ausência de campos financeiros reduz risco e comunica corretamente o caráter demonstrativo do portfólio.
 
-Implementado:
+### Estado híbrido do checkout
 
-* Footer completo seguindo a identidade visual da marca.
-* Organização em colunas para navegação e informações institucionais.
-* Área de descrição da marca.
-* Links para coleções e atendimento.
-* Layout responsivo para dispositivos menores.
-* Adaptação da estrutura para mobile com navegação mais compacta.
-* Organização dos links em formato inline no mobile para preservar a estética minimalista.
-* Integração visual com o restante da página.
+O estado operacional permanece em memória. Somente um rascunho mínimo e validado vai para `sessionStorage`, permitindo recuperação após recarga sem transformar dados do checkout em persistência duradoura.
 
-Estrutura:
+### Helpers financeiros reutilizados
 
-Logo + Descrição
+Carrinho completo e checkout usam a mesma busca de produtos, formatação monetária e regras de subtotal, frete e total. O valor do frete não é redefinido fora de `cart.js`.
 
-↓
+### Persistência limitada por responsabilidade
 
-Collections
+`localStorage` mantém apenas carrinho, favoritos e newsletter. `sessionStorage` mantém o rascunho do checkout. Pedido confirmado e resposta de serviço externo permanecem fora do armazenamento.
 
-↓
+### HTML semântico e estados explícitos
 
-Institutional
+Labels, fieldsets, legends, headings e botões reais formam a base dos componentes. Atributos ARIA complementam estados dinâmicos, sem substituir semântica nativa.
 
-↓
+## Dependências externas
 
-Customer Service
+- Google Fonts: Inter e Playfair Display.
+- Bootstrap CSS e Bootstrap Bundle 5.3.7, carregados na Home.
+- Bootstrap Icons 1.13.1, carregado nas três páginas.
+- ViaCEP, consultado durante o preenchimento de endereço.
 
-↓
+Não há pacotes instalados no repositório. A indisponibilidade de fontes, CDN ou ViaCEP pode afetar recursos externos, mas o preenchimento manual do endereço permanece disponível em falhas de rede.
 
-Copyright
+## Limitações atuais
 
-## Product Cards
+- O link `Ver detalhes` dos Product Cards não abre uma página ou modal.
+- Os controles visuais de busca não executam pesquisa.
+- A interface de cupom não aplica descontos.
+- Links de Instagram e Pinterest usam destinos de demonstração.
+- Não existe sincronização imediata do checkout com alterações feitas em outra aba; o carrinho é revalidado na entrada e antes da confirmação.
+- O pedido confirmado existe apenas na memória da página e não pode ser recuperado após recarga.
+- Frete, estoque, cobrança e confirmação não correspondem a operações reais.
 
-Evoluídos para componentes reutilizáveis.
+## Melhorias futuras
 
-Incluem:
+- Implementar busca no catálogo.
+- Criar detalhes de produto para o CTA já existente.
+- Implementar cupons simulados sem duplicar os cálculos centrais.
+- Substituir links sociais de demonstração.
+- Ampliar o catálogo e os conteúdos institucionais.
+- Adicionar testes automatizados de interface e persistência.
+- Refinar microinterações e pontos responsivos conforme novos testes em dispositivos reais.
+- Avaliar sincronização opcional do checkout entre abas sem ampliar a fonte de estado.
 
-* Renderização dinâmica.
-* Hover.
-* Escala de imagem.
-* Favoritos persistentes.
-* Design System.
-* Aspect Ratio.
-* Integração com botão de compra.
-
----
-
-# Responsividade
-
-Implementada a adaptação da página inicial e da página completa do carrinho para diferentes dispositivos.
-
-A responsividade foi trabalhada preservando a identidade premium da Lumière e evitando perda de hierarquia visual.
-
-Implementado:
-
-* Header reorganizado para mobile nas duas páginas.
-* Menu hamburguer funcional em `index.html` e `cart.html`.
-* Hero adaptado para layout vertical.
-* Featured Collection com grid responsivo.
-* Story reorganizado com texto e imagem empilhados.
-* Benefits adaptado para cards em coluna.
-* Categories reorganizado para mobile.
-* Products adaptado para catálogo em uma coluna.
-* Filtros de produtos preparados para rolagem horizontal.
-* Newsletter com formulário adaptado para telas menores.
-* Footer reorganizado para navegação mobile.
-* Lista, resumo financeiro e controles do carrinho adaptados para telas menores.
-* Responsividade exclusiva do carrinho mantida em `cart-responsive.css`.
-
-Direção aplicada:
-
-* Preservação de espaçamento.
-* Melhor aproveitamento de telas pequenas.
-* Manutenção da hierarquia tipográfica.
-* Redução de elementos excessivos no mobile.
-* Experiência consistente entre desktop e dispositivos móveis.
-
-# 🚧 Próximos Passos
-
-## Curto prazo
-
-* Refinar microinterações.
-* Realizar polimentos pontuais de responsividade e experiência mobile.
-
----
-
-## Médio prazo
-
-* Implementar checkout simulado.
-* Criar modal de detalhes do produto.
-* Melhorar experiência geral de navegação.
-
----
-
-## Longo prazo
-
-* Expandir componentes conforme novas páginas forem adicionadas.
-* Integração com API simulada.
-* Persistência avançada de dados.
----
-
-# 📌 Status Geral
-
-O projeto evoluiu de uma landing page visual para uma experiência de e-commerce funcional.
-
-A Lumière atualmente possui:
-
-* Marca definida.
-* Sistema visual consistente.
-* Hero finalizado.
-* Coleção em destaque.
-* Catálogo dinâmico renderizado via JavaScript.
-* Dez produtos cadastrados.
-* Sistema de filtros por categoria.
-* Sistema de favoritos persistente.
-* Product Cards reutilizáveis.
-* Botão de compra funcional.
-* Carrinho persistente com leitura defensiva do localStorage.
-* Mini Carrinho lateral funcional.
-* Página completa de carrinho.
-* Header reutilizável entre páginas.
-* Integração entre carrinho e catálogo de produtos.
-* Controle de quantidade.
-* Remoção de produtos.
-* Cálculo automático de subtotal, frete e total.
-* Estado, persistência, helpers e ações centralizados em `cart.js`.
-* Contador, mini carrinho e página completa sincronizados.
-* Sincronização do carrinho entre abas.
-* Arquitetura JavaScript organizada e escalável.
-* Newsletter funcional com persistência local.
-* Sistema de Toast reutilizável entre funcionalidades.
-* Página inicial e carrinho responsivos para desktop, tablet e mobile.
-* Componentes adaptados mantendo consistência visual entre diferentes resoluções.
-* Experiência mobile refinada para navegação, catálogo e áreas institucionais.
+Integração real de pagamento, backend, autenticação e persistência de pedidos não fazem parte da implementação atual. Caso sejam consideradas no futuro, exigirão uma revisão arquitetural e de privacidade separada.
