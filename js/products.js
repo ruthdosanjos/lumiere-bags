@@ -181,6 +181,7 @@ function createProductCard(product) {
                    type="button"
                    class="favorite-button"
                    data-product-id="${product.id}"
+                   aria-pressed="false"
                    aria-label="Adicionar bolsa ${product.name} aos favoritos">
 
              <i class="bi bi-heart"></i>
@@ -259,6 +260,8 @@ function renderFeaturedProducts() {
         .map(createProductCard)
         .join("");
 
+    loadFavoriteState();
+
 }
 
 /* ==========================================================
@@ -282,6 +285,8 @@ function renderProducts(productsList) {
 
         `;
 
+        loadFavoriteState();
+
         return;
 
     }
@@ -290,6 +295,8 @@ function renderProducts(productsList) {
     productsCatalog.innerHTML = productsList
         .map(createProductCard)
         .join("");
+
+    loadFavoriteState();
 
 }
 
@@ -419,7 +426,7 @@ function handleFavoriteClick(event) {
 
     saveFavorites();
 
-    updateFavoriteButton(button, productId);
+    updateFavoriteButtons(productId);
 
 }
 
@@ -444,6 +451,43 @@ function updateFavoriteButton(button, productId) {
         "active",
         isFavorite
     );
+
+    button.setAttribute(
+        "aria-pressed",
+        String(isFavorite)
+    );
+
+    const product = products.find(item => (
+        item.id === productId
+    ));
+
+    if (product) {
+
+        button.setAttribute(
+            "aria-label",
+            isFavorite
+                ? `Remover bolsa ${product.name} dos favoritos`
+                : `Adicionar bolsa ${product.name} aos favoritos`
+        );
+
+    }
+
+}
+
+function updateFavoriteButtons(productId) {
+
+    document
+        .querySelectorAll(
+            `.favorite-button[data-product-id="${productId}"]`
+        )
+        .forEach(button => {
+
+            updateFavoriteButton(
+                button,
+                productId
+            );
+
+        });
 
 }
 
@@ -480,5 +524,3 @@ function loadFavoriteState() {
 renderFeaturedProducts();
 
 renderProducts(products);
-
-loadFavoriteState();
