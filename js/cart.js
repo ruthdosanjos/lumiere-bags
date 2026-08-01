@@ -65,6 +65,8 @@ const checkoutButton = document.querySelector(
 
 const cartTotal = document.querySelector(".cart-total strong");
 
+let miniCartTrigger = null;
+
 
 /* ==========================================================
    Storage Helpers
@@ -349,11 +351,27 @@ function openMiniCart() {
 
     if (!miniCart || !cartOverlay) return;
 
+    if (!miniCart.classList.contains("open")) {
+        miniCartTrigger = document.activeElement;
+    }
+
+    miniCart.removeAttribute("inert");
+    miniCart.setAttribute("aria-hidden", "false");
+
+    cartButton?.setAttribute(
+        "aria-expanded",
+        "true"
+    );
+
     miniCart.classList.add("open");
 
     cartOverlay.classList.add("show");
 
     document.body.classList.add("cart-open");
+
+    (closeCartButton || miniCart).focus({
+        preventScroll: true
+    });
 
 }
 
@@ -361,11 +379,111 @@ function closeMiniCart() {
 
     if (!miniCart || !cartOverlay) return;
 
+    const wasOpen = miniCart.classList.contains("open");
+
     miniCart.classList.remove("open");
 
     cartOverlay.classList.remove("show");
 
     document.body.classList.remove("cart-open");
+
+    miniCart.setAttribute("aria-hidden", "true");
+    miniCart.setAttribute("inert", "");
+
+    cartButton?.setAttribute(
+        "aria-expanded",
+        "false"
+    );
+
+    if (
+        wasOpen
+        && miniCartTrigger?.isConnected
+        && typeof miniCartTrigger.focus === "function"
+    ) {
+
+        miniCartTrigger.focus({
+            preventScroll: true
+        });
+
+    }
+
+    miniCartTrigger = null;
+
+}
+
+function getMiniCartFocusableElements() {
+
+    if (!miniCart) return [];
+
+    return Array.from(
+        miniCart.querySelectorAll(
+            'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        )
+    ).filter(element => !element.hasAttribute("hidden"));
+
+}
+
+function handleMiniCartKeydown(event) {
+
+    if (!miniCart?.classList.contains("open")) return;
+
+    if (event.key === "Escape") {
+
+        event.preventDefault();
+        closeMiniCart();
+
+        return;
+
+    }
+
+    if (event.key !== "Tab") return;
+
+    const focusableElements = getMiniCartFocusableElements();
+
+    if (!focusableElements.length) {
+
+        event.preventDefault();
+        miniCart.focus();
+
+        return;
+
+    }
+
+    const firstElement = focusableElements[0];
+    const lastElement = focusableElements[
+        focusableElements.length - 1
+    ];
+    const focusIsOutside = !miniCart.contains(
+        document.activeElement
+    );
+
+    if (
+        event.shiftKey
+        && (
+            document.activeElement === firstElement
+            || focusIsOutside
+        )
+    ) {
+
+        event.preventDefault();
+        lastElement.focus();
+
+        return;
+
+    }
+
+    if (
+        !event.shiftKey
+        && (
+            document.activeElement === lastElement
+            || focusIsOutside
+        )
+    ) {
+
+        event.preventDefault();
+        firstElement.focus();
+
+    }
 
 }
 
@@ -614,6 +732,11 @@ function handleCartStorage(event) {
 document.addEventListener(
     "click",
     handleCartClick
+);
+
+document.addEventListener(
+    "keydown",
+    handleMiniCartKeydown
 );
 
 window.addEventListener(

@@ -118,6 +118,8 @@
                 <button
                     type="button"
                     class="icon-button cart-button"
+                    aria-controls="mini-cart"
+                    aria-expanded="false"
                     aria-label="Carrinho de compras">
 
                     <i class="bi bi-bag"></i>
@@ -960,14 +962,20 @@ Ver carrinho
 <!-- Mini Cart -->
 
 <aside
+    id="mini-cart"
     class="mini-cart"
-    aria-label="Carrinho de compras">
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="mini-cart-title"
+    aria-hidden="true"
+    tabindex="-1"
+    inert>
 
        <div class="mini-cart-header">
 
     <div class="mini-cart-header-info">
 
-        <h2>Meu carrinho</h2>
+        <h2 id="mini-cart-title">Meu carrinho</h2>
 
         <span class="cart-items-count">
 
@@ -1016,7 +1024,7 @@ Ver carrinho
 
 </aside>
 
-<div class="cart-overlay"></div>
+<div class="cart-overlay" aria-hidden="true"></div>
 
 
 <!-- Ordem de dependências: toast → mobile-menu → Bootstrap → main → products → cart → newsletter -->
