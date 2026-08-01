@@ -35,15 +35,6 @@
 
 }
 
-@media (max-width: 768px) {
-
-    .cart-page .nav-actions .icon-button:not(.cart-button) {
-        display: none;
-    }
-
-}
-
-
 /* ==========================================================
    Container
 ========================================================== */
@@ -115,9 +106,11 @@
 
     font-family: var(--font-heading);
 
-    font-size: clamp(2.2rem, 5vw, 3rem);
+    font-size: clamp(2rem, 4vw, 3rem);
 
     font-weight: 500;
+
+    line-height: 1.15;
 
     letter-spacing: -.02em;
 

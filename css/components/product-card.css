@@ -232,3 +232,38 @@
     background: #fff;
 
 }
+
+@media (max-width: 425px) {
+
+    .product-info {
+        padding: .75rem;
+    }
+
+    .product-collection {
+        font-size: .6rem;
+        letter-spacing: .08rem;
+    }
+
+    .product-name {
+        font-size: 1rem;
+    }
+
+    .product-price,
+    .product-link {
+        font-size: .85rem;
+    }
+
+    .favorite-button {
+        width: 2.25rem;
+        height: 2.25rem;
+        top: .6rem;
+        right: .6rem;
+    }
+
+    .add-to-cart-button {
+        width: 36px;
+        height: 36px;
+        flex: 0 0 36px;
+    }
+
+}
