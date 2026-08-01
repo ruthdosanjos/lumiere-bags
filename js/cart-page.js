@@ -20,6 +20,10 @@ const totalElement = document.querySelector(
     ".summary-total strong"
 );
 
+const checkoutPageButton = document.querySelector(
+    ".cart-summary .checkout-button[data-checkout-url]"
+);
+
 
 /* ==========================================================
    Cart Summary
@@ -66,6 +70,31 @@ function updateSummary(cartProducts) {
             );
 
     }
+
+}
+
+function updateCheckoutButtonState(cartProducts) {
+
+    if (!checkoutPageButton) return;
+
+    const hasValidProducts = cartProducts.length > 0;
+
+    checkoutPageButton.disabled = !hasValidProducts;
+
+    if (hasValidProducts) {
+
+        checkoutPageButton.removeAttribute(
+            "aria-disabled"
+        );
+
+        return;
+
+    }
+
+    checkoutPageButton.setAttribute(
+        "aria-disabled",
+        "true"
+    );
 
 }
 
@@ -180,6 +209,8 @@ function renderCartPage() {
 
     const cartProducts = getCartProducts();
 
+    updateCheckoutButtonState(cartProducts);
+
     if (!cartProducts.length) {
 
         renderEmptyCart();
@@ -264,6 +295,22 @@ function handleCartPageStorage(event) {
 
 }
 
+function handleCheckoutNavigation() {
+
+    const cartProducts = getCartProducts();
+
+    updateCheckoutButtonState(cartProducts);
+
+    if (!cartProducts.length) return;
+
+    const checkoutUrl = checkoutPageButton.dataset.checkoutUrl;
+
+    if (!checkoutUrl) return;
+
+    window.location.href = checkoutUrl;
+
+}
+
 
 cartItemsContainer?.addEventListener(
 
@@ -278,6 +325,14 @@ window.addEventListener(
     "storage",
 
     handleCartPageStorage
+
+);
+
+checkoutPageButton?.addEventListener(
+
+    "click",
+
+    handleCheckoutNavigation
 
 );
 

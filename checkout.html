@@ -792,14 +792,37 @@
 
                         </div>
 
-                        <div class="checkout-step-actions checkout-step-actions--review">
+                        <!-- ==============================================
+                             Review Submit
+                        =============================================== -->
 
-                            <button
-                                type="button"
-                                class="checkout-secondary-action"
-                                data-checkout-previous>
-                                Voltar
-                            </button>
+                        <div
+                            class="checkout-review-submit"
+                            data-review-submit
+                            hidden>
+
+                            <p class="checkout-step-notice">
+                                <i class="bi bi-info-circle" aria-hidden="true"></i>
+                                Esta é uma experiência demonstrativa. Nenhuma cobrança será realizada.
+                            </p>
+
+                            <div class="checkout-step-actions checkout-step-actions--review">
+
+                                <button
+                                    type="button"
+                                    class="checkout-secondary-action"
+                                    data-checkout-previous>
+                                    Voltar
+                                </button>
+
+                                <button
+                                    type="submit"
+                                    class="checkout-primary-action checkout-confirm-button"
+                                    disabled>
+                                    Confirmar pedido simulado
+                                </button>
+
+                            </div>
 
                         </div>
 
@@ -879,29 +902,6 @@
                     </a>
 
                 </aside>
-
-                <!-- ======================================================
-                     Review Submit
-                ======================================================= -->
-
-                <div
-                    class="checkout-review-submit"
-                    data-review-submit
-                    hidden>
-
-                    <p class="checkout-step-notice">
-                        <i class="bi bi-info-circle" aria-hidden="true"></i>
-                        Esta é uma experiência demonstrativa. Nenhuma cobrança será realizada.
-                    </p>
-
-                    <button
-                        type="submit"
-                        class="checkout-primary-action checkout-confirm-button"
-                        disabled>
-                        Confirmar pedido simulado
-                    </button>
-
-                </div>
 
             </form>
 

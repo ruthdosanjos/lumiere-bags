@@ -255,12 +255,17 @@
         box-shadow 0.3s ease;
 }
 
-.cart-summary .checkout-button:hover {
+.cart-summary .checkout-button:hover:not(:disabled) {
     background: var(--color-secondary);
 
     transform: translateY(-2px);
 
     box-shadow: var(--shadow-sm);
+}
+
+.cart-summary .checkout-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
 }
 
 .cart-summary .checkout-button:focus-visible {

@@ -520,7 +520,7 @@ body.checkout-page {
 }
 
 .checkout-step-actions--review {
-    justify-content: flex-start;
+    justify-content: space-between;
 }
 
 .checkout-primary-action,
@@ -864,8 +864,6 @@ body.checkout-page {
 ========================================================== */
 
 .checkout-review-submit {
-    grid-column: 2;
-
     display: flex;
     flex-direction: column;
 
@@ -873,11 +871,11 @@ body.checkout-page {
 }
 
 .checkout-review-submit .checkout-step-notice {
-    margin-top: 0;
+    margin-top: var(--spacing-md);
 }
 
 .checkout-confirm-button {
-    width: 100%;
+    width: auto;
 }
 
 .checkout-review-submit[aria-busy="true"] {
