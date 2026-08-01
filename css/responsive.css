@@ -4,10 +4,105 @@
 
 @media (max-width: 992px) {
 
+    /* ---------- Hero ---------- */
+
+    .hero {
+        background-position: 75% center;
+    }
+
+    .hero-content {
+        grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
+    }
+
+    .hero-text {
+        max-width: 19rem;
+    }
+
     /* ---------- Products ---------- */
 
     .products-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+
+/* ==================================================
+   TABLET — REFINAMENTO DO HERO
+================================================== */
+
+@media (min-width: 769px) and (max-width: 1024px) {
+
+    .hero {
+        background-position: 76% center;
+    }
+
+    .hero-content {
+        grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+
+        padding-block: clamp(3rem, 6vh, 4.5rem);
+    }
+
+    .hero-text {
+        max-width: 21.5rem;
+    }
+
+    .hero-title {
+        font-size: clamp(2.1rem, 3.4vw, 2.35rem);
+        line-height: 1.04;
+    }
+
+    .hero-description {
+        max-width: 32ch;
+
+        font-size: 1rem;
+        line-height: 1.65;
+    }
+
+    .hero .btn-primary {
+        min-height: 52px;
+
+        margin-top: 1.35rem;
+        padding: .85rem 1.65rem;
+    }
+
+}
+
+@media (min-width: 769px) and (max-width: 1024px) and (orientation: portrait) {
+
+    .hero {
+        background-image: url("../assets/images/hero/banner1-mobile.png");
+        background-position: center 54%;
+    }
+
+    .hero::before {
+        background:
+            linear-gradient(
+                180deg,
+                rgba(250, 249, 247, .34) 0%,
+                rgba(250, 249, 247, .22) 42%,
+                rgba(250, 249, 247, .06) 64%,
+                transparent 78%
+            ),
+            linear-gradient(
+                90deg,
+                rgba(250, 249, 247, .42) 0%,
+                rgba(250, 249, 247, .14) 48%,
+                transparent 72%
+            );
+    }
+
+    .hero-content {
+        min-height: inherit;
+
+        grid-template-columns: 1fr;
+        align-items: start;
+
+        padding-block: clamp(3.25rem, 6vh, 4.5rem) 3.5rem;
+    }
+
+    .hero-text {
+        max-width: 21rem;
     }
 
 }
@@ -146,49 +241,59 @@
     /* ---------- Hero ---------- */
 
     .hero {
-        min-height: auto;
+        min-height: calc(100svh - var(--header-height));
 
-        padding-bottom: 3rem;
+        background-image: url("../assets/images/hero/banner1-mobile.png");
+        background-position: center;
+    }
+
+    .hero::before {
+        background:
+            linear-gradient(
+                180deg,
+                rgba(250, 249, 247, 0.16) 18%,
+                rgba(250, 249, 247, 0.26) 55%,
+                rgba(250, 249, 247, 0.48) 100%
+            ),
+            linear-gradient(
+                90deg,
+                rgba(250, 249, 247, 0.50),
+                rgba(250, 249, 247, 0.06)
+            );
     }
 
     .hero-content {
         width: 100%;
+        min-height: inherit;
 
         grid-template-columns: 1fr;
-        justify-items: center;
+        justify-items: start;
+        align-items: start;
 
-        gap: 2rem;
+        padding-block: clamp(2.75rem, 7vh, 4rem) 3rem;
 
-        text-align: center;
+        text-align: left;
     }
 
     .hero-text {
-        order: 2;
-
         width: 100%;
+        max-width: 18.5rem;
     }
 
     .hero-title {
-        font-size: 2.5rem;
-        line-height: 1.1;
+        line-height: 1.04;
     }
 
     .hero-description {
-        max-width: 34ch;
-        margin-inline: auto;
+        max-width: 30ch;
+        margin-inline: 0;
     }
 
-    .hero-image {
-        order: 1;
+    .hero .btn-primary {
+        margin-top: 1.25rem;
     }
 
-    .hero-image img {
-        width: min(100%, 300px);
-    }
-
-    .hero-content,
-    .hero-image,
-    .hero-text {
+    .hero-content {
         max-width: 100%;
     }
 
