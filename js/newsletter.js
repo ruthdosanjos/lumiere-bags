@@ -31,7 +31,8 @@ function getSubscribers() {
 
         return parsedSubscribers.filter(subscriber => {
 
-            return typeof subscriber === "string";
+            return typeof subscriber === "string"
+                && subscriber.trim().length > 0;
 
         });
 
