@@ -8,11 +8,17 @@ function showToast(message) {
 
     toast.className = "cart-toast";
 
-    toast.textContent = message;
+    toast.setAttribute("role", "status");
+
+    toast.setAttribute("aria-live", "polite");
+
+    toast.setAttribute("aria-atomic", "true");
 
     document.body.appendChild(toast);
 
     requestAnimationFrame(() => {
+
+        toast.textContent = message;
 
         toast.classList.add("show");
 
