@@ -392,6 +392,25 @@ body.checkout-page {
     font-weight: 500;
 }
 
+.checkout-field-status {
+    min-height: 1.25rem;
+
+    margin-top: -0.9rem;
+
+    color: var(--color-text-muted);
+
+    font-size: 0.75rem;
+    line-height: 1.4;
+}
+
+.checkout-field-status[data-state="success"] {
+    color: var(--color-primary);
+}
+
+.checkout-field-status[data-state="error"] {
+    color: #8f2f2f;
+}
+
 .checkout-field.invalid input,
 .checkout-field.invalid select,
 .checkout-field input[aria-invalid="true"],

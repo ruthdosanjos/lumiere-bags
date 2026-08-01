@@ -16,6 +16,10 @@ const CONFIRM_BUTTON_TEXT = "Confirmar pedido simulado";
 
 const SUBMITTING_BUTTON_TEXT = "Confirmando...";
 
+const POSTAL_CODE_NOT_FOUND_MESSAGE = "CEP não encontrado. Verifique ou preencha o endereço manualmente.";
+
+const POSTAL_CODE_LOOKUP_ERROR_MESSAGE = "Não foi possível consultar o CEP. Preencha o endereço manualmente.";
+
 const STEP_NAMES = [
     "Dados e entrega",
     "Pagamento",
@@ -103,6 +107,8 @@ const SELECTORS = {
     reviewAddress: "[data-review-address]",
     reviewPayment: "[data-review-payment]",
     reviewOrder: "[data-review-order]",
+    addressGroup: "[data-checkout-address-group]",
+    postalCodeStatus: "[data-postal-code-status]",
     nextButtons: "[data-checkout-next]",
     previousButtons: "[data-checkout-previous]",
     exitLinks: "[data-checkout-exit]"
@@ -135,6 +141,14 @@ const checkoutState = {
 let confirmedOrderSnapshot = null;
 
 let orderNumberSequence = 0;
+
+let postalCodeRequestController = null;
+
+let postalCodeLookup = {
+    status: "idle",
+    postalCode: "",
+    result: null
+};
 
 /* ==========================================================
    DOM Elements
@@ -232,6 +246,433 @@ const reviewOrder = document.querySelector(
     SELECTORS.reviewOrder
 );
 
+const addressGroup = document.querySelector(
+    SELECTORS.addressGroup
+);
+
+const postalCodeStatus = document.querySelector(
+    SELECTORS.postalCodeStatus
+);
+
+/* ==========================================================
+   Input Formatting
+========================================================== */
+
+function getNumericValue(value, maxLength) {
+
+    return String(value ?? "")
+        .replace(/\D/g, "")
+        .slice(0, maxLength);
+
+}
+
+function formatPhone(value) {
+
+    const digits = getNumericValue(value, 11);
+
+    if (!digits) return "";
+    if (digits.length <= 2) return `(${digits}`;
+
+    const areaCode = digits.slice(0, 2);
+    const localNumber = digits.slice(2);
+    const prefixLength = digits.length === 11 ? 5 : 4;
+    const prefix = localNumber.slice(0, prefixLength);
+    const suffix = localNumber.slice(prefixLength);
+
+    return `(${areaCode}) ${prefix}${suffix ? `-${suffix}` : ""}`;
+
+}
+
+function formatPostalCode(value) {
+
+    const digits = getNumericValue(value, 8);
+
+    return digits.length > 5
+        ? `${digits.slice(0, 5)}-${digits.slice(5)}`
+        : digits;
+
+}
+
+function formatRestoredInputValue(value, formatter, maxDigits) {
+
+    const digitCount = String(value ?? "")
+        .replace(/\D/g, "")
+        .length;
+
+    return digitCount <= maxDigits
+        ? formatter(value)
+        : value;
+
+}
+
+function getCaretPositionForDigits(value, digitCount) {
+
+    if (digitCount <= 0) return 0;
+
+    let digitsFound = 0;
+
+    for (let index = 0; index < value.length; index += 1) {
+
+        if (/\d/.test(value[index])) {
+            digitsFound += 1;
+        }
+
+        if (digitsFound === digitCount) return index + 1;
+
+    }
+
+    return value.length;
+
+}
+
+function applyInputMask(field, formatter, maxDigits) {
+
+    const selectionStart = field.selectionStart;
+    const digitsBeforeCaret = selectionStart === null
+        ? null
+        : getNumericValue(
+            field.value.slice(0, selectionStart),
+            maxDigits
+        ).length;
+
+    const formattedValue = formatter(field.value);
+
+    field.value = formattedValue;
+
+    if (digitsBeforeCaret === null || document.activeElement !== field) {
+        return;
+    }
+
+    const nextCaretPosition = getCaretPositionForDigits(
+        formattedValue,
+        digitsBeforeCaret
+    );
+
+    field.setSelectionRange(
+        nextCaretPosition,
+        nextCaretPosition
+    );
+
+}
+
+/* ==========================================================
+   Postal Code Lookup
+========================================================== */
+
+function announcePostalCodeStatus(message) {
+
+    if (!liveRegion || liveRegion.textContent === message) return;
+
+    liveRegion.textContent = message;
+
+}
+
+function setPostalCodeStatus(status, message = "") {
+
+    postalCodeLookup.status = status;
+
+    if (addressGroup) {
+
+        if (status === "loading") {
+            addressGroup.setAttribute("aria-busy", "true");
+        } else {
+            addressGroup.removeAttribute("aria-busy");
+        }
+
+    }
+
+    if (!postalCodeStatus) return;
+
+    postalCodeStatus.textContent = message;
+
+    if (message) {
+        postalCodeStatus.dataset.state = status === "success"
+            ? "success"
+            : status === "loading"
+                ? "loading"
+                : "error";
+    } else {
+        delete postalCodeStatus.dataset.state;
+    }
+
+}
+
+function resetPostalCodeLookup(postalCode = "") {
+
+    if (postalCodeRequestController) {
+        postalCodeRequestController.abort();
+        postalCodeRequestController = null;
+    }
+
+    postalCodeLookup = {
+        status: "idle",
+        postalCode,
+        result: null
+    };
+
+    setPostalCodeStatus("idle");
+
+}
+
+function handlePhoneInput(event) {
+
+    applyInputMask(
+        event.currentTarget,
+        formatPhone,
+        11
+    );
+
+}
+
+function handlePostalCodeInput(event) {
+
+    const postalCodeField = event.currentTarget;
+    const previousPostalCode = postalCodeLookup.postalCode;
+
+    applyInputMask(
+        postalCodeField,
+        formatPostalCode,
+        8
+    );
+
+    const currentPostalCode = getNumericValue(
+        postalCodeField.value,
+        8
+    );
+
+    if (
+        previousPostalCode
+        && currentPostalCode !== previousPostalCode
+    ) {
+
+        const previousStatus = postalCodeLookup.status;
+
+        resetPostalCodeLookup(currentPostalCode);
+
+        if (previousStatus === "not-found") {
+            clearFieldError(postalCodeField);
+        }
+
+    }
+
+}
+
+function getPostalCodeResult(responseData) {
+
+    if (
+        !responseData
+        || typeof responseData !== "object"
+        || Array.isArray(responseData)
+        || typeof responseData.localidade !== "string"
+        || typeof responseData.uf !== "string"
+    ) return null;
+
+    const state = responseData.uf.trim().toUpperCase();
+
+    if (!VALID_STATE_CODES.has(state)) return null;
+
+    return {
+        address: typeof responseData.logradouro === "string"
+            ? responseData.logradouro.trim()
+            : "",
+        neighborhood: typeof responseData.bairro === "string"
+            ? responseData.bairro.trim()
+            : "",
+        city: responseData.localidade.trim(),
+        state
+    };
+
+}
+
+function applyPostalCodeResult(result, postalCode) {
+
+    const deliveryFields = {
+        address: result.address,
+        neighborhood: result.neighborhood,
+        city: result.city,
+        state: result.state
+    };
+
+    Object.entries(deliveryFields).forEach(([fieldName, value]) => {
+
+        const field = getFormField(fieldName);
+
+        if (!field) return;
+
+        if (value && !field.value.trim()) {
+            field.value = value;
+        }
+
+        checkoutState.delivery[fieldName] = field.value.trim();
+
+        if (field.value.trim()) {
+            validateField(field);
+        }
+
+    });
+
+    checkoutState.delivery.postalCode = formatPostalCode(
+        postalCode
+    );
+
+}
+
+async function lookupPostalCode(shouldFocusNumber = false) {
+
+    const postalCodeField = getFormField("postalCode");
+
+    if (!postalCodeField) return;
+
+    const postalCode = getNumericValue(
+        postalCodeField.value,
+        8
+    );
+
+    if (postalCode.length !== 8) return;
+
+    if (
+        postalCodeLookup.status === "success"
+        && postalCodeLookup.postalCode === postalCode
+    ) return;
+
+    if (
+        postalCodeLookup.status === "loading"
+        && postalCodeLookup.postalCode === postalCode
+    ) return;
+
+    if (postalCodeRequestController) {
+        postalCodeRequestController.abort();
+    }
+
+    const requestController = new AbortController();
+
+    postalCodeRequestController = requestController;
+    postalCodeLookup.postalCode = postalCode;
+    postalCodeLookup.result = null;
+
+    clearFieldError(postalCodeField);
+    setPostalCodeStatus("loading", "Buscando CEP...");
+
+    try {
+
+        const response = await fetch(
+            `https://viacep.com.br/ws/${postalCode}/json/`,
+            {
+                signal: requestController.signal
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error("ViaCEP request failed");
+        }
+
+        const responseData = await response.json();
+
+        if (
+            requestController.signal.aborted
+            || getNumericValue(postalCodeField.value, 8) !== postalCode
+        ) return;
+
+        if (responseData.erro === true) {
+
+            setPostalCodeStatus(
+                "not-found"
+            );
+            showFieldError(
+                postalCodeField,
+                POSTAL_CODE_NOT_FOUND_MESSAGE
+            );
+            announcePostalCodeStatus(
+                POSTAL_CODE_NOT_FOUND_MESSAGE
+            );
+
+            return;
+
+        }
+
+        const postalCodeResult = getPostalCodeResult(
+            responseData
+        );
+
+        if (!postalCodeResult) {
+
+            setPostalCodeStatus(
+                "invalid-response",
+                POSTAL_CODE_LOOKUP_ERROR_MESSAGE
+            );
+            announcePostalCodeStatus(
+                POSTAL_CODE_LOOKUP_ERROR_MESSAGE
+            );
+
+            return;
+
+        }
+
+        postalCodeLookup.result = postalCodeResult;
+
+        applyPostalCodeResult(
+            postalCodeResult,
+            postalCode
+        );
+
+        clearFieldError(postalCodeField);
+        setPostalCodeStatus(
+            "success",
+            "CEP encontrado. Confira os dados do endereço."
+        );
+        announcePostalCodeStatus(
+            "CEP encontrado. Confira os dados do endereço."
+        );
+
+        const addressNumberField = getFormField(
+            "addressNumber"
+        );
+
+        if (
+            shouldFocusNumber
+            && checkoutState.currentStep === 1
+            && document.activeElement === document.body
+        ) {
+            addressNumberField?.focus();
+        }
+
+    } catch (error) {
+
+        if (error.name === "AbortError") return;
+
+        setPostalCodeStatus(
+            "network-error",
+            POSTAL_CODE_LOOKUP_ERROR_MESSAGE
+        );
+        announcePostalCodeStatus(
+            POSTAL_CODE_LOOKUP_ERROR_MESSAGE
+        );
+
+    } finally {
+
+        if (postalCodeRequestController === requestController) {
+            postalCodeRequestController = null;
+            addressGroup?.removeAttribute("aria-busy");
+        }
+
+    }
+
+}
+
+function handlePostalCodeBlur(event) {
+
+    const postalCodeField = event.currentTarget;
+
+    validateField(postalCodeField);
+
+    if (
+        getNumericValue(postalCodeField.value, 8).length === 8
+    ) {
+        lookupPostalCode(event.relatedTarget === null);
+    }
+
+}
+
 /* ==========================================================
    Draft Helpers
 ========================================================== */
@@ -271,6 +712,16 @@ function sanitizeCheckoutDraft(draft) {
 
     sanitizedDraft.email = sanitizedDraft.email.toLowerCase();
     sanitizedDraft.state = sanitizedDraft.state.toUpperCase();
+    sanitizedDraft.phone = formatRestoredInputValue(
+        sanitizedDraft.phone,
+        formatPhone,
+        11
+    );
+    sanitizedDraft.postalCode = formatRestoredInputValue(
+        sanitizedDraft.postalCode,
+        formatPostalCode,
+        8
+    );
 
     if (
         sanitizedDraft.state
@@ -1285,9 +1736,19 @@ function getFieldValidationMessage(field) {
         }
 
         case "postalCode":
-            return value.replace(/\D/g, "").length === 8
-                ? ""
-                : "Digite um CEP com 8 dígitos.";
+            if (value.replace(/\D/g, "").length !== 8) {
+                return "Digite um CEP com 8 dígitos.";
+            }
+
+            return (
+                postalCodeLookup.status === "not-found"
+                && postalCodeLookup.postalCode === getNumericValue(
+                    value,
+                    8
+                )
+            )
+                ? POSTAL_CODE_NOT_FOUND_MESSAGE
+                : "";
 
         case "address":
             return value
@@ -1747,11 +2208,30 @@ function handleCheckoutExit() {
 
 function registerCheckoutEvents() {
 
+    const phoneField = getFormField("phone");
+    const postalCodeField = getFormField("postalCode");
+
+    phoneField?.addEventListener(
+        "input",
+        handlePhoneInput
+    );
+
+    postalCodeField?.addEventListener(
+        "input",
+        handlePostalCodeInput
+    );
+
+    postalCodeField?.addEventListener(
+        "blur",
+        handlePostalCodeBlur
+    );
+
     PERSONAL_AND_DELIVERY_FIELDS.forEach(fieldName => {
 
         const field = getFormField(fieldName);
 
         if (!field) return;
+        if (fieldName === "postalCode") return;
 
         const validationEvent = field.tagName === "SELECT"
             ? "change"

@@ -329,6 +329,7 @@
                                         name="phone"
                                         autocomplete="tel"
                                         inputmode="tel"
+                                        maxlength="15"
                                         aria-describedby="checkout-phone-error"
                                         required>
 
@@ -343,7 +344,9 @@
 
                         </fieldset>
 
-                        <fieldset class="checkout-fieldset">
+                        <fieldset
+                            class="checkout-fieldset"
+                            data-checkout-address-group>
 
                             <legend>
                                 Endereço de entrega
@@ -364,12 +367,18 @@
                                         autocomplete="postal-code"
                                         inputmode="numeric"
                                         maxlength="9"
-                                        aria-describedby="checkout-postal-code-error"
+                                        aria-describedby="checkout-postal-code-error checkout-postal-code-status"
                                         required>
 
                                     <p
                                         id="checkout-postal-code-error"
                                         class="checkout-field-error">
+                                    </p>
+
+                                    <p
+                                        id="checkout-postal-code-status"
+                                        class="checkout-field-status"
+                                        data-postal-code-status>
                                     </p>
 
                                 </div>
