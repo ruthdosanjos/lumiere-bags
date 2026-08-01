@@ -158,11 +158,11 @@ function formatPrice(value) {
    Cart Helpers
 ========================================================== */
 
-function getCartItemsCount() {
+function getCartItemsCount(cartProducts = getCartProducts()) {
 
-    return cart.reduce((total, item) => {
+    return cartProducts.reduce((total, product) => {
 
-        return total + item.quantity;
+        return total + product.quantity;
 
     }, 0);
 
@@ -392,15 +392,7 @@ function renderEmptyCart() {
 
 }
 
-function createMiniCartItem(item) {
-
-    const product = getProduct(item.productId);
-
-    if (!product) {
-
-        return "";
-
-    }
+function createMiniCartItem(product) {
 
     return `
 
@@ -446,7 +438,7 @@ function createMiniCartItem(item) {
 
                         <span class="quantity">
 
-                            ${item.quantity}
+                            ${product.quantity}
 
                         </span>
 
@@ -489,7 +481,9 @@ function renderMiniCart() {
 
     if (!miniCartContent) return;
 
-    if (!cart.length) {
+    const cartProducts = getCartProducts();
+
+    if (!cartProducts.length) {
 
         renderEmptyCart();
 
@@ -497,7 +491,7 @@ function renderMiniCart() {
 
     }
 
-    miniCartContent.innerHTML = cart
+    miniCartContent.innerHTML = cartProducts
         .map(createMiniCartItem)
         .join("");
 
