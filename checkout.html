@@ -587,7 +587,7 @@
 
                         <fieldset
                             class="checkout-fieldset checkout-payment-fieldset"
-                            aria-describedby="checkout-payment-error checkout-payment-simulation-notice">
+                            aria-describedby="checkout-payment-error checkout-payment-details checkout-payment-simulation-notice">
 
                             <legend>
                                 Modalidade de pagamento simulada
@@ -666,6 +666,18 @@
                             </p>
 
                         </fieldset>
+
+                        <div
+                            id="checkout-payment-details"
+                            class="checkout-payment-details"
+                            data-payment-details
+                            hidden>
+
+                            <strong data-payment-details-title></strong>
+
+                            <p data-payment-details-description></p>
+
+                        </div>
 
                         <p
                             id="checkout-payment-simulation-notice"
@@ -807,15 +819,18 @@
                         Resumo do pedido
                     </h2>
 
-                    <div
+                    <ul
                         class="checkout-order-items"
-                        data-order-items>
+                        data-order-items
+                        aria-label="Produtos do pedido">
+                    </ul>
 
-                        <p class="checkout-order-empty">
-                            O resumo dos produtos será carregado nesta área.
-                        </p>
-
-                    </div>
+                    <p
+                        class="checkout-order-unavailable"
+                        data-order-unavailable
+                        role="status"
+                        hidden>
+                    </p>
 
                     <div class="checkout-summary-line">
 

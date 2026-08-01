@@ -56,6 +56,21 @@ const VALID_STATE_CODES = new Set([
     "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO"
 ]);
 
+const PAYMENT_DETAILS = {
+    pix: {
+        label: "Pix",
+        description: "Confirmação simulada e instantânea. Nenhuma chave ou QR Code real será gerado."
+    },
+    card: {
+        label: "Cartão",
+        description: "Modalidade apenas demonstrativa. Nenhum dado financeiro será solicitado."
+    },
+    boleto: {
+        label: "Boleto",
+        description: "Confirmação fictícia. Nenhum boleto real será emitido."
+    }
+};
+
 const SELECTORS = {
     form: "#checkout-form",
     steps: "[data-checkout-step]",
@@ -66,6 +81,18 @@ const SELECTORS = {
     reviewSubmit: "[data-review-submit]",
     paymentFieldset: ".checkout-payment-fieldset",
     paymentError: "#checkout-payment-error",
+    paymentDetails: "[data-payment-details]",
+    paymentDetailsTitle: "[data-payment-details-title]",
+    paymentDetailsDescription: "[data-payment-details-description]",
+    orderItems: "[data-order-items]",
+    orderUnavailable: "[data-order-unavailable]",
+    orderSubtotal: "[data-order-subtotal]",
+    orderShipping: "[data-order-shipping]",
+    orderTotal: "[data-order-total]",
+    reviewPersonal: "[data-review-personal]",
+    reviewAddress: "[data-review-address]",
+    reviewPayment: "[data-review-payment]",
+    reviewOrder: "[data-review-order]",
     nextButtons: "[data-checkout-next]",
     previousButtons: "[data-checkout-previous]",
     exitLinks: "[data-checkout-exit]"
@@ -125,6 +152,54 @@ const paymentFieldset = document.querySelector(
 
 const paymentError = document.querySelector(
     SELECTORS.paymentError
+);
+
+const paymentDetails = document.querySelector(
+    SELECTORS.paymentDetails
+);
+
+const paymentDetailsTitle = document.querySelector(
+    SELECTORS.paymentDetailsTitle
+);
+
+const paymentDetailsDescription = document.querySelector(
+    SELECTORS.paymentDetailsDescription
+);
+
+const orderItems = document.querySelector(
+    SELECTORS.orderItems
+);
+
+const orderUnavailable = document.querySelector(
+    SELECTORS.orderUnavailable
+);
+
+const orderSubtotal = document.querySelector(
+    SELECTORS.orderSubtotal
+);
+
+const orderShipping = document.querySelector(
+    SELECTORS.orderShipping
+);
+
+const orderTotal = document.querySelector(
+    SELECTORS.orderTotal
+);
+
+const reviewPersonal = document.querySelector(
+    SELECTORS.reviewPersonal
+);
+
+const reviewAddress = document.querySelector(
+    SELECTORS.reviewAddress
+);
+
+const reviewPayment = document.querySelector(
+    SELECTORS.reviewPayment
+);
+
+const reviewOrder = document.querySelector(
+    SELECTORS.reviewOrder
 );
 
 /* ==========================================================
@@ -456,6 +531,287 @@ function restoreFormState() {
         );
 
     });
+
+}
+
+/* ==========================================================
+   Order Summary
+========================================================== */
+
+function hasCentralOrderHelpers() {
+
+    return (
+        typeof getCartProducts === "function"
+        && typeof getCartSubtotal === "function"
+        && typeof getShippingCost === "function"
+        && typeof getOrderTotal === "function"
+        && typeof formatPrice === "function"
+    );
+
+}
+
+function getValidCheckoutItems() {
+
+    if (!hasCentralOrderHelpers()) return [];
+
+    return getCartProducts();
+
+}
+
+function getCheckoutOrderData() {
+
+    const items = getValidCheckoutItems();
+
+    if (!items.length) return null;
+
+    const subtotal = getCartSubtotal(items);
+    const shipping = getShippingCost(subtotal);
+    const total = getOrderTotal(
+        subtotal,
+        shipping
+    );
+
+    return {
+        items,
+        subtotal,
+        shipping,
+        total
+    };
+
+}
+
+function getUnavailableCartItemsCount(validItems) {
+
+    if (!Array.isArray(window.cart)) return 0;
+
+    return Math.max(
+        0,
+        window.cart.length - validItems.length
+    );
+
+}
+
+function renderOrderItems(items) {
+
+    const itemsFragment = document.createDocumentFragment();
+
+    items.forEach(item => {
+
+        const itemElement = document.createElement("li");
+        const itemImage = document.createElement("img");
+        const itemDetails = document.createElement("div");
+        const itemName = document.createElement("p");
+        const itemCollection = document.createElement("p");
+        const itemQuantity = document.createElement("p");
+        const itemPrice = document.createElement("p");
+
+        itemElement.className = "checkout-order-item";
+
+        itemImage.className = "checkout-order-item-image";
+        itemImage.src = item.image;
+        itemImage.alt = `Bolsa ${item.name} da coleção ${item.collection}`;
+        itemImage.loading = "lazy";
+
+        itemDetails.className = "checkout-order-item-details";
+
+        itemName.className = "checkout-order-item-name";
+        itemName.textContent = item.name;
+
+        itemCollection.className = "checkout-order-item-collection";
+        itemCollection.textContent = `Coleção ${item.collection}`;
+
+        itemQuantity.className = "checkout-order-item-quantity";
+        itemQuantity.textContent = `Quantidade: ${item.quantity}`;
+
+        itemPrice.className = "checkout-order-item-price";
+        itemPrice.textContent = `Preço unitário: ${formatPrice(item.price)}`;
+
+        itemDetails.append(
+            itemName,
+            itemCollection,
+            itemQuantity,
+            itemPrice
+        );
+
+        itemElement.append(
+            itemImage,
+            itemDetails
+        );
+
+        itemsFragment.append(itemElement);
+
+    });
+
+    orderItems.replaceChildren(itemsFragment);
+
+}
+
+function renderOrderTotals(orderData) {
+
+    orderSubtotal.textContent = formatPrice(
+        orderData.subtotal
+    );
+
+    orderShipping.textContent = formatPrice(
+        orderData.shipping
+    );
+
+    orderTotal.textContent = formatPrice(
+        orderData.total
+    );
+
+}
+
+function renderUnavailableItemsNotice(validItems) {
+
+    const unavailableCount = getUnavailableCartItemsCount(
+        validItems
+    );
+
+    orderUnavailable.hidden = unavailableCount === 0;
+
+    if (!unavailableCount) {
+
+        orderUnavailable.textContent = "";
+
+        return;
+
+    }
+
+    orderUnavailable.textContent = unavailableCount === 1
+        ? "Um item indisponível foi ignorado neste resumo."
+        : `${unavailableCount} itens indisponíveis foram ignorados neste resumo.`;
+
+}
+
+function renderOrderSummary() {
+
+    const orderData = getCheckoutOrderData();
+
+    if (!orderData) {
+
+        redirectToCartIfEmpty();
+
+        return null;
+
+    }
+
+    renderOrderItems(orderData.items);
+    renderOrderTotals(orderData);
+    renderUnavailableItemsNotice(orderData.items);
+
+    return orderData;
+
+}
+
+function createReviewDetails(entries) {
+
+    const detailsList = document.createElement("dl");
+
+    detailsList.className = "checkout-review-details";
+
+    entries.forEach(([label, value]) => {
+
+        const term = document.createElement("dt");
+        const description = document.createElement("dd");
+
+        term.textContent = label;
+        description.textContent = value;
+
+        detailsList.append(
+            term,
+            description
+        );
+
+    });
+
+    return detailsList;
+
+}
+
+function renderPaymentDetails(paymentMethod = checkoutState.paymentMethod) {
+
+    const selectedPayment = PAYMENT_DETAILS[paymentMethod];
+
+    paymentDetails.hidden = !selectedPayment;
+
+    if (!selectedPayment) {
+
+        paymentDetailsTitle.textContent = "";
+        paymentDetailsDescription.textContent = "";
+
+        return;
+
+    }
+
+    paymentDetailsTitle.textContent = selectedPayment.label;
+    paymentDetailsDescription.textContent = selectedPayment.description;
+
+}
+
+function renderReviewData(orderData = getCheckoutOrderData()) {
+
+    if (!orderData) {
+
+        redirectToCartIfEmpty();
+
+        return false;
+
+    }
+
+    const payment = PAYMENT_DETAILS[checkoutState.paymentMethod];
+    const addressComplement = checkoutState.delivery.addressComplement
+        ? ` — ${checkoutState.delivery.addressComplement}`
+        : "";
+
+    reviewPersonal.replaceChildren(
+        createReviewDetails([
+            ["Nome", checkoutState.personal.fullName],
+            ["E-mail", checkoutState.personal.email],
+            ["Telefone", checkoutState.personal.phone]
+        ])
+    );
+
+    reviewAddress.replaceChildren(
+        createReviewDetails([
+            ["Endereço", `${checkoutState.delivery.address}, ${checkoutState.delivery.addressNumber}${addressComplement}`],
+            ["Bairro", checkoutState.delivery.neighborhood],
+            ["Cidade e estado", `${checkoutState.delivery.city}/${checkoutState.delivery.state}`],
+            ["CEP", checkoutState.delivery.postalCode]
+        ])
+    );
+
+    reviewPayment.replaceChildren(
+        createReviewDetails([
+            ["Modalidade", payment?.label ?? "Não selecionada"],
+            ["Simulação", payment?.description ?? "Escolha uma modalidade na etapa anterior."]
+        ])
+    );
+
+    const reviewItems = document.createElement("ul");
+
+    reviewItems.className = "checkout-review-order-items";
+
+    orderData.items.forEach(item => {
+
+        const reviewItem = document.createElement("li");
+
+        reviewItem.textContent = `${item.quantity} × ${item.name} — ${formatPrice(item.price)} por unidade`;
+
+        reviewItems.append(reviewItem);
+
+    });
+
+    reviewOrder.replaceChildren(
+        reviewItems,
+        createReviewDetails([
+            ["Subtotal", formatPrice(orderData.subtotal)],
+            ["Frete", formatPrice(orderData.shipping)],
+            ["Total", formatPrice(orderData.total)]
+        ])
+    );
+
+    return true;
 
 }
 
@@ -913,6 +1269,9 @@ function goToStep(step) {
 function handleNextStep() {
 
     const currentStep = checkoutState.currentStep;
+    const orderData = renderOrderSummary();
+
+    if (!orderData) return;
 
     if (!validateStep(currentStep)) {
 
@@ -945,6 +1304,11 @@ function handleNextStep() {
     );
     clearStepErrors(currentStep);
 
+    if (
+        currentStep === 2
+        && !renderReviewData(orderData)
+    ) return;
+
     goToStep(
         currentStep + 1
     );
@@ -958,6 +1322,8 @@ function handlePreviousStep() {
     const currentStep = checkoutState.currentStep;
     const formState = captureFormState();
 
+    if (!renderOrderSummary()) return;
+
     if (validateStep(currentStep, false)) {
         applyValidatedStepState(
             currentStep,
@@ -970,6 +1336,33 @@ function handlePreviousStep() {
     );
 
     saveCheckoutDraft();
+
+}
+
+function handlePaymentChange(event) {
+
+    const paymentMethod = event.target.value;
+
+    if (!VALID_PAYMENT_METHODS.has(paymentMethod)) return;
+
+    checkoutState.paymentMethod = paymentMethod;
+
+    validatePaymentStep();
+    renderPaymentDetails(paymentMethod);
+
+    const orderData = renderOrderSummary();
+
+    if (!orderData) return;
+
+    renderReviewData(orderData);
+
+    if (liveRegion) {
+
+        liveRegion.textContent = (
+            `Modalidade ${PAYMENT_DETAILS[paymentMethod].label} selecionada.`
+        );
+
+    }
 
 }
 
@@ -1004,7 +1397,7 @@ function registerCheckoutEvents() {
 
             option.addEventListener(
                 "change",
-                () => validatePaymentStep()
+                handlePaymentChange
             );
 
         });
@@ -1059,10 +1452,7 @@ function registerCheckoutEvents() {
 
 function redirectToCartIfEmpty() {
 
-    const hasValidProducts = (
-        typeof getCartProducts === "function"
-        && getCartProducts().length > 0
-    );
+    const hasValidProducts = getValidCheckoutItems().length > 0;
 
     if (hasValidProducts) return false;
 
@@ -1112,6 +1502,18 @@ function initializeCheckout() {
         && reviewSubmit
         && paymentFieldset
         && paymentError
+        && paymentDetails
+        && paymentDetailsTitle
+        && paymentDetailsDescription
+        && orderItems
+        && orderUnavailable
+        && orderSubtotal
+        && orderShipping
+        && orderTotal
+        && reviewPersonal
+        && reviewAddress
+        && reviewPayment
+        && reviewOrder
     );
 
     if (!hasEssentialElements) return;
@@ -1138,6 +1540,16 @@ function initializeCheckout() {
 
         checkoutState.currentStep = restoredDraftStatus.step;
 
+    }
+
+    const orderData = renderOrderSummary();
+
+    if (!orderData) return;
+
+    renderPaymentDetails();
+
+    if (checkoutState.currentStep === 3) {
+        renderReviewData(orderData);
     }
 
     renderCurrentStep();

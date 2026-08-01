@@ -473,6 +473,31 @@ body.checkout-page {
     line-height: 1.5;
 }
 
+.checkout-payment-details {
+    margin-top: var(--spacing-sm);
+    padding: var(--spacing-sm);
+
+    color: var(--color-text-muted);
+    background: var(--color-background);
+
+    border: 1px solid var(--color-border);
+    border-left: 3px solid var(--color-secondary);
+    border-radius: var(--radius-md);
+}
+
+.checkout-payment-details strong {
+    display: block;
+
+    margin-bottom: 0.35rem;
+
+    color: var(--color-primary);
+}
+
+.checkout-payment-details p {
+    font-size: 0.82rem;
+    line-height: 1.6;
+}
+
 .checkout-step-notice {
     margin-top: var(--spacing-md);
 }
@@ -616,6 +641,44 @@ body.checkout-page {
     line-height: 1.6;
 }
 
+.checkout-review-details {
+    display: grid;
+    grid-template-columns: minmax(90px, auto) minmax(0, 1fr);
+
+    gap: 0.4rem var(--spacing-sm);
+
+    font-size: 0.84rem;
+    line-height: 1.6;
+}
+
+.checkout-review-details dt {
+    color: var(--color-text-muted);
+
+    font-weight: 500;
+}
+
+.checkout-review-details dd {
+    min-width: 0;
+
+    color: var(--color-primary);
+
+    overflow-wrap: anywhere;
+}
+
+.checkout-review-order-items {
+    display: grid;
+
+    gap: 0.4rem;
+
+    margin-bottom: var(--spacing-sm);
+    padding-left: 1.1rem;
+
+    color: var(--color-text-muted);
+
+    font-size: 0.84rem;
+    line-height: 1.6;
+}
+
 /* ==========================================================
    Order Summary
 ========================================================== */
@@ -647,6 +710,9 @@ body.checkout-page {
     gap: var(--spacing-sm);
 
     margin-bottom: var(--spacing-sm);
+    padding: 0;
+
+    list-style: none;
 }
 
 .checkout-order-empty {
@@ -682,6 +748,15 @@ body.checkout-page {
     border-radius: var(--radius-sm);
 }
 
+.checkout-order-item-details {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 0.2rem;
+}
+
 .checkout-order-item-name,
 .checkout-order-item-price {
     color: var(--color-primary);
@@ -694,6 +769,27 @@ body.checkout-page {
     color: var(--color-text-muted);
 
     font-size: 0.75rem;
+}
+
+.checkout-order-item-name,
+.checkout-order-item-collection,
+.checkout-order-item-quantity,
+.checkout-order-item-price {
+    overflow-wrap: anywhere;
+}
+
+.checkout-order-unavailable {
+    margin-bottom: var(--spacing-sm);
+    padding: 0.75rem;
+
+    color: #8f2f2f;
+    background: rgba(143, 47, 47, 0.08);
+
+    border: 1px solid rgba(143, 47, 47, 0.24);
+    border-radius: var(--radius-sm);
+
+    font-size: 0.78rem;
+    line-height: 1.5;
 }
 
 .checkout-summary-line,
