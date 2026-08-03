@@ -231,11 +231,9 @@ Sirva a raiz do projeto com um servidor HTTP local, como a extensão Live Server
 
 ## Melhorias futuras
 
-- Implementar busca de produtos nos controles já presentes no header.
 - Criar uma experiência real para o link `Ver detalhes` dos Product Cards.
 - Implementar a aplicação de cupons exibida na página do carrinho.
-- Substituir links sociais de demonstração por destinos reais.
-- Expandir o catálogo e refinar microinterações e testes de interface.
+- Refinar microinterações e testes de interface.
 - Considerar sincronização em tempo real do checkout com alterações realizadas em outra aba.
 
 ## Autoria
