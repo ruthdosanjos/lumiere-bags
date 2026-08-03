@@ -1,8 +1,74 @@
+
 # LUMIÈRE
 
-E-commerce fictício de bolsas premium desenvolvido como projeto de portfólio com HTML5, CSS3 modular e JavaScript Vanilla.
+### E-commerce fictício de bolsas premium desenvolvido como projeto de portfólio
 
-O projeto oferece uma jornada front-end completa, da descoberta dos produtos à confirmação de um pedido simulado. Não há backend, autenticação, banco de dados ou processamento real de pagamentos.
+<div align="center">
+
+<br>
+
+<p>
+  <img src="./assets/images/github/lumiere-preview.png" alt="Lumière Preview" width="100%">
+</p>
+
+<br>
+
+![Status](https://img.shields.io/badge/Status-Concluído-22C55E?style=for-the-badge)
+![HTML5](https://img.shields.io/badge/HTML5-Semântico-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-Modular-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+
+![Responsivo](https://img.shields.io/badge/Responsivo-Mobile%20First-2563EB?style=for-the-badge)
+![Acessibilidade](https://img.shields.io/badge/Acessibilidade-WCAG%20Oriented-7C3AED?style=for-the-badge)
+![Checkout](https://img.shields.io/badge/Checkout-4%20Etapas-0F766E?style=for-the-badge)
+![Web Storage](https://img.shields.io/badge/Web%20Storage-localStorage%20%26%20sessionStorage-F97316?style=for-the-badge)
+
+</div>
+
+---
+
+O projeto oferece uma jornada completa de compra, desde a descoberta dos produtos até a confirmação de um pedido simulado, utilizando apenas tecnologias nativas da web. Não há backend, autenticação, banco de dados ou processamento real de pagamentos.
+
+## ✨ Destaques
+
+- Jornada completa de compra (Home → Carrinho → Checkout → Confirmação)
+- Catálogo de produtos renderizado dinamicamente
+- Sistema de favoritos com persistência
+- Estado global do carrinho compartilhado entre todas as páginas
+- Checkout demonstrativo em quatro etapas
+- Layout responsivo para desktop, tablet e mobile
+- Implementação com foco em acessibilidade
+- Arquitetura modular em HTML, CSS e JavaScript
+- Persistência utilizando Web Storage API
+
+---
+
+## 🎯 Objetivos do projeto
+
+- Desenvolver uma experiência completa de e-commerce Front-end.
+- Aplicar princípios de arquitetura e organização de código.
+- Praticar gerenciamento de estado sem o uso de frameworks.
+- Construir componentes reutilizáveis e de fácil manutenção.
+- Aplicar boas práticas de acessibilidade e experiência do usuário.
+- Simular um fluxo realista de compra.
+
+---
+
+## 📑 Índice
+
+- [Visão geral](#visão-geral)
+- [Funcionalidades](#funcionalidades)
+- [Fluxo do usuário](#fluxo-do-usuário)
+- [Arquitetura](#arquitetura)
+- [Persistência](#persistência)
+- [Estrutura do projeto](#estrutura-do-projeto)
+- [Tecnologias e serviços](#tecnologias-e-serviços)
+- [Execução local](#execução-local)
+- [Limites da simulação](#limites-da-simulação)
+- [Melhorias futuras](#melhorias-futuras)
+- [Autoria](#autoria)
+
+---
 
 ## Visão geral
 
@@ -16,226 +82,289 @@ Estado atual:
 - checkout demonstrativo em quatro etapas;
 - layouts adaptados para desktop, tablet e mobile.
 
-## Funcionalidades
+  ## Funcionalidades
 
-### Home e catálogo
+A Lumière foi desenvolvida para simular uma experiência completa de compra em um e-commerce, priorizando organização de código, reutilização de componentes, acessibilidade e uma experiência consistente entre todas as páginas.
+
+### 🛍️ Home e catálogo
 
 - Hero com CTA para a coleção em destaque.
-- Featured Collection renderizada a partir dos produtos da coleção ÉTOILE.
+- Featured Collection renderizada dinamicamente a partir da coleção ÉTOILE.
 - Seções Benefits, Story, Categories, Products e Newsletter.
 - Catálogo completo com dez produtos renderizados dinamicamente.
-- Filtros `Todos`, `Shoulder`, `Tote`, `Mini` e `Crossbody`.
+- Filtros por categoria (`Todos`, `Shoulder`, `Tote`, `Mini` e `Crossbody`).
 - Integração entre os cards de Categories e os filtros do catálogo.
-- Rolagem até Products com respeito a `prefers-reduced-motion`.
-- Product Card reutilizado na coleção em destaque e no catálogo.
+- Rolagem automática até a seção Products respeitando `prefers-reduced-motion`.
+- Reutilização do mesmo Product Card na Featured Collection e no catálogo.
 
-### Favoritos
+---
 
-- Adição e remoção por delegação de eventos.
-- Persistência defensiva dos IDs válidos.
-- Sincronização visual entre cards repetidos da Featured Collection e do catálogo.
-- Restauração do estado visual após filtros e novas renderizações.
-- Atualização de `aria-pressed` e do nome acessível dos controles.
+### ❤️ Favoritos
 
-### Carrinho
+- Adição e remoção utilizando delegação de eventos.
+- Persistência dos produtos favoritados com validação defensiva.
+- Sincronização visual entre produtos repetidos na Featured Collection e no catálogo.
+- Restauração automática do estado após filtros e novas renderizações.
+- Atualização dinâmica de `aria-pressed` e do nome acessível dos controles.
 
-- Adição de produtos pelos Product Cards.
-- Mini carrinho lateral com overlay, estado vazio, subtotal, quantidades e remoção.
-- Diálogo do mini carrinho com fechamento por botão, overlay ou `Escape`, contenção de foco e retorno do foco ao acionador.
+---
+
+### 🛒 Carrinho
+
+- Adição de produtos diretamente pelos Product Cards.
+- Mini carrinho lateral com overlay, estado vazio, subtotal, alteração de quantidades e remoção de itens.
+- Fechamento por botão, clique no overlay ou tecla `Escape`.
+- Contenção e restauração de foco para melhor acessibilidade.
 - Contador global baseado na soma das quantidades válidas.
-- Página completa do carrinho com alteração de quantidade, remoção e resumo financeiro.
-- Frete de R$ 25,00 quando existe subtotal válido e frete zero no carrinho vazio.
-- Botão `Finalizar compra` habilitado somente quando existem produtos válidos.
-- Sincronização do carrinho entre abas pelo evento `storage`.
-- Estado, persistência, consultas, cálculos e ações centralizados em `js/cart.js`.
+- Página completa do carrinho com atualização de quantidades, remoção de produtos e resumo financeiro.
+- Frete fixo de R$ 25,00 para pedidos válidos e frete gratuito para carrinhos vazios.
+- Botão **Finalizar compra** habilitado apenas quando existem produtos válidos.
+- Sincronização automática entre abas utilizando o evento `storage`.
+- Estado, persistência, cálculos e ações centralizados em `js/cart.js`.
 
-### Checkout simulado
+---
 
-- Página única com quatro etapas: Dados e entrega, Pagamento, Revisão e Confirmação.
-- Bloqueio e redirecionamento para o carrinho quando não existem produtos válidos.
-- Formulário com validação por etapa, mensagens locais e foco no primeiro campo inválido.
-- Máscara de telefone para 10 ou 11 dígitos e de CEP no formato `00000-000`.
-- Consulta ao ViaCEP no `blur` de um CEP com oito dígitos.
-- Preenchimento conservador de endereço, bairro, cidade e estado sem sobrescrever valores manuais; número e complemento nunca são preenchidos pela API.
-- Modalidades demonstrativas Pix, Cartão e Boleto, sem coleta de dados financeiros.
-- Resumo e revisão construídos com os helpers centrais do carrinho.
-- Prevenção de submissão duplicada e estado temporário `Confirmando...`.
-- Snapshot final mantido somente em memória antes da limpeza do carrinho.
-- Número fictício de pedido e confirmação explícita de que nenhuma cobrança foi realizada.
-- Limpeza centralizada do carrinho somente após a confirmação bem-sucedida.
+### 💳 Checkout demonstrativo
 
-### Newsletter e feedback
+- Fluxo em página única dividido em quatro etapas:
+  - Dados e entrega
+  - Pagamento
+  - Revisão
+  - Confirmação
+- Redirecionamento automático para o carrinho quando não existem produtos válidos.
+- Validação independente para cada etapa.
+- Mensagens locais de erro e foco automático no primeiro campo inválido.
+- Máscaras para telefone e CEP.
+- Consulta automática ao ViaCEP utilizando `fetch`.
+- Preenchimento inteligente de endereço sem sobrescrever informações inseridas manualmente.
+- Modalidades demonstrativas de pagamento (Pix, Cartão e Boleto), sem coleta de dados financeiros.
+- Revisão do pedido construída utilizando os mesmos helpers centrais do carrinho.
+- Proteção contra envio duplicado.
+- Estado temporário **"Confirmando..."** durante o processamento.
+- Snapshot do pedido mantido apenas em memória.
+- Número fictício de pedido.
+- Limpeza centralizada do carrinho apenas após confirmação bem-sucedida.
 
-- Validação de e-mail, normalização e prevenção de inscrições duplicadas.
-- Persistência defensiva dos endereços cadastrados.
+---
+
+### 📧 Newsletter
+
+- Validação de e-mail.
+- Normalização dos dados armazenados.
+- Prevenção de inscrições duplicadas.
+- Persistência utilizando Web Storage.
 - Toast reutilizável com região de status acessível.
 
-### Responsividade e acessibilidade
+---
 
-- Adaptações gerais nos breakpoints de 992 px, 768 px e 425 px.
-- Home, carrinho e checkout responsivos, sem alterar a identidade visual entre páginas.
-- Menu mobile com estado acessível, fechamento por `Escape` e restauração de foco.
-- HTML semântico, labels visíveis, `fieldset` e `legend` no pagamento.
-- Uso de `aria-current`, `aria-invalid`, `aria-describedby`, `aria-live`, `aria-busy`, `hidden` e `disabled` conforme o estado da interface.
-- Navegação por teclado, foco visível e gerenciamento de foco entre etapas e erros.
-- Preferência por movimento reduzido respeitada nos fluxos que usam animação ou rolagem.
+### ♿ Responsividade e acessibilidade
 
-## Fluxo do usuário
+- Layout adaptado para desktop, tablet e smartphone.
+- Breakpoints em **992 px**, **768 px** e **425 px**.
+- Home, Carrinho e Checkout responsivos.
+- Menu mobile acessível com suporte à tecla `Escape`.
+- HTML semântico.
+- Labels visíveis.
+- Uso de `fieldset` e `legend` no formulário de pagamento.
+- Implementação de `aria-current`, `aria-invalid`, `aria-describedby`, `aria-live`, `aria-busy`, `hidden` e `disabled`.
+- Navegação completa por teclado.
+- Gerenciamento de foco entre componentes e formulários.
+- Respeito à preferência do usuário para redução de movimento (`prefers-reduced-motion`).
 
-A jornada principal de compra é:
+  ## Fluxo do usuário
 
-Home  
-↓  
-Featured Collection  
-↓  
-Story  
-↓  
-Categories  
-↓  
-Products  
-↓  
-Mini Cart  
-↓  
-Cart  
-↓  
-Checkout  
-↓  
-Confirmação simulada
+A jornada principal simulada pela aplicação segue o fluxo abaixo:
 
-Na ordem real do DOM, a Home apresenta: Hero, Featured Collection, Benefits, Story, Categories, Products, Newsletter e Footer. Benefits atua como bloco de confiança entre a apresentação da coleção e a história da marca.
+```text
+Home
+   │
+   ▼
+Featured Collection
+   │
+   ▼
+Story
+   │
+   ▼
+Categories
+   │
+   ▼
+Products
+   │
+   ▼
+Mini Cart
+   │
+   ▼
+Cart
+   │
+   ▼
+Checkout
+   │
+   ▼
+Confirmação
+```
 
-## Arquitetura
+Na ordem real do DOM, a Home apresenta as seguintes seções:
 
-### HTML
+- Hero
+- Featured Collection
+- Benefits
+- Story
+- Categories
+- Products
+- Newsletter
+- Footer
 
-- `index.html`: descoberta da marca, catálogo, favoritos, newsletter e mini carrinho.
-- `cart.html`: revisão e edição do carrinho completo.
-- `checkout.html`: finalização demonstrativa em quatro etapas.
+A seção **Benefits** atua como um bloco de confiança entre a apresentação da coleção e a história da marca.
 
-### CSS
+---
 
-- `css/variables.css`: tokens de cor, tipografia, espaçamento, raio, sombra e layout.
-- `css/base/`: reset, tipografia e regras globais.
-- `css/layout/`: estilos das seções da Home e estruturas compartilhadas.
-- `css/components/`: botões, Product Card, mini carrinho e componentes do carrinho completo.
-- `css/pages/`: estilos exclusivos das páginas de carrinho e checkout.
-- arquivos responsivos gerais e específicos para carrinho e checkout.
+# Arquitetura
 
-### JavaScript
+## HTML
 
-- `products.js`: fonte dos produtos, renderização, filtros, Categories e favoritos.
-- `cart.js`: estado central, armazenamento, helpers, cálculos, ações, contador e mini carrinho.
-- `cart-page.js`: renderização e eventos exclusivos de `cart.html`, em escopo isolado.
-- `checkout.js`: estado temporário, etapas, validação, ViaCEP, revisão e confirmação simulada, em escopo isolado.
-- `newsletter.js`: validação e persistência da newsletter.
-- `main.js`: comportamento do header ao rolar.
-- `js/components/`: menu mobile e toast.
+| Arquivo | Responsabilidade |
+|---------|------------------|
+| `index.html` | Descoberta da marca, catálogo, favoritos, newsletter e mini carrinho |
+| `cart.html` | Revisão e edição do carrinho |
+| `checkout.html` | Fluxo de checkout em quatro etapas |
 
-O carrinho mantém uma única referência compartilhada em `window.cart`. Todas as mutações passam pelas ações centrais, que preservam essa referência e sincronizam persistência e interfaces. O checkout consome `getCartProducts()`, `getCartSubtotal()`, `getShippingCost()`, `getOrderTotal()`, `formatPrice()` e `clearCart()`; não mantém um segundo carrinho nem replica os cálculos financeiros.
+---
 
-## Persistência
+## CSS
+
+A organização dos estilos segue uma arquitetura modular:
+
+- `css/base/` → Reset, tipografia e regras globais.
+- `css/layout/` → Estrutura das seções da Home.
+- `css/components/` → Componentes reutilizáveis.
+- `css/pages/` → Estilos exclusivos do Carrinho e Checkout.
+- `responsive.css` → Responsividade geral.
+- `cart-responsive.css` → Ajustes específicos do carrinho.
+- `checkout-responsive.css` → Ajustes específicos do checkout.
+- `variables.css` → Tokens de cor, tipografia, espaçamentos, sombras e layout.
+
+---
+
+## JavaScript
+
+| Arquivo | Responsabilidade |
+|---------|------------------|
+| `products.js` | Fonte de dados, renderização, filtros, categorias e favoritos |
+| `cart.js` | Estado global do carrinho, persistência, cálculos e mini carrinho |
+| `cart-page.js` | Funcionalidades exclusivas da página do carrinho |
+| `checkout.js` | Fluxo do checkout, validações, ViaCEP e confirmação |
+| `newsletter.js` | Newsletter |
+| `main.js` | Header e comportamentos globais |
+| `js/components/` | Menu mobile e Toast |
+
+O carrinho mantém uma única referência compartilhada em `window.cart`.
+
+Todas as alterações passam pelas ações centrais, preservando a referência compartilhada, sincronizando persistência, contador global e todas as interfaces que consomem esse estado.
+
+O checkout reutiliza diretamente os helpers do carrinho (`getCartProducts()`, `getCartSubtotal()`, `getShippingCost()`, `getOrderTotal()`, `formatPrice()` e `clearCart()`), evitando duplicação de lógica.
+
+---
+
+# Persistência
 
 | Armazenamento | Chave | Conteúdo |
-|---|---|---|
-| `localStorage` | `lumiereCart` | Array de itens com `productId` e `quantity` válidos |
-| `localStorage` | `lumiereFavorites` | Array de IDs de produtos válidos |
-| `localStorage` | `lumiereNewsletter` | Array de e-mails normalizados e não vazios |
-| `sessionStorage` | `lumiereCheckoutDraft` | Rascunho validado e limitado aos campos permitidos do checkout |
+|---------------|-------|----------|
+| `localStorage` | `lumiereCart` | Itens válidos do carrinho |
+| `localStorage` | `lumiereFavorites` | IDs dos produtos favoritados |
+| `localStorage` | `lumiereNewsletter` | E-mails cadastrados |
+| `sessionStorage` | `lumiereCheckoutDraft` | Rascunho temporário do checkout |
 
-As leituras são defensivas: JSON inválido ou tipos incompatíveis retornam estados seguros. O pedido confirmado e a resposta completa do ViaCEP não são persistidos. Dados de cartão, CVV, CPF ou dados bancários não são solicitados.
+As leituras são defensivas: JSON inválido ou tipos incompatíveis retornam estados seguros.
 
-## Estrutura do projeto
+Dados financeiros não são armazenados.
+
+---
+
+# Estrutura do projeto
 
 ```text
 lumiere-bags/
 ├── assets/
 │   └── images/
 │       ├── categories/
+│       ├── github/
+│       │   └── lumiere-preview.png
 │       ├── hero/
 │       └── products/
 ├── css/
 │   ├── base/
-│   │   ├── globals.css
-│   │   ├── reset.css
-│   │   └── typography.css
 │   ├── components/
-│   │   ├── cart/
-│   │   │   ├── cart-item.css
-│   │   │   └── cart-summary.css
-│   │   ├── buttons.css
-│   │   ├── cart.css
-│   │   └── product-card.css
 │   ├── layout/
-│   │   ├── benefits.css
-│   │   ├── categories.css
-│   │   ├── featured.css
-│   │   ├── footer.css
-│   │   ├── header.css
-│   │   ├── hero.css
-│   │   ├── newsletter.css
-│   │   ├── products.css
-│   │   ├── sections.css
-│   │   └── story.css
 │   ├── pages/
-│   │   ├── cart-page.css
-│   │   └── checkout-page.css
+│   ├── responsive.css
 │   ├── cart-responsive.css
 │   ├── checkout-responsive.css
-│   ├── responsive.css
 │   ├── style.css
 │   └── variables.css
 ├── js/
 │   ├── components/
-│   │   ├── mobile-menu.js
-│   │   └── toast.js
 │   ├── cart-page.js
 │   ├── cart.js
 │   ├── checkout.js
 │   ├── main.js
 │   ├── newsletter.js
 │   └── products.js
-├── .gitignore
-├── .vscode/
-│   └── settings.json
+├── assets/
+├── index.html
 ├── cart.html
 ├── checkout.html
-├── index.html
 ├── project.md
 └── README.md
 ```
 
-## Tecnologias e serviços
+---
 
-- HTML5 semântico.
-- CSS3 modular.
-- JavaScript Vanilla (ES6+), carregado como scripts clássicos.
-- Web Storage API (`localStorage` e `sessionStorage`).
-- Fetch API e `AbortController` para consulta de CEP.
-- Google Fonts: Inter e Playfair Display.
-- Bootstrap 5.3.7 na Home.
-- Bootstrap Icons 1.13.1 nas três páginas.
-- ViaCEP para consulta pública de endereço.
+# Tecnologias e serviços
 
-Não há processo de build, gerenciador de pacotes ou dependências instaladas no repositório.
+| Front-end | APIs | Bibliotecas |
+|-----------|------|-------------|
+| HTML5 | ViaCEP | Bootstrap 5 |
+| CSS3 Modular | Fetch API | Bootstrap Icons |
+| JavaScript (ES6+) | Web Storage API | Google Fonts |
 
-## Execução local
+O projeto utiliza apenas tecnologias nativas da web.
 
-Sirva a raiz do projeto com um servidor HTTP local, como a extensão Live Server, e abra `index.html`. O servidor é recomendado porque o checkout consulta o ViaCEP por `fetch`.
+Não há processo de build, bundlers, frameworks JavaScript ou gerenciadores de pacotes.
 
-## Limites da simulação
+---
+
+# Execução local
+
+Basta servir a raiz do projeto utilizando um servidor HTTP local (como a extensão **Live Server**) e abrir `index.html`.
+
+O uso de um servidor é recomendado porque o checkout realiza consultas ao ViaCEP utilizando `fetch`.
+
+---
+
+# Limites da simulação
 
 - Nenhuma cobrança é realizada.
-- Não há gateway de pagamento, backend, banco de dados ou autenticação.
-- O número de pedido é demonstrativo e não é persistido.
-- Frete, disponibilidade e confirmação não representam operações comerciais reais.
+- Não existe backend.
+- Não existe autenticação.
+- Não existe banco de dados.
+- O número do pedido é apenas ilustrativo.
+- Frete e disponibilidade são simulados.
 
-## Melhorias futuras
+---
 
-- Criar uma experiência real para o link `Ver detalhes` dos Product Cards.
-- Implementar a aplicação de cupons exibida na página do carrinho.
-- Refinar microinterações e testes de interface.
-- Considerar sincronização em tempo real do checkout com alterações realizadas em outra aba.
+# Melhorias futuras
 
-## Autoria
+- Página individual de produto.
+- Sistema de cupons.
+- Microinterações adicionais.
+- Testes automatizados.
+- Sincronização em tempo real do checkout entre abas.
+- Backend e autenticação para transformar o projeto em uma aplicação completa.
+
+---
+
+# Autoria
 
 Desenvolvido por **Ruth Emilly dos Anjos Paulino** como projeto de portfólio Front-end.
+
+Caso tenha gostado do projeto, considere deixar uma ⭐ no repositório.
